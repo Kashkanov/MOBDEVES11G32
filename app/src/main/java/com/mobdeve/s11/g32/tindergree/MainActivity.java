@@ -11,8 +11,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //temporarily set to activity_login just to test.
-        //A new activity should be created for the activity_login.
+        // TODO (1) Update this to activity_main once the activity for activity_login has been created
         setContentView(R.layout.activity_login);
         hideBar();
     }
