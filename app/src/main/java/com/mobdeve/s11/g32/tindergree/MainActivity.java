@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO (1) Update this to activity_main once the activity for activity_login has been created
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         hideBar();
     }
 

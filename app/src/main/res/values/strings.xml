@@ -4,7 +4,12 @@
     <string name="logo_description">like tinder, but for pets</string>
     <string name="password_hint">Password</string>
     <string name="login">login</string>
+    <string name="register">create account</string>
     <string name="email_address">E-mail address</string>
     <string name="email_hint">tindergree@gmail.com</string>
-    <string name="firstTime">First time? Create an account here.</string>
+    <string name="first_time">First time? Create an account here.</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="confirm_pasword">Confirm password</string>
+    <string name="already_have_account">Already have an account?</string>
 </resources>
