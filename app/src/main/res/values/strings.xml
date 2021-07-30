@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Tindergree</string>
+    <string name="logo_name">Tindergree</string>
+    <string name="logo_description">like tinder, but for pets</string>
+    <string name="password_hint">Password</string>
+    <string name="login">login</string>
+    <string name="email_address">E-mail address</string>
+    <string name="email_hint">tindergree@gmail.com</string>
+    <string name="firstTime">First time? Create an account here.</string>
 </resources>
