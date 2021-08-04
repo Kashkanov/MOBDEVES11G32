@@ -4,14 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
     tools:context=".ChatActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="123dp"
+    <!--TODO:edittext overflow vertical-->
 
-        android:background="@layout/border_layout"
-        android:backgroundTint="#FF914D"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_chattop"
+        android:layout_width="match_parent"
+
+        android:layout_height="123dp"
+        android:background="#FF914D"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -80,4 +84,98 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="381dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_chatbottom"
+        android:layout_width="match_parent"
+
+        android:layout_height="123dp"
+
+        android:background="#FF914D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#FFFFFF"
+            android:backgroundTint="#F8F8F8"
+            android:ems="10"
+            android:gravity="fill_horizontal|top|left"
+            android:hint="Type something..."
+            android:includeFontPadding="true"
+            android:inputType="textPersonName"
+            android:overScrollMode="ifContentScrolls"
+            android:padding="5dp"
+            android:textColor="#000000"
+            app:layout_constraintBottom_toTopOf="@id/guideline23"
+            app:layout_constraintEnd_toEndOf="@id/guideline21"
+            app:layout_constraintStart_toEndOf="@id/guideline20"
+            app:layout_constraintTop_toBottomOf="@id/guideline22" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="12dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="12dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="32dp" />
+
+        <Button
+            android:id="@+id/btn_sendmessage"
+            android:layout_width="96dp"
+            android:layout_height="35dp"
+            android:text="Send"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline21"
+            app:layout_constraintTop_toBottomOf="@id/guideline23" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="22dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="22dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_convoarea"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@id/cl_chatbottom"
+        app:layout_constraintEnd_toStartOf="@id/guideline25"
+        app:layout_constraintStart_toEndOf="@id/guideline24"
+        app:layout_constraintTop_toBottomOf="@id/cl_chattop" />
 </androidx.constraintlayout.widget.ConstraintLayout>
