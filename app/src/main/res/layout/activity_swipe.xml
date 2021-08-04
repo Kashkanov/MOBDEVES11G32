@@ -15,4 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--TODO:add peripherals(app logo, search, settings button)-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
