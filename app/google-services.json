@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855378974337",
+    "project_id": "tindergree",
+    "storage_bucket": "tindergree.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855378974337:android:1e0d95fc962253b00b9f80",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s11.g32.tindergree"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855378974337-ns1voahf9htda375807593a1k3g12934.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIKvx4yxdgNCSstnHsLHEQi2YdsBfSMyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855378974337-ns1voahf9htda375807593a1k3g12934.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
