@@ -3,7 +3,153 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".PostRegisterUploadPhotos">
 
+    <TextView
+        android:id="@+id/tv_post_register_add_photos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/addPhotosOfPet"
+        android:textColor="@color/orangeAppColor"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toTopOf="@+id/gl_top" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_text"
+        app:layout_constraintVertical_bias="0.100000024">
+
+        <LinearLayout
+            android:id="@+id/ll_first_row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo1"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo2"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginRight="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo3"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_second_row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_first_row">
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo4"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo5"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/ib_post_register_photo6"
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/ib_post_register_next"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_next" />
+
+    <TextView
+        android:id="@+id/tv_post_register_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Don't forget to be creative and add those goofy pictures!"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/gl_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_add_photos" />
 </androidx.constraintlayout.widget.ConstraintLayout>

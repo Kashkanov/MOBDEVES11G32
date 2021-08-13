@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="peach">#FFDAB9</color>
     <color name="gray">#cfcfcf</color>
+    <color name="lightGray">#dbdbdb</color>
     <color name="red">#a60210</color>
     <color name="orangeAppColor">#FF914D</color>
 </resources>
