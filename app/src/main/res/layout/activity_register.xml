@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl_register"
-    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <!-- TODO (3) Add icons to each edit text    -->
     <!-- TODO (4) Change the font of edit text hints if necessary  -->
@@ -14,7 +13,7 @@
         android:id="@+id/tv_register_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/already_have_account"
         android:textColor="@color/red"
         android:textSize="12sp"
@@ -26,6 +25,7 @@
         android:id="@+id/et_register_emailaddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/gray"
         android:ems="10"
         android:hint="@string/email_hint"
@@ -34,7 +34,7 @@
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
-        app:layout_constraintTop_toBottomOf="@+id/tv_register_emailaddress" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_description" />
 
     <EditText
         android:id="@+id/et_login_first_name"
@@ -105,7 +105,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/peach"
+        android:backgroundTint="@color/orangeAppColor"
         android:text="@string/register"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
@@ -120,17 +120,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="0dp"
         app:layout_constraintGuide_percent="0.80" />
-
-    <TextView
-        android:id="@+id/tv_register_emailaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="40dp"
-        android:text="@string/email_address"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
-        app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_description" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_register_right_of_image"
@@ -193,4 +182,57 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="0dp"
         app:layout_constraintGuide_percent="0.07" />
+
+    <ImageView
+        android:id="@+id/iv_register_email_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_emailaddress"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_emailaddress"
+        app:layout_constraintHorizontal_bias="0.588"
+        app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
+        app:srcCompat="@drawable/ic_email" />
+
+    <ImageView
+        android:id="@+id/iv_register_first_name_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_login_first_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
+        app:srcCompat="@drawable/ic_first_name" />
+
+    <ImageView
+        android:id="@+id/iv_register_last_name_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_last_name"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_last_name"
+        app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
+        app:srcCompat="@drawable/ic_last_name" />
+
+    <ImageView
+        android:id="@+id/iv_register_password_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_password"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
+        app:srcCompat="@drawable/ic_password" />
+
+    <ImageView
+        android:id="@+id/iv_register_confirm_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_confirm"
+        app:layout_constraintEnd_toEndOf="@+id/et_register_confirm"
+        app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
+        app:srcCompat="@drawable/ic_confirm" />
 </androidx.constraintlayout.widget.ConstraintLayout>

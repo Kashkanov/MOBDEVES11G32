@@ -71,17 +71,17 @@
         android:id="@+id/et_login_emailaddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="60dp"
         android:backgroundTint="@color/gray"
         android:ems="10"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"
-        android:textColorHint="@color/gray"
         android:textColor="@color/black"
+        android:textColorHint="@color/gray"
         app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login_emailaddress" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_logo_description" />
 
     <EditText
         android:id="@+id/et_login_password"
@@ -103,7 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/peach"
+        android:backgroundTint="@color/orangeAppColor"
         android:text="@string/register"
         android:textColor="@color/black"
         app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
@@ -114,7 +114,7 @@
         android:id="@+id/tv_login_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/first_time"
         android:textColor="@color/red"
         android:textSize="12sp"
@@ -131,28 +131,6 @@
         app:layout_constraintGuide_percent="0.10" />
 
     <!--    TODO (2) Check the design if it looks better without this-->
-    <TextView
-        android:id="@+id/tv_login_emailaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="72dp"
-        android:text="@string/email_address"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login_logo_description" />
-
-    <ImageView
-        android:id="@+id/iv_login_logo_email"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="12dp"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="@+id/et_login_emailaddress"
-        app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_login_left_icons"
-        app:srcCompat="@drawable/emaillogo" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_login_left_icons"
@@ -163,14 +141,23 @@
         app:layout_constraintGuide_percent="0.80" />
 
     <ImageView
-        android:id="@+id/iv_login_logo_password"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:id="@+id/iv_login_email_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_login_emailaddress"
+        app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
+        app:layout_constraintStart_toStartOf="@+id/gl_login_left_icons"
+        app:srcCompat="@drawable/ic_email" />
+
+    <ImageView
+        android:id="@+id/iv_login_password_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/et_login_password"
-        app:layout_constraintEnd_toEndOf="@+id/et_login_password"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_icons"
-        app:srcCompat="@drawable/passwordlogo" />
+        app:srcCompat="@drawable/ic_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
