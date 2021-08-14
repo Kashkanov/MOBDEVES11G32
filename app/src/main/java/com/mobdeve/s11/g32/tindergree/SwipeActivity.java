@@ -1,10 +1,12 @@
 package com.mobdeve.s11.g32.tindergree;
 
-
+//TODO: collapsible rv of otherpics
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,13 +29,24 @@ public class SwipeActivity extends AppCompatActivity {
     private CardStackLayoutManager manager;
     private CardAdapter cardAdapter;
     private ArrayList<Profile> profiles;
-
+    private ImageButton ib_openchats;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        this.ib_openchats = findViewById(R.id.ib_openchats);
+
+        this.ib_openchats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), DisplayChatsActivity.class);
+
+                v.getContext().startActivity(i);
+            }
+        });
+
         this.initRecyclerView();
 
     }

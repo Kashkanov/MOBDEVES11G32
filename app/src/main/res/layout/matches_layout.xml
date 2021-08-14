@@ -31,31 +31,37 @@
             android:backgroundTint="#FFFFFF">
 
 
-            <ImageButton
-                android:id="@+id/ib_matchpic"
-                android:layout_width="74dp"
-                android:layout_height="64dp"
-                android:background="@layout/border_layout"
-                android:scaleType="fitCenter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.129"
-                app:srcCompat="@mipmap/dog4_foreground" />
-
             <TextView
                 android:id="@+id/tv_matchname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="TextView"
                 android:textColor="#000000"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ib_matchpic" />
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFFFFF"
+                android:foreground="@layout/border_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/ib_matchpic"
+                    android:layout_width="74dp"
+                    android:layout_height="64dp"
+
+                    android:scaleType="center"
+                    app:srcCompat="@mipmap/dog4_foreground" />
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

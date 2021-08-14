@@ -16,15 +16,18 @@
 
         android:layout_height="123dp"
         android:background="#FF914D"
+        android:foreground="@layout/border_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iv_kachatpic"
+        <ImageButton
+            android:id="@+id/ib_kachatpic"
             android:layout_width="92dp"
             android:layout_height="80dp"
-            android:background="@layout/border_layout"
+
+            android:background="#FFFFFF"
+            android:foreground="@layout/border_layout"
             android:scaleType="center"
             app:layout_constraintStart_toEndOf="@id/guideline14"
             app:layout_constraintTop_toBottomOf="@id/guideline16"
@@ -90,8 +93,8 @@
         android:layout_width="match_parent"
 
         android:layout_height="123dp"
-
         android:background="#FF914D"
+        android:foreground="@layout/border_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -104,6 +107,7 @@
             android:background="#FFFFFF"
             android:backgroundTint="#F8F8F8"
             android:ems="10"
+            android:foreground="@layout/border_layout"
             android:gravity="fill_horizontal|top|left"
             android:hint="Type something..."
             android:includeFontPadding="true"
@@ -146,10 +150,12 @@
 
         <Button
             android:id="@+id/btn_sendmessage"
-            android:layout_width="96dp"
-            android:layout_height="35dp"
+            android:layout_width="76dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="4dp"
             android:text="Send"
             android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline21"
             app:layout_constraintTop_toBottomOf="@id/guideline23" />
     </androidx.constraintlayout.widget.ConstraintLayout>

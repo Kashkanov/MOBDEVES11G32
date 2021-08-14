@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +48,7 @@ public class DisplayChatsActivity extends AppCompatActivity {
         else {
             Log.d("AUTH_TEST", "User has NOT signed in.");
         }
+        Intent i = getIntent();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_chats);
