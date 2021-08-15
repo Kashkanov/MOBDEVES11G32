@@ -45,7 +45,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
 
     public void initRecyclerView(){
-        this.rv_otherpics = findViewById(R.id.rv_matchotherpics);
+        this.rv_otherpics = findViewById(R.id.rv_profotherpics);
         LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
 
         this.rv_otherpics.setLayoutManager(manager);

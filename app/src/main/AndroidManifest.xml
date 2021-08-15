@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OtherPicsActivity"></activity>
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".OtherPicsActivity" />
         <activity android:name=".ProfilePageActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
