@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 //TODO: collapsible rv of otherpics
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
+import com.mobdeve.s11.g32.tindergree.Models.Profile;
+import com.mobdeve.s11.g32.tindergree.R;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
 import com.yuyakaido.android.cardstackview.CardStackView;

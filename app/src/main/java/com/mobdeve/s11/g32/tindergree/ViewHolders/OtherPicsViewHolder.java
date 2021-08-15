@@ -1,10 +1,12 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.ViewHolders;
 
 import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobdeve.s11.g32.tindergree.R;
 
 import org.jetbrains.annotations.NotNull;
 

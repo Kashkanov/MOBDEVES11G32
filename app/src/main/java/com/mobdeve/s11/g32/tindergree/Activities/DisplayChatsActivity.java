@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,9 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.LinearInterpolator;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,10 +16,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
+import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
+import com.mobdeve.s11.g32.tindergree.Models.Profile;
+import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class DisplayChatsActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
+import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
+import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 

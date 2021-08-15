@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Adapters;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobdeve.s11.g32.tindergree.Activities.ChatActivity;
+import com.mobdeve.s11.g32.tindergree.ViewHolders.MatchViewHolder;
+import com.mobdeve.s11.g32.tindergree.Models.Profile;
+import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 

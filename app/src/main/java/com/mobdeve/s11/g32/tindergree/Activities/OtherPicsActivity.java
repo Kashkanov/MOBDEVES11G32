@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,9 +9,14 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
+import com.mobdeve.s11.g32.tindergree.Adapters.OtherPicsAdapter;
+import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
+import com.mobdeve.s11.g32.tindergree.R;
+
 import java.util.ArrayList;
 
-public class ProfilePageActivity extends AppCompatActivity {
+public class OtherPicsActivity extends AppCompatActivity {
 
     private ImageView iv_profprofpic;
     private TextView tv_profname;
@@ -30,11 +35,11 @@ public class ProfilePageActivity extends AppCompatActivity {
         this.tv_profdesc = findViewById(R.id.tv_profdesc);
 
         Intent i = getIntent();
-        int profprofpic = i.getIntExtra(ChatActivity.KEY_KACHATPIC,0);
+        int profprofpic = i.getIntExtra(CardAdapter.KEY_PROFPIC,0);
         this.iv_profprofpic.setImageResource(profprofpic);
-        String profname = i.getStringExtra(ChatActivity.KEY_KACHATNAME);
+        String profname = i.getStringExtra(CardAdapter.KEY_PROFNAME);
         this.tv_profname.setText(profname);
-        String profdesc = i.getStringExtra(ChatActivity.KEY_KACHATDESC);
+        String profdesc = i.getStringExtra(CardAdapter.KEY_PROFDESC);
         this.tv_profdesc.setText(profdesc);
         Bundle bundleObject = getIntent().getExtras();
         this.otherpics = (ArrayList<OtherPic>) bundleObject.getSerializable("KEY_OTHERPICS");

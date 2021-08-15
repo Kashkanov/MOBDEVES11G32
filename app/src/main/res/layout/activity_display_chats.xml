@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".DisplayChatsActivity">
+    tools:context=".Activities.DisplayChatsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_logoarea"

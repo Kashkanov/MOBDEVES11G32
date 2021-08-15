@@ -1,4 +1,6 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Models;
+
+import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 

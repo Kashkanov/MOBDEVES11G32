@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".OtherPicsActivity" />
-        <activity android:name=".ProfilePageActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".DisplayChatsActivity" />
-        <activity android:name=".SwipeActivity">
+        <activity android:name=".Activities.SettingsActivity"></activity>
+        <activity android:name=".Activities.OtherPicsActivity" />
+        <activity android:name=".Activities.ProfilePageActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.ChatActivity" />
+        <activity android:name=".Activities.DisplayChatsActivity" />
+        <activity android:name=".Activities.SwipeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

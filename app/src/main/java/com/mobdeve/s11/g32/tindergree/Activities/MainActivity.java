@@ -1,10 +1,12 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.mobdeve.s11.g32.tindergree.R;
 
 public class MainActivity extends AppCompatActivity {
 

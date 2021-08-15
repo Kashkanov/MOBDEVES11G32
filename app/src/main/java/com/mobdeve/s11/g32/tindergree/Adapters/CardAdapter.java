@@ -1,4 +1,4 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Adapters;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.mobdeve.s11.g32.tindergree.ViewHolders.CardViewHolder;
+import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
+import com.mobdeve.s11.g32.tindergree.Activities.OtherPicsActivity;
+import com.mobdeve.s11.g32.tindergree.Models.Profile;
+import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 

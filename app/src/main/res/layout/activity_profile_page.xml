@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF"
-    tools:context=".ProfilePageActivity">
+    tools:context=".Activities.ProfilePageActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_logoarea"
         android:layout_width="0dp"

@@ -1,8 +1,10 @@
-package com.mobdeve.s11.g32.tindergree;
+package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.mobdeve.s11.g32.tindergree.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
