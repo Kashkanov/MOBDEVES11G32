@@ -18,3 +18,5 @@ local.properties
 /database-debug.log
 /firestore-debug.log
 /ui-debug.log
+/firebase-debug.log
+/storage.rules
