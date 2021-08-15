@@ -1,5 +1,5 @@
 # Tindergree - Like Tinder, But For Pets!
-<img src="https://img.shields.io/badge/status-pre--alpha-yellow" /> <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" />
+<img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" /> <img src="https://img.shields.io/badge/status-pre--alpha-yellow" />
 <p align="center">
   <img src="https://user-images.githubusercontent.com/55874439/129483167-82106154-de15-44f1-a975-6deb7eec0dd8.png" />
 </p>
