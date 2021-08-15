@@ -31,7 +31,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tv_yourmatches"
+        android:id="@+id/tv_matchpics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -44,10 +44,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_matches"
-        android:layout_width="389dp"
+        android:layout_width="0dp"
         android:layout_height="545dp"
         android:layout_marginTop="152dp"
         android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toEndOf="@id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />
 

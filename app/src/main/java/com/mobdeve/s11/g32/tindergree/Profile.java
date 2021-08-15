@@ -4,17 +4,19 @@ import java.util.ArrayList;
 
 public class Profile {
     private int profpicid;
-    private ArrayList<Integer> otherpics;
+    private ArrayList<OtherPic> otherpics;
     private String petname, petdesc;
+    private Boolean hasclicked; //for swipeactivity only
 
     public Profile(int profpicid, String petname, String petdesc){
         this.profpicid = profpicid;
         this.petname = petname;
         this.petdesc = petdesc;
-        this.otherpics = new ArrayList<Integer>();
-        this.otherpics.add(R.mipmap.dog3_foreground);
-        this.otherpics.add(R.mipmap.dog4_foreground);
-        this.otherpics.add(R.mipmap.dog5_foreground);
+        this.hasclicked = false;
+        this.otherpics = new ArrayList<OtherPic>();
+        this.otherpics.add(new OtherPic(R.mipmap.dog3_foreground));
+        this.otherpics.add(new OtherPic(R.mipmap.dog4_foreground));
+        this.otherpics.add(new OtherPic(R.mipmap.dog5_foreground));
 
     }
 
@@ -28,5 +30,17 @@ public class Profile {
 
     public String getPetdesc(){
         return this.petdesc;
+    }
+
+    public ArrayList<OtherPic> getOtherpics() {
+        return this.otherpics;
+    }
+
+    public Boolean getHasclicked(){
+        return this.hasclicked;
+    }
+
+    public void setHasclicked(Boolean hasclicked) {
+        this.hasclicked = hasclicked;
     }
 }

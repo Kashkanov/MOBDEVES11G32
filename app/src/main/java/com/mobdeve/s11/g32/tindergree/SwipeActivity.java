@@ -46,13 +46,15 @@ public class SwipeActivity extends AppCompatActivity {
                 v.getContext().startActivity(i);
             }
         });
-
+        Log.d("MyApp","I am here");
         this.initRecyclerView();
 
     }
 
     public void initRecyclerView(){
         CardDataHelper carddataHelper = new CardDataHelper();
+
+        System.out.println("pasok sa init");
 
         this.profiles = carddataHelper.loadProfileData();
         this.rv_cardarea = findViewById(R.id.cs_cardarea);

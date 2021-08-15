@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder> {
                 i.putExtra(KEY_MATCHPIC,profiles.get(matchViewHolder.getBindingAdapterPosition()).getProfpicid());
                 i.putExtra(KEY_MATCHNAME,profiles.get(matchViewHolder.getBindingAdapterPosition()).getPetname());
                 i.putExtra(KEY_MATCHDESC,profiles.get(matchViewHolder.getBindingAdapterPosition()).getPetdesc());
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("KEY_OTHERPICS",profiles.get(matchViewHolder.getBindingAdapterPosition()).getOtherpics());
+                i.putExtras(bundle);
                 view.getContext().startActivity(i);
             }
         });

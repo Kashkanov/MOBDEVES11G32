@@ -120,13 +120,28 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_profotherpics"
-        android:layout_width="307dp"
-        android:layout_height="120dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline28"
+        android:foreground="@layout/border_layout"
+        app:layout_constraintEnd_toStartOf="@+id/guideline32"
         app:layout_constraintHorizontal_bias="0.4"
-        app:layout_constraintStart_toStartOf="@+id/guideline27"
+        app:layout_constraintStart_toStartOf="@+id/guideline31"
         app:layout_constraintTop_toBottomOf="@+id/tv_profname2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="25dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="25dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

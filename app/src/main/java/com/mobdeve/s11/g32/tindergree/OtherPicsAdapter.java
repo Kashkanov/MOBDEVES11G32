@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class OtherPicsAdapter extends RecyclerView.Adapter<OtherPicsViewHolder> {
-    private ArrayList<Integer> otherpics;
+    private ArrayList<OtherPic> otherpics;
 
-    public OtherPicsAdapter(ArrayList<Integer> otherpics){
+    public OtherPicsAdapter(ArrayList<OtherPic> otherpics){
         this.otherpics = otherpics;
     }
     @NonNull
@@ -29,7 +29,7 @@ public class OtherPicsAdapter extends RecyclerView.Adapter<OtherPicsViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull OtherPicsViewHolder holder, int position) {
-        holder.setIv_otherpic(otherpics.get(position));
+        holder.setIv_otherpic(otherpics.get(position).getPicid());
 
     }
 

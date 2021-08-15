@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
         android:layout_width="322dp"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="50dp"
@@ -158,13 +158,18 @@
             app:layout_constraintGuide_begin="325dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout6"
+            android:id="@+id/cl_buttongroup"
             android:layout_width="232dp"
             android:layout_height="69dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline6"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/guideline7"
-            app:layout_constraintTop_toBottomOf="@id/guideline12">
+            app:layout_constraintTop_toBottomOf="@id/rv_otherpicarea2"
+            app:layout_constraintVertical_bias="1.0">
 
             <ImageButton
                 android:id="@+id/ib_yes"
@@ -187,6 +192,28 @@
                 app:srcCompat="@android:drawable/ic_delete" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/ib_seeotherpics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF914D"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toTopOf="@+id/cl_buttongroup"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline12"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_otherpicarea2"
+            android:layout_width="0dp"
+            android:layout_height="127dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ib_seeotherpics" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

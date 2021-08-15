@@ -10,11 +10,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class ChatActivity extends AppCompatActivity {
 
     private ImageButton ib_kachatpic;
     private TextView tv_kachatname;
     private TextView tv_kachatdesc;
+    private ArrayList<OtherPic> otherpics;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
@@ -36,6 +39,8 @@ public class ChatActivity extends AppCompatActivity {
         this.tv_kachatdesc.setText(kachatdesc);
         int kachatpic = i.getIntExtra(MatchAdapter.KEY_MATCHPIC,0);
         this.ib_kachatpic.setImageResource(kachatpic);
+        Bundle bundleObject = getIntent().getExtras();
+        this.otherpics = (ArrayList<OtherPic>) bundleObject.getSerializable("KEY_OTHERPICS");
 
         this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +49,9 @@ public class ChatActivity extends AppCompatActivity {
                 i.putExtra(KEY_KACHATNAME,kachatname);
                 i.putExtra(KEY_KACHATPIC,kachatpic);
                 i.putExtra(KEY_KACHATDESC,kachatdesc);
-
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("KEY_OTHERPICS",otherpics);
+                i.putExtras(bundle);
                 v.getContext().startActivity(i);
 
             }
