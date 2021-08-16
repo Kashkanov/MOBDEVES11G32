@@ -26,6 +26,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageButton
+            android:id="@+id/ib_opensettings"
+            android:layout_width="70dp"
+            android:layout_height="53dp"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintHorizontal_bias="0.421"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/settings_icon_foreground" />
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="180dp"
@@ -49,7 +62,7 @@
             app:layout_constraintHorizontal_bias="0.529"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/sym_action_chat" />
+            app:srcCompat="@mipmap/chat_icon_foreground" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
