@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 //TODO: collapsible rv of otherpics
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
@@ -35,11 +38,38 @@ public class SwipeActivity extends AppCompatActivity {
     private ArrayList<Profile> profiles;
     private ImageButton ib_openchats;
 
+    private FirebaseAuth mAuth;
+
+    public static String firebaseLogKey = "AUTH_TEST";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+
+        // Use Firebase emulator instead
+        FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+
+        // If not signed in, destroy this activity and redirect to Register activity
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null){
+            Log.d(firebaseLogKey, "User has signed in.");
+            Log.d(firebaseLogKey, currentUser.toString());
+        }
+        else {
+            Log.d(firebaseLogKey, "User has NOT signed in.");
+            Toast.makeText(SwipeActivity.this, "To bypass this, comment out codes " +
+                    "at SwipeActivity starting at line 58.", Toast.LENGTH_LONG).show();
+            Intent authenticateIntent = new Intent(SwipeActivity.this, RegisterActivity.class);
+            startActivity(authenticateIntent);
+
+            finish(); // Destroy activity
+        }
+
         this.ib_openchats = findViewById(R.id.ib_openchats);
 
         this.ib_openchats.setOnClickListener(new View.OnClickListener() {
