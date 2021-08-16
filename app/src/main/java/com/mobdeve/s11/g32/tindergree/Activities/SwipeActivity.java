@@ -37,6 +37,7 @@ public class SwipeActivity extends AppCompatActivity {
     private CardAdapter cardAdapter;
     private ArrayList<Profile> profiles;
     private ImageButton ib_openchats;
+    private ImageButton ib_opensettings;
 
     private FirebaseAuth mAuth;
 
@@ -71,6 +72,7 @@ public class SwipeActivity extends AppCompatActivity {
         }
 
         this.ib_openchats = findViewById(R.id.ib_openchats);
+        this.ib_opensettings = findViewById(R.id.ib_opensettings);
 
         this.ib_openchats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +82,16 @@ public class SwipeActivity extends AppCompatActivity {
                 v.getContext().startActivity(i);
             }
         });
+
+        this.ib_opensettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), SettingsActivity.class);
+
+                v.getContext().startActivity(i);
+            }
+        });
+
         Log.d("MyApp","I am here");
         this.initRecyclerView();
 

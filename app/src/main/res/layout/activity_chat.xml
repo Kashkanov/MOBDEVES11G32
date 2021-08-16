@@ -16,7 +16,7 @@
 
         android:layout_height="123dp"
         android:background="#FF914D"
-        android:foreground="@layout/border_layout"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
-            android:textColor="#0B0B0B"
+            android:textColor="#FFFFFF"
             android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@id/guideline19"
             app:layout_constraintStart_toEndOf="@id/guideline18"
@@ -73,7 +73,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-condensed-light"
             android:text="TextView"
-            android:textColor="#0B0B0B"
+            android:textColor="#FFFFFF"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@id/guideline19"
             app:layout_constraintHorizontal_bias="0.0"
