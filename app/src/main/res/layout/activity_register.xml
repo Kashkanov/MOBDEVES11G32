@@ -14,6 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:clickable="true"
+        android:onClick="loginRedirectOnClick"
         android:text="@string/already_have_account"
         android:textColor="@color/red"
         android:textSize="12sp"
@@ -37,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_description" />
 
     <EditText
-        android:id="@+id/et_login_first_name"
+        android:id="@+id/et_register_first_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -66,7 +68,7 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
-        app:layout_constraintTop_toBottomOf="@+id/et_login_first_name" />
+        app:layout_constraintTop_toBottomOf="@+id/et_register_first_name" />
 
     <EditText
         android:id="@+id/et_register_password"
@@ -199,7 +201,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/et_login_first_name"
+        app:layout_constraintBottom_toBottomOf="@+id/et_register_first_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintHorizontal_bias="0.5"
