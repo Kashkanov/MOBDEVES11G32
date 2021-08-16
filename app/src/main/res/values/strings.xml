@@ -22,4 +22,12 @@
     <string name="developerNotes">Developer notes</string>
     <string name="logOut">Log out</string>
     <string name="deleteAccount">Delete account</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="birthday">Birthday</string>
+    <string name="breed">Breed</string>
+    <string name="corgi">Corgi</string>
+    <string name="name">Name</string>
+    <string name="milo">Milo</string>
+    <string name="continueText">Continue</string>
 </resources>
