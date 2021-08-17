@@ -19,4 +19,7 @@ public class CardDataHelper {
         return profiles;
     };
 
+    // TODO: Load data from Firebase.
+    // The card area corresponds to the matches of the user.
+
 }
