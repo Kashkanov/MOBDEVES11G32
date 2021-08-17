@@ -17,8 +17,10 @@
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.DisplayChatsActivity" />
+        <activity android:name=".Activities.PostRegisterUserDetails"/>
+        <activity android:name=".Activities.PostRegisterUploadPhotos"/>
         <activity android:name=".Activities.SwipeActivity">
-            <intent-filter>
+        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
