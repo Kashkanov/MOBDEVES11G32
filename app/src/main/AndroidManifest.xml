@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mobdeve.s11.g32.tindergree">
 
+    <!-- Permissions for gallery   -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,13 +21,17 @@
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.DisplayChatsActivity" />
         <activity android:name=".Activities.PostRegisterUserDetails"/>
-        <activity android:name=".Activities.PostRegisterUploadPhotos"/>
-        <activity android:name=".Activities.SwipeActivity">
-        <intent-filter>
+        <activity android:name=".Activities.PostRegisterUploadPhotos">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Activities.SwipeActivity">
+<!--        <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

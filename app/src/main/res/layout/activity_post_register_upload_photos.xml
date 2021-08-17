@@ -58,34 +58,38 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:weightSum="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo1"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
                 android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
+                android:adjustViewBounds="false"
                 android:background="@drawable/roundcorner"
+                android:cropToPadding="false"
+                android:scaleType="center"
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo2"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
                 android:layout_marginRight="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:background="@drawable/roundcorner"
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo3"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:background="@drawable/roundcorner"
                 app:srcCompat="@drawable/ic_add_photo" />
         </LinearLayout>
@@ -96,33 +100,34 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
+            android:weightSum="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_first_row">
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo4"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
                 android:layout_marginRight="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:background="@drawable/roundcorner"
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo5"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:background="@drawable/roundcorner"
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
                 android:id="@+id/ib_post_register_photo6"
-                android:layout_width="wrap_content"
+                android:layout_width="33dp"
                 android:layout_height="95dp"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.33"
                 android:background="@drawable/roundcorner"
                 app:srcCompat="@drawable/ic_add_photo" />
 
