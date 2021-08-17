@@ -5,25 +5,44 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.media.Image;
+import android.net.Uri;
+import android.net.sip.SipAudioCall;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+
+import javax.xml.parsers.SAXParser;
+
+import id.zelory.compressor.Compressor;
 
 public class PostRegisterUploadPhotos extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseAuth mAuth;
+    private FirebaseStorage storage;
+
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
 
-    private int currentButtonClicked;
+    private int currentButtonClicked; // tracks which add image button is tapped
 
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
@@ -32,10 +51,11 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_upload_photos);
+        FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
 
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
 
-        // TODO: Implement Gallery pick implicit intent. I need the URI of the image.
         ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
         ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
         ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
@@ -58,7 +78,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     @Override
     public void onClick(View v){
-
         switch(v.getId()){
             case R.id.ib_post_register_photo1:
                 this.currentButtonClicked = 1;
@@ -110,42 +129,74 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     }
 
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-       switch(this.currentButtonClicked)
+        if (resultCode == Activity.RESULT_CANCELED)
+            return;
+
+        Uri selectedImageUri = data.getData();
+        File originalImageFile = new File(getRealPathFromURI(selectedImageUri));
+        File compressedImageFile = null;
+
+        // Compress the image
+        try {
+            compressedImageFile = new Compressor(PostRegisterUploadPhotos.this).compressToFile(originalImageFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        switch(this.currentButtonClicked)
        {
            case 1:
-               setImage(ibPostRegister1,requestCode,resultCode,data);
+               setImage(ibPostRegister1,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 2:
-               setImage(ibPostRegister2,requestCode,resultCode,data);
+               setImage(ibPostRegister2,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 3:
-               setImage(ibPostRegister3,requestCode,resultCode,data);
+               setImage(ibPostRegister3,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 4:
-               setImage(ibPostRegister4,requestCode,resultCode,data);
+               setImage(ibPostRegister4,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 5:
-               setImage(ibPostRegister5,requestCode,resultCode,data);
+               setImage(ibPostRegister5,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 6:
-               setImage(ibPostRegister6,requestCode,resultCode,data);
+               setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
        }
 
     }
 
-    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data){
+    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri){
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            ibPostRegister.setImageURI(data.getData());
+            ibPostRegister.setImageURI(compressedImageUri);
 
             ibPostRegister.setAdjustViewBounds(true);
             ibPostRegister.setScaleType(ImageView.ScaleType.FIT_XY);
             ibPostRegister.setPadding(15,15,15,15);
         }
+    }
+
+    private void uploadImage(File compressedImageFile) {
+        // TODO: Cloud Storage implementation
     }
 
     private void changeImageOnClick(){
