@@ -1,8 +1,10 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 //TODO: collapsible rv of otherpics
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,10 +45,24 @@ public class SwipeActivity extends AppCompatActivity {
 
     public static String firebaseLogKey = "AUTH_TEST";
 
+    // BroadcastReceiver to end the activity from another activity.
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context arg0, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals("finish_main_activity")) {
+                finish();
+                Log.d(SwipeActivity.firebaseLogKey, "SwipeActivity ended.");
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+        registerReceiver(broadcastReceiver, new IntentFilter("finish_main_activity"));
 
         // Use Firebase emulator instead
         FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
@@ -54,12 +70,13 @@ public class SwipeActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        // If not signed in, destroy this activity and redirect to Register activity
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        //mAuth.signOut();
 
+        // If not signed in, destroy this activity and redirect to Register activity
         if(currentUser != null){
             Log.d(firebaseLogKey, "User has signed in.");
-            Log.d(firebaseLogKey, currentUser.toString());
+            Log.d(firebaseLogKey, currentUser.getUid() + " UID.");
         }
         else {
             Log.d(firebaseLogKey, "User has NOT signed in.");
@@ -94,7 +111,6 @@ public class SwipeActivity extends AppCompatActivity {
 
         Log.d("MyApp","I am here");
         this.initRecyclerView();
-
     }
 
     public void initRecyclerView(){
