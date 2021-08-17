@@ -3,6 +3,8 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,25 +44,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signIn(emailTv.getText().toString(), passwordTv.getText().toString());
-
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-
-                // Check if user is signed in (non-null).
-                if(currentUser != null){
-                    Log.d(SwipeActivity.firebaseLogKey, "User has signed in.");
-                    // End Register Activity.
-                    Intent intent = new Intent("finish_activity");
-                    sendBroadcast(intent);
-
-                    // Move on to homescreen.
-                    Intent homescreenIntent = new Intent(v.getContext(), SwipeActivity.class);
-                    v.getContext().startActivity(homescreenIntent);
-
-                    finish();
-                }
-                else {
-                    Log.d(SwipeActivity.firebaseLogKey, "Unauthorized access to Swipe Activity thwarted.");
-                }
             }
         });
     }
@@ -77,8 +60,16 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    protected void onLoginClick(View v) {
-        Log.d(SwipeActivity.firebaseLogKey, "Attempt login CLICKED");
+    private void successLoginRedirect() {
+        // End Register Activity.
+        Intent intent = new Intent("finish_activity");
+        sendBroadcast(intent);
+
+        // Move on to homescreen.
+        Intent homescreenIntent = new Intent(LoginActivity.this, SwipeActivity.class);
+        startActivity(homescreenIntent);
+
+        finish();
     }
 
     /**
@@ -93,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
+                            successLoginRedirect();
                             Log.d(SwipeActivity.firebaseLogKey, "signInWithEmail:success");
                         } else {
                             // If sign in fails, display a message to the user.

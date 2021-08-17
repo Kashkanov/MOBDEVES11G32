@@ -67,20 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String displayName = firstName.getText().toString() + " " + lastName.getText().toString();
                 // Register the account, and get the current instance of the user
-                registerAccount(emailTv.getText().toString(), passwordTv.getText().toString(), displayName);
-                FirebaseUser currentUser = mAuth.getCurrentUser();
+                registerAccount(emailTv.getText().toString(), passwordTv.getText().toString(), displayName); // Asynchronous
+                // TODO: Write code here that informs the user the app is currently creating the account. Probably a progress bar or something
 
-                // Check if user is signed in (non-null).
-                if(currentUser != null){
-                    Log.d(SwipeActivity.firebaseLogKey, "User has created account.");
-                    Intent homescreenIntent = new Intent(v.getContext(), SwipeActivity.class);
-
-                    v.getContext().startActivity(homescreenIntent);
-                    finish();
-                }
-                else {
-                    Log.d(SwipeActivity.firebaseLogKey, "Unauthorized access to Swipe Activity thwarted.");
-                }
             }
         });
     }
@@ -101,19 +90,26 @@ public class RegisterActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
 
         v.getContext().startActivity(loginIntent);
+    }
 
+    public void successfulRegisterRedirect() {
+        Log.d(SwipeActivity.firebaseLogKey, "User has created account.");
+        Intent successfulRegister = new Intent(RegisterActivity.this, PostRegisterUploadPhotos.class);
+
+        startActivity(successfulRegister);
+        finish();
     }
 
     public void registerAccount(String email, String password, String displayName) {
+        // This is a shit input validation. TODO: Implement proper validation. Just make it simple, I don't think miss cares too much about it.
         if (email.length() == 0)
             return;
 
-        // TODO: Implement Coroutines
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()) { // Successful register
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             // Update user profile the save name
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -130,8 +126,8 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
-
                             Log.d(SwipeActivity.firebaseLogKey, "createUserWithEmail:success");
+                            successfulRegisterRedirect();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(SwipeActivity.firebaseLogKey, "createUserWithEmail:failure", task.getException());
