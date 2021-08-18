@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,10 +30,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private TextView emailTv;
-    private TextView passwordTv;
-    private TextView firstName;
-    private TextView lastName;
+    private EditText emailEt;
+    private EditText passwordEt;
+    private EditText confirmPasswordEt;
+    private EditText firstName;
+    private EditText lastName;
     private TextView loginRedirectTv;
     private Button registerBtn;
     private ProgressBar registerPb;
@@ -56,8 +58,9 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
 
-        emailTv = findViewById(R.id.et_register_emailaddress);
-        passwordTv = findViewById(R.id.et_register_password);
+        emailEt = findViewById(R.id.et_register_emailaddress);
+        passwordEt = findViewById(R.id.et_register_password);
+        confirmPasswordEt = findViewById(R.id.et_register_confirm);
         firstName = findViewById(R.id.et_register_first_name);
         lastName = findViewById(R.id.et_register_last_name);
         loginRedirectTv = findViewById(R.id.tv_register_login);
@@ -69,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String displayName = firstName.getText().toString() + " " + lastName.getText().toString();
                 // Register the account, and get the current instance of the user
-                registerAccount(emailTv.getText().toString(), passwordTv.getText().toString(), displayName); // Asynchronous
+                registerAccount(emailEt.getText().toString(), passwordEt.getText().toString(), displayName); // Asynchronous
                 // TODO: Write code here that informs the user the app is currently creating the account. Probably a progress bar or something
 
             }
@@ -106,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerAccount(String email, String password, String displayName) {
         // This is a shit input validation. TODO: Implement proper validation. Just make it simple, I don't think miss cares too much about it.
-        if (email.length() == 0)
+        if(checkEmptyFields(email,password))
             return;
         registerPb.setVisibility(View.VISIBLE);
 
@@ -144,4 +147,39 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private boolean checkEmptyFields(String email,String password){
+        boolean hasEmpty = false;
+
+        String firstNameText = firstName.getText().toString();
+        String lastNameText = lastName.getText().toString();
+        String confirmPassword = confirmPasswordEt.getText().toString();
+
+            if(email.isEmpty()) {
+                emailEt.setError("Please enter your email!");
+                emailEt.requestFocus();
+                hasEmpty = true;
+            }else if(firstNameText.isEmpty()){
+                firstName.setError("Please enter your first name!");
+                firstName.requestFocus();
+                hasEmpty = true;
+            }else if(lastNameText.isEmpty()){
+                lastName.setError("Please enter your last name!");
+                lastName.requestFocus();
+                hasEmpty = true;
+            }else if(password.isEmpty()){
+                passwordEt.setError("Please enter your password!");
+                passwordEt.requestFocus();
+                hasEmpty = true;
+            }else if(confirmPassword.isEmpty()){
+                confirmPasswordEt.setError("Please confirm your password!");
+                confirmPasswordEt.requestFocus();
+                hasEmpty = true;
+            }
+
+
+            return hasEmpty;
+
+    }
+
 }
