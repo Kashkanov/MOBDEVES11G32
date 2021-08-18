@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView emailTv;
     private TextView passwordTv;
     private Button loginBtn;
+    private ProgressBar loginPb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         emailTv = findViewById(R.id.et_login_emailaddress);
         passwordTv = findViewById(R.id.et_login_password);
         loginBtn = findViewById(R.id.btn_login);
+        loginPb = findViewById(R.id.pb_login);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -62,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void successLoginRedirect() {
         // End Register Activity.
+        loginPb.setVisibility(View.GONE);
         Intent intent = new Intent("finish_activity");
         sendBroadcast(intent);
 
@@ -78,6 +82,9 @@ public class LoginActivity extends AppCompatActivity {
      * @param password - password of the user
      */
     public void signIn(String email, String password){
+
+        loginPb.setVisibility(View.VISIBLE);
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -88,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(SwipeActivity.firebaseLogKey, "signInWithEmail:success");
                         } else {
                             // If sign in fails, display a message to the user.
+                            loginPb.setVisibility(View.GONE);
                             Log.w(SwipeActivity.firebaseLogKey, "signInWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed. Check credentials.",
                                     Toast.LENGTH_SHORT).show();
