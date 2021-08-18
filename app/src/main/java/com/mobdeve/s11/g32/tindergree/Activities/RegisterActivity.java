@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView lastName;
     private TextView loginRedirectTv;
     private Button registerBtn;
+    private ProgressBar registerPb;
 
     // BroadcastReceiver to end the activity from another activity.
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -60,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         lastName = findViewById(R.id.et_register_last_name);
         loginRedirectTv = findViewById(R.id.tv_register_login);
         registerBtn = findViewById(R.id.btn_register);
-
+        registerPb = findViewById(R.id.pb_register);
         // Register button click event
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void successfulRegisterRedirect() {
+        registerPb.setVisibility(View.GONE);
+
         Log.d(SwipeActivity.firebaseLogKey, "User has created account.");
         Intent successfulRegister = new Intent(RegisterActivity.this, PostRegisterUploadPhotos.class);
 
@@ -104,6 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
         // This is a shit input validation. TODO: Implement proper validation. Just make it simple, I don't think miss cares too much about it.
         if (email.length() == 0)
             return;
+        registerPb.setVisibility(View.VISIBLE);
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -130,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
                             successfulRegisterRedirect();
                         } else {
                             // If sign in fails, display a message to the user.
+                            registerPb.setVisibility(View.GONE);
                             Log.w(SwipeActivity.firebaseLogKey, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
