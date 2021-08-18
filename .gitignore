@@ -20,3 +20,8 @@ local.properties
 /ui-debug.log
 /firebase-debug.log
 /storage.rules
+/dir/auth_export/accounts.json
+/dir/storage_export/buckets.json
+/dir/auth_export/config.json
+/dir/firebase-export-metadata.json
+/dir/firestore_export/firestore_export.overall_export_metadata
