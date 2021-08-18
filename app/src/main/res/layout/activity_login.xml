@@ -78,7 +78,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_login_left_icons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_logo_description" />
@@ -89,12 +89,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/gray"
-        android:textColorHint="@color/gray"
         android:ems="10"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/gl_login_right_of_image"
+        android:textColorHint="@color/gray"
+        app:layout_constraintEnd_toStartOf="@+id/gl_login_left_icons"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_login_emailaddress" />
 
@@ -103,6 +103,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_orange"
         android:backgroundTint="@color/orangeAppColor"
         android:text="@string/login"
         android:textColor="@color/black"

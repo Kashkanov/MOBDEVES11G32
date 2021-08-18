@@ -34,7 +34,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_description" />
 
@@ -49,7 +49,7 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_register_emailaddress" />
@@ -65,7 +65,7 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_register_first_name" />
@@ -81,7 +81,7 @@
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_register_last_name" />
@@ -97,7 +97,7 @@
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
-        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_register_password" />
@@ -107,6 +107,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_button_orange"
         android:backgroundTint="@color/orangeAppColor"
         android:text="@string/register"
         android:textColor="@color/black"
@@ -191,7 +192,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/et_register_emailaddress"
-        app:layout_constraintEnd_toEndOf="@+id/et_register_emailaddress"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintHorizontal_bias="0.588"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
         app:srcCompat="@drawable/ic_email" />
@@ -214,7 +215,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/et_register_last_name"
-        app:layout_constraintEnd_toEndOf="@+id/et_register_last_name"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
         app:srcCompat="@drawable/ic_last_name" />
 
@@ -234,7 +235,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         app:layout_constraintBottom_toBottomOf="@+id/et_register_confirm"
-        app:layout_constraintEnd_toEndOf="@+id/et_register_confirm"
+        app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
         app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
         app:srcCompat="@drawable/ic_confirm" />
 </androidx.constraintlayout.widget.ConstraintLayout>
