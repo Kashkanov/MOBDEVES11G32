@@ -43,6 +43,7 @@ dependencies {
     // Declare HERE the dependencies for any other desired Firebase products
     implementation 'com.google.firebase:firebase-auth' // Authentication
     implementation 'com.google.firebase:firebase-storage' // Cloud Storage
+    implementation 'com.google.firebase:firebase-firestore' // Firestore
 
     // Image Compressor
     implementation 'id.zelory:compressor:2.1.1'

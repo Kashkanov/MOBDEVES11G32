@@ -22,13 +22,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.mobdeve.s11.g32.tindergree.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 import javax.xml.parsers.SAXParser;
 
@@ -38,6 +42,9 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
+    private FirebaseFirestore firestore;
+
+    private ArrayList<File> userPhotosToUpload;
 
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
@@ -51,10 +58,21 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_upload_photos);
+
+        // Comment these lines if production Firebase should be used instead of emulator
         FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
+        FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+        firestore.useEmulator("10.0.2.2", 8080);
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
 
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
         ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
@@ -62,6 +80,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
         ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
         ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
+
+        userPhotosToUpload = new ArrayList<>();
 
         setImageOnClickListeners();
 
@@ -185,7 +205,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     }
 
-    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri){
+    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri) {
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             ibPostRegister.setImageURI(compressedImageUri);
 
@@ -195,8 +215,9 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         }
     }
 
-    private void uploadImage(File compressedImageFile) {
-        // TODO: Cloud Storage implementation
+    private void uploadImage() {
+        // TODO: Cloud Storage implementation. Iterate this.userPhotosToUpload and handle async upload (Users/UID/<filename>). Save filename to database
+        StorageReference storageRef = storage.getReference();
     }
 
     private void changeImageOnClick(){
