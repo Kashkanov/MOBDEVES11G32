@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
-    private TextView emailTv;
-    private TextView passwordTv;
+    private EditText emailEt;
+    private EditText passwordEt;
     private Button loginBtn;
     private ProgressBar loginPb;
 
@@ -35,8 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailTv = findViewById(R.id.et_login_emailaddress);
-        passwordTv = findViewById(R.id.et_login_password);
+        emailEt = findViewById(R.id.et_login_emailaddress);
+        passwordEt = findViewById(R.id.et_login_password);
         loginBtn = findViewById(R.id.btn_login);
         loginPb = findViewById(R.id.pb_login);
 
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(emailTv.getText().toString(), passwordTv.getText().toString());
+                signIn(emailEt.getText().toString(), passwordEt.getText().toString());
             }
         });
     }
@@ -83,6 +84,9 @@ public class LoginActivity extends AppCompatActivity {
      */
     public void signIn(String email, String password){
 
+        if(checkEmptyFields(email,password))
+            return;
+
         loginPb.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -107,5 +111,21 @@ public class LoginActivity extends AppCompatActivity {
     public void signOut(){
         FirebaseAuth.getInstance().signOut();
         Log.d("AUTH_TEST", "Successfully logged out.");
+    }
+
+    private boolean checkEmptyFields(String email,String password){
+        boolean hasEmpty = false;
+
+        if(email.isEmpty()){
+            emailEt.setError("Please enter your email!");
+            emailEt.requestFocus();
+            hasEmpty = true;
+        }else if(password.isEmpty()){
+            passwordEt.setError("Please enter your password!");
+            passwordEt.requestFocus();
+            hasEmpty = true;
+        }
+
+        return hasEmpty;
     }
 }
