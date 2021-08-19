@@ -21,11 +21,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mobdeve.s11.g32.tindergree.R;
 
 import java.io.File;
@@ -33,6 +41,12 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import javax.xml.parsers.SAXParser;
 
@@ -49,6 +63,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
 
+    private ImageButton ibPostRegisterNext;
+
     private int currentButtonClicked; // tracks which add image button is tapped
 
     private static final int IMAGE_PICK_CODE = 1000;
@@ -58,6 +74,10 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_upload_photos);
+
+        mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         // Comment these lines if production Firebase should be used instead of emulator
         FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
@@ -69,22 +89,18 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                 .build();
         firestore.setFirestoreSettings(settings);
 
-
-        mAuth = FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
-        firestore = FirebaseFirestore.getInstance();
-
         ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
         ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
         ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
         ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
         ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
         ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
+        ibPostRegisterNext = findViewById(R.id.ib_post_register_next);
 
         userPhotosToUpload = new ArrayList<>();
+        for (int i = 0; i < 6; i++) userPhotosToUpload.add(null);
 
         setImageOnClickListeners();
-
     }
 
     private void setImageOnClickListeners(){
@@ -94,6 +110,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             ibPostRegister4.setOnClickListener(this);
             ibPostRegister5.setOnClickListener(this);
             ibPostRegister6.setOnClickListener(this);
+            ibPostRegisterNext.setOnClickListener(this);
+
     }
 
     @Override
@@ -122,6 +140,9 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             case R.id.ib_post_register_photo6:
                 this.currentButtonClicked = 6;
                 changeImageOnClick();
+                break;
+            case R.id.ib_post_register_next:
+                uploadImage();
                 break;
         }
 
@@ -184,25 +205,30 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         switch(this.currentButtonClicked)
        {
            case 1:
+               this.userPhotosToUpload.set(0, compressedImageFile);
                setImage(ibPostRegister1,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 2:
+               this.userPhotosToUpload.set(1, compressedImageFile);
                setImage(ibPostRegister2,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 3:
+               this.userPhotosToUpload.set(2, compressedImageFile);
                setImage(ibPostRegister3,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 4:
+               this.userPhotosToUpload.set(3, compressedImageFile);
                setImage(ibPostRegister4,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 5:
+               this.userPhotosToUpload.set(4, compressedImageFile);
                setImage(ibPostRegister5,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
            case 6:
+               this.userPhotosToUpload.set(5, compressedImageFile);
                setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
        }
-
     }
 
     private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri) {
@@ -216,8 +242,99 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     }
 
     private void uploadImage() {
-        // TODO: Cloud Storage implementation. Iterate this.userPhotosToUpload and handle async upload (Users/UID/<filename>). Save filename to database
-        StorageReference storageRef = storage.getReference();
+        Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
+        FirebaseUser user = mAuth.getCurrentUser();
+        StorageReference storageRef = storage.getReference(); // Points to the root reference
+
+        String uid = user.getUid();
+
+        // Remove nulls
+        this.userPhotosToUpload.removeAll(Collections.singleton(null));
+
+        // Track the number of images yet to upload
+        final int[] numImagesToUpload = {this.userPhotosToUpload.size()};
+        final String[] filenames = new String[numImagesToUpload[0]];
+
+        Log.d(SwipeActivity.firebaseLogKey, "Total images to upload: " + String.valueOf(this.userPhotosToUpload.size()));
+
+        // Upload each image
+        for (int i = 0; i < this.userPhotosToUpload.size(); i++) {
+            // No image at that slot
+            if (this.userPhotosToUpload.get(i) == null) continue;
+
+            // Get the filename of each images and track them
+            String filename = Uri.fromFile(this.userPhotosToUpload.get(i)).getLastPathSegment();
+            filenames[i] = filename; // redundant??
+
+            // Prepare document
+            Map<String, Object> filenameDocument = new HashMap<>();
+            filenameDocument.put("filename", filename);
+            filenameDocument.put("uid", uid);
+            filenameDocument.put("uriTemp", Uri.fromFile(this.userPhotosToUpload.get(i)).toString());
+
+            // Add document to Firestore
+            firestore.collection("filenames")
+                    .add(filenameDocument)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                            // Get the file name on the saved document
+                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot data: " + document.getData());
+                                            String uploadedFilename = document.getString("filename");
+                                            String uriStringTemp = document.getString("uriTemp");
+
+                                            // Proceed to image upload
+                                            // Create reference to a path in Cloud Storage (Users/UID/<filename>)
+                                            StorageReference imageUploadReference = storageRef.child("Users/" + uid + "/" + uploadedFilename);
+                                            Uri uploadImageUri = Uri.parse(uriStringTemp);
+
+                                            UploadTask uploadTask = imageUploadReference.putFile(uploadImageUri);
+
+                                            // Register observers to listen for when the upload is done or if it fails
+                                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+                                                    exception.printStackTrace();
+                                                    // TODO: Handle failure of image upload task
+                                                }
+                                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    Log.d(SwipeActivity.firebaseLogKey, "Image uploaded.");
+                                                    numImagesToUpload[0]--;
+
+                                                    // Proceed to next Activity if all images have been uploaded
+                                                    if (numImagesToUpload[0] == 0) {
+                                                        Log.d(SwipeActivity.firebaseLogKey, "All images uploaded!");
+                                                    }
+
+                                                }
+                                            });
+                                        } else {
+                                            Log.d(SwipeActivity.firebaseLogKey, "No such document");
+                                        }
+                                    } else {
+                                        Log.d(SwipeActivity.firebaseLogKey, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(SwipeActivity.firebaseLogKey, "Error adding document", e);
+                        }
+                    });
+        }
     }
 
     private void changeImageOnClick(){
