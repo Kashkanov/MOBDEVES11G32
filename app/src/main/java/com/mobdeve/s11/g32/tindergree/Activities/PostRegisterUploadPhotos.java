@@ -94,20 +94,23 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         userPhotosToUpload = new ArrayList<>();
         for (int i = 0; i < 6; i++) userPhotosToUpload.add(null);
 
+        initData();
+
         setImageOnClickListeners();
 
     }
 
     private void setImageOnClickListeners(){
-            ibPostRegister1.setOnClickListener(this);
-            ibPostRegister2.setOnClickListener(this);
-            ibPostRegister3.setOnClickListener(this);
-            ibPostRegister4.setOnClickListener(this);
-            ibPostRegister5.setOnClickListener(this);
-            ibPostRegister6.setOnClickListener(this);
+        ibPostRegister1.setOnClickListener(this);
+        ibPostRegister2.setOnClickListener(this);
+        ibPostRegister3.setOnClickListener(this);
+        ibPostRegister4.setOnClickListener(this);
+        ibPostRegister5.setOnClickListener(this);
+        ibPostRegister6.setOnClickListener(this);
+        btnPostRegister.setOnClickListener(this);
     }
 
-      private void initData(){
+    private void initData(){
         ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
         ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
         ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
@@ -116,18 +119,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
 
         btnPostRegister = findViewById(R.id.ib_post_register_next);
-
-        userPhotosToUpload = new ArrayList<>();
-
-        btnPostRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(PostRegisterUploadPhotos.this,PostRegisterUserDetails.class);
-                startActivity(i);
-
-                //finish(); TODO: Check if finish() here is still needed.
-            }
-        });
     }
 
     @Override
@@ -156,6 +147,9 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             case R.id.ib_post_register_photo6:
                 this.currentButtonClicked = 6;
                 changeImageOnClick();
+                break;
+            case R.id.ib_post_register_next:
+                uploadImage();
                 break;
         }
 
@@ -256,6 +250,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     }
 
     private void uploadImage() {
+        // TODO: Enable the loading view component and disable the next button.
+
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
         FirebaseUser user = mAuth.getCurrentUser();
         StorageReference storageRef = storage.getReference(); // Points to the root reference
@@ -328,6 +324,11 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                                                     // Proceed to next Activity if all images have been uploaded
                                                     if (numImagesToUpload[0] == 0) {
                                                         Log.d(SwipeActivity.firebaseLogKey, "All images uploaded!");
+
+                                                        Intent i = new Intent(PostRegisterUploadPhotos.this,PostRegisterUserDetails.class);
+                                                        startActivity(i);
+
+                                                        finish();
                                                     }
 
                                                 }
