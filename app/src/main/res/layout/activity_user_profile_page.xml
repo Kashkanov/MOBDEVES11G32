@@ -5,7 +5,7 @@
     android:id="@+id/sv_user_profile_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#fafafa"
     tools:context=".Activities.UserProfilePageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,9 +124,232 @@
             android:layout_marginTop="10dp"
             android:text="@string/firstPhoto"
             android:textColor="@color/gray"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
             app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_user_profile" />
+
+        <TextView
+            android:id="@+id/tv_user_profile_about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif"
+            android:text="@string/aboutMe"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/ll_row2_user_profile" />
+
+        <EditText
+            android:id="@+id/et_user_profile_about_me"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:gravity="top|left"
+            android:hint="Start by introducing your pet!"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:paddingTop="0dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            android:typeface="sans"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_about_me" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_user_profile_left_headers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="0dp"
+            app:layout_constraintGuide_percent="0.09" />
+
+        <TextView
+            android:id="@+id/tv_user_profile_pet_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="My pet is a.."
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_about_me" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_user_profile_dog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_border"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_pet_label">
+
+            <TextView
+                android:id="@+id/tv_user_profile_dog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="@string/dog"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_user_profile_check_dog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_check" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_user_profile_cat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/cl_user_profile_dog">
+
+            <ImageView
+                android:id="@+id/iv_user_profile_check_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_check" />
+
+            <TextView
+                android:id="@+id/tv_user_profile_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="@string/cat"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_user_profile_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/birthday"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/cl_user_profile_cat" />
+
+        <EditText
+            android:id="@+id/et_user_profile_birthday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_birthday" />
+
+        <TextView
+            android:id="@+id/tv_user_profile_breed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/breed"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_birthday" />
+
+        <EditText
+            android:id="@+id/et_user_profile_breed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="Corgi"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_breed" />
+
+        <TextView
+            android:id="@+id/tv_user_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_breed" />
+
+        <EditText
+            android:id="@+id/et_user_profile_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="@string/milo"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_name" />
+
+        <Button
+            android:id="@+id/btn_user_profile_update"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/rounded_button_orange"
+            android:text="update"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_name" />
+
+        <TextView
+            android:id="@+id/tv_for_spacing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
+            app:layout_constraintTop_toBottomOf="@+id/btn_user_profile_update" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

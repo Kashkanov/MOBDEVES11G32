@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.UserProfilePageActivity"></activity>
+        <activity android:name=".Activities.PostRegisterUploadPhotos"></activity>
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".Activities.OtherPicsActivity" />
         <activity android:name=".Activities.MatchesProfilePageActivity" />
@@ -21,7 +21,7 @@
         <activity android:name=".Activities.ChatActivity" />
         <activity android:name=".Activities.DisplayChatsActivity" />
         <activity android:name=".Activities.PostRegisterUserDetails" />
-        <activity android:name=".Activities.PostRegisterUploadPhotos">
+        <activity android:name=".Activities.UserProfilePageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

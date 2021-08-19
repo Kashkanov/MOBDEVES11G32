@@ -31,5 +31,6 @@
     <string name="milo">Milo</string>
     <string name="continueText">Continue</string>
     <string name="profile">Profile</string>
+    <string name="aboutMe">About me</string>
     <string name="firstPhoto">The first photo on the upper left will be your profile picture that is first seen by other users.</string>
 </resources>
