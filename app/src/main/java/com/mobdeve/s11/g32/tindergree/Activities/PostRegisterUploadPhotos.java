@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
+    private ImageButton btnPostRegister;
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
@@ -62,7 +64,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         // Comment these lines if production Firebase should be used instead of emulator
         FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
         FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-        firestore.useEmulator("10.0.2.2", 8080);
+        firestore.useEmulator("10.0.2.2", 8080); //TODO There seems to be an error here idk if it's just on my end
 
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(false)
@@ -74,14 +76,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
-        ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
-        ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
-        ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
-        ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
-        ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
-
-        userPhotosToUpload = new ArrayList<>();
+        initData();
 
         setImageOnClickListeners();
 
@@ -94,6 +89,29 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             ibPostRegister4.setOnClickListener(this);
             ibPostRegister5.setOnClickListener(this);
             ibPostRegister6.setOnClickListener(this);
+    }
+
+      private void initData(){
+        ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
+        ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
+        ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
+        ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
+        ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
+        ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
+
+        btnPostRegister = findViewById(R.id.ib_post_register_next);
+
+        userPhotosToUpload = new ArrayList<>();
+
+        btnPostRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PostRegisterUploadPhotos.this,PostRegisterUserDetails.class);
+                startActivity(i);
+
+                //finish(); TODO: Check if finish() here is still needed.
+            }
+        });
     }
 
     @Override
