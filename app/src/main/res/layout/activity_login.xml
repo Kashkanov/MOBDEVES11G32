@@ -78,6 +78,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
+        android:textCursorDrawable="@drawable/cursor_orange"
         app:layout_constraintEnd_toStartOf="@+id/gl_login_left_icons"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
@@ -94,6 +95,7 @@
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/gray"
+        android:textCursorDrawable="@drawable/cursor_orange"
         app:layout_constraintEnd_toStartOf="@+id/gl_login_left_icons"
         app:layout_constraintStart_toStartOf="@+id/gl_login_left_of_email"
         app:layout_constraintTop_toBottomOf="@+id/et_login_emailaddress" />
