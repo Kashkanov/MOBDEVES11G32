@@ -15,7 +15,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 
-public class ProfilePageActivity extends AppCompatActivity {
+public class MatchesProfilePageActivity extends AppCompatActivity {
 
     private ImageView iv_profprofpic;
     private TextView tv_profname;

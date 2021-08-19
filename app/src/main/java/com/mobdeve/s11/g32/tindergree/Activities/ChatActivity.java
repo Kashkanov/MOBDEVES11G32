@@ -48,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
         this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ProfilePageActivity.class);
+                Intent i = new Intent(v.getContext(), MatchesProfilePageActivity.class);
                 i.putExtra(KEY_KACHATNAME,kachatname);
                 i.putExtra(KEY_KACHATPIC,kachatpic);
                 i.putExtra(KEY_KACHATDESC,kachatdesc);
