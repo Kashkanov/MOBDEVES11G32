@@ -1,9 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_user_profile_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Activities.UserProfilePageActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_user_profile_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_user_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/profile"
+            android:textColor="@color/orangeAppColor"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_row1_user_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_page_photos_header">
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_left_user_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="0dp"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_right_user_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="0dp"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <LinearLayout
+            android:id="@+id/ll_row2_user_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/ll_row1_user_profile">
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+
+            <ImageButton
+                android:id="@+id/imageButton6"
+                android:layout_width="33dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.33"
+                android:background="@drawable/roundcorner"
+                app:srcCompat="@drawable/ic_add_photo" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_user_profile_page_photos_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/firstPhoto"
+            android:textColor="@color/gray"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
+            app:layout_constraintStart_toStartOf="@+id/gl_left_user_profile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_user_profile" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
