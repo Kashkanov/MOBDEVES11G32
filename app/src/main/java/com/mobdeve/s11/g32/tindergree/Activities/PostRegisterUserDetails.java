@@ -3,10 +3,12 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +16,11 @@ import com.mobdeve.s11.g32.tindergree.R;
 
 public class PostRegisterUserDetails extends AppCompatActivity {
 
-    private ConstraintLayout cl_dog_option,cl_cat_option;
-    private ImageView iv_dog_check,iv_cat_check;
-    private TextView tv_dog_option,tv_cat_option;
-    private boolean iv_dog_isChecked,iv_cat_isChecked;
+    private ConstraintLayout clDogOption,clCatOption;
+    private ImageView ivDogCheck,ivCatCheck;
+    private TextView tvDogOption,tvCatOption;
+    private boolean ivDogIsChecked,ivCatIsChecked;
+    private Button btnPostRegisterDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,49 +28,68 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_user_details);
 
-        cl_dog_option = findViewById(R.id.cl_post_register_user_details_dog);
-        cl_cat_option = findViewById(R.id.cl_post_register_user_details_cat);
-        iv_dog_check = findViewById(R.id.iv_post_register_user_details_check_dog);
-        iv_cat_check = findViewById(R.id.iv_post_register_user_details_check_cat);
-        tv_dog_option = findViewById(R.id.tv_post_register_user_details_dog);
-        tv_cat_option = findViewById(R.id.tv_post_register_user_details_cat);
+        initData();
 
-        iv_dog_isChecked = false;
-        iv_cat_isChecked = false;
 
-        cl_dog_option.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initData(){
+        clDogOption = findViewById(R.id.cl_post_register_user_details_dog);
+        clCatOption = findViewById(R.id.cl_post_register_user_details_cat);
+        ivDogCheck = findViewById(R.id.iv_post_register_user_details_check_dog);
+        ivCatCheck = findViewById(R.id.iv_post_register_user_details_check_cat);
+        tvDogOption = findViewById(R.id.tv_post_register_user_details_dog);
+        tvCatOption = findViewById(R.id.tv_post_register_user_details_cat);
+        btnPostRegisterDetails = findViewById(R.id.btn_post_register_user_details_continue);
+
+        ivDogIsChecked = false;
+        ivCatIsChecked = false;
+
+        setOnClickListeners();
+    }
+
+    private void setOnClickListeners(){
+        clDogOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(iv_dog_isChecked == false){
-                    tv_dog_option.setTextColor(Color.parseColor("#FF914D"));
-                    iv_dog_check.setVisibility(v.VISIBLE);
-                    iv_dog_isChecked = true;
+                if(ivDogIsChecked == false){
+                    tvDogOption.setTextColor(Color.parseColor("#FF914D"));
+                    ivDogCheck.setVisibility(v.VISIBLE);
+                    ivDogIsChecked = true;
 
-                    tv_cat_option.setTextColor(Color.parseColor("#FF000000"));
-                    iv_cat_check.setVisibility(v.GONE);
-                    iv_cat_isChecked = false;
+                    tvCatOption.setTextColor(Color.parseColor("#FF000000"));
+                    ivCatCheck.setVisibility(v.GONE);
+                    ivCatIsChecked = false;
                 }
             }
         });
 
-        cl_cat_option.setOnClickListener(new View.OnClickListener() {
+        clCatOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_cat_option.setTextColor(Color.parseColor("#FF914D"));
-                if(iv_cat_isChecked == false){
+                tvCatOption.setTextColor(Color.parseColor("#FF914D"));
+                if(ivCatIsChecked == false){
 
-                    iv_cat_check.setVisibility(v.VISIBLE);
-                    iv_cat_isChecked = true;
+                    ivCatCheck.setVisibility(v.VISIBLE);
+                    ivCatIsChecked = true;
 
-                    tv_dog_option.setTextColor(Color.parseColor("#FF000000"));
-                    iv_dog_check.setVisibility(v.GONE);
-                    iv_dog_isChecked = false;
+                    tvDogOption.setTextColor(Color.parseColor("#FF000000"));
+                    ivDogCheck.setVisibility(v.GONE);
+                    ivDogIsChecked = false;
                 }
+            }
+        });
+
+        btnPostRegisterDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PostRegisterUserDetails.this,SwipeActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
     }
-
 
 }
