@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -62,8 +63,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
-
-    private ImageButton ibPostRegisterNext;
+    private ImageButton btnPostRegister;
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
@@ -89,18 +89,13 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                 .build();
         firestore.setFirestoreSettings(settings);
 
-        ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
-        ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
-        ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
-        ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
-        ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
-        ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
-        ibPostRegisterNext = findViewById(R.id.ib_post_register_next);
+        initData();
 
         userPhotosToUpload = new ArrayList<>();
         for (int i = 0; i < 6; i++) userPhotosToUpload.add(null);
 
         setImageOnClickListeners();
+
     }
 
     private void setImageOnClickListeners(){
@@ -110,8 +105,29 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             ibPostRegister4.setOnClickListener(this);
             ibPostRegister5.setOnClickListener(this);
             ibPostRegister6.setOnClickListener(this);
-            ibPostRegisterNext.setOnClickListener(this);
+    }
 
+      private void initData(){
+        ibPostRegister1 = findViewById(R.id.ib_post_register_photo1);
+        ibPostRegister2 = findViewById(R.id.ib_post_register_photo2);
+        ibPostRegister3 = findViewById(R.id.ib_post_register_photo3);
+        ibPostRegister4 = findViewById(R.id.ib_post_register_photo4);
+        ibPostRegister5 = findViewById(R.id.ib_post_register_photo5);
+        ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
+
+        btnPostRegister = findViewById(R.id.ib_post_register_next);
+
+        userPhotosToUpload = new ArrayList<>();
+
+        btnPostRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PostRegisterUploadPhotos.this,PostRegisterUserDetails.class);
+                startActivity(i);
+
+                //finish(); TODO: Check if finish() here is still needed.
+            }
+        });
     }
 
     @Override
@@ -140,9 +156,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             case R.id.ib_post_register_photo6:
                 this.currentButtonClicked = 6;
                 changeImageOnClick();
-                break;
-            case R.id.ib_post_register_next:
-                uploadImage();
                 break;
         }
 
@@ -229,6 +242,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile));
                break;
        }
+
     }
 
     private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri) {
