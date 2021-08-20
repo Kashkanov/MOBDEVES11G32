@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
@@ -42,6 +44,8 @@ public class SwipeActivity extends AppCompatActivity {
     private ImageButton ib_opensettings;
 
     private FirebaseAuth mAuth;
+    private FirebaseStorage storage;
+    private FirebaseFirestore firestore;
 
     public static String firebaseLogKey = "AUTH_TEST";
 
@@ -64,14 +68,22 @@ public class SwipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swipe);
         registerReceiver(broadcastReceiver, new IntentFilter("finish_main_activity"));
 
-        // Use Firebase emulator instead
-        FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+
+        // Comment these lines if production Firebase should be used instead of emulator
+        try {
+            FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
+            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+            firestore.useEmulator("10.0.2.2", 8080);
+        }
+        catch (IllegalStateException e) {
+            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //mAuth.signOut();
 
         // If not signed in, destroy this activity and redirect to Register activity
         if(currentUser != null){
