@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.UserProfilePageActivity"></activity>
+        <activity android:name=".Activities.DeveloperNotesActivity"></activity>
+        <activity android:name=".Activities.UserProfilePageActivity" />
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".Activities.OtherPicsActivity" />
         <activity android:name=".Activities.MatchesProfilePageActivity" />
