@@ -250,9 +250,10 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     }
 
     private void uploadImage() {
-        // TODO: Enable the loading view component and disable the next button.
+        // TODO: Enable loading circle view and disable the next button.
 
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
+
         FirebaseUser user = mAuth.getCurrentUser();
         StorageReference storageRef = storage.getReference(); // Points to the root reference
 
@@ -283,15 +284,16 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             filenameDocument.put("uriTemp", Uri.fromFile(this.userPhotosToUpload.get(i)).toString());
 
             // Add document to Firestore
-            firestore.collection("filenames")
-                    .add(filenameDocument)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            firestore.collection("filenames").document(uid)
+                    .set(filenameDocument)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        public void onSuccess(Void aVoid) {
+                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot successfully written!");
 
                             // Get the file name on the saved document
-                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            DocumentReference docRef = firestore.collection("filenames").document(uid);
+                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
@@ -346,7 +348,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w(SwipeActivity.firebaseLogKey, "Error adding document", e);
+                            Log.w(SwipeActivity.firebaseLogKey, "Error writing document", e);
                         }
                     });
         }
