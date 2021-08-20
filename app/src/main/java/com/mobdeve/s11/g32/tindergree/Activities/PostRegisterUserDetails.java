@@ -27,20 +27,14 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.R;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PostRegisterUserDetails extends AppCompatActivity {
-
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore firestore;
 
     private ConstraintLayout clDogOption,clCatOption;
     private ImageView ivDogCheck,ivCatCheck;
-    private TextView tvDogOption,tvCatOption;
+    private TextView tvDogOption,tvCatOption,tvErrorMessage;
     private boolean ivDogIsChecked,ivCatIsChecked;
     private Button btnPostRegisterDetails;
-    private EditText etBirthday, etBreed, etName;
+    private EditText etBirthday,etBreed,etName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +62,11 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         ivCatCheck = findViewById(R.id.iv_post_register_user_details_check_cat);
         tvDogOption = findViewById(R.id.tv_post_register_user_details_dog);
         tvCatOption = findViewById(R.id.tv_post_register_user_details_cat);
+        tvErrorMessage = findViewById(R.id.tv_post_register_user_details_pet_error_message);
+        btnPostRegisterDetails = findViewById(R.id.btn_post_register_user_details_continue);
         etBirthday = findViewById(R.id.et_post_register_user_details_birthday);
         etBreed = findViewById(R.id.et_post_register_user_details_breed);
         etName = findViewById(R.id.et_post_register_user_details_name);
-        btnPostRegisterDetails = findViewById(R.id.btn_post_register_user_details_continue);
-
 
         ivDogIsChecked = false;
         ivCatIsChecked = false;
@@ -89,6 +83,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
                     tvDogOption.setTextColor(Color.parseColor("#FF914D"));
                     ivDogCheck.setVisibility(v.VISIBLE);
                     ivDogIsChecked = true;
+                    tvErrorMessage.setVisibility(View.GONE);
 
                     tvCatOption.setTextColor(Color.parseColor("#FF000000"));
                     ivCatCheck.setVisibility(v.GONE);
@@ -105,6 +100,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
 
                     ivCatCheck.setVisibility(v.VISIBLE);
                     ivCatIsChecked = true;
+                    tvErrorMessage.setVisibility(View.GONE);
 
                     tvDogOption.setTextColor(Color.parseColor("#FF000000"));
                     ivDogCheck.setVisibility(v.GONE);
@@ -116,6 +112,9 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         btnPostRegisterDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(checkEmptyFields())
+                    return;
+
                 // TODO: Call the Firestore save data function here
                 saveDataToFirestore();
             }
@@ -163,5 +162,36 @@ public class PostRegisterUserDetails extends AppCompatActivity {
                         Log.w(SwipeActivity.firebaseLogKey, "Error writing document", e);
                     }
                 });
+    }
+
+    private boolean checkEmptyFields(){
+        boolean hasEmpty = false;
+
+        String birthday = etBirthday.getText().toString();
+        String breed = etBreed.getText().toString();
+        String name = etName.getText().toString();
+
+        if((ivDogIsChecked || ivCatIsChecked) == false){
+            tvErrorMessage.setVisibility(View.VISIBLE);
+            tvErrorMessage.requestFocus();
+            hasEmpty = true;
+        }
+        else if(birthday.isEmpty()){
+            etBirthday.setError("Please enter your pets birthday!");
+            etBirthday.requestFocus();
+            hasEmpty = true;
+        }
+        else if(breed.isEmpty()){
+            etBreed.setError("Please enter your pets breed!");
+            etBreed.requestFocus();
+            hasEmpty = true;
+        }
+        else if(name.isEmpty()){
+            etName.setError("Please enter your pets name!");
+            etName.requestFocus();
+            hasEmpty = true;
+        }
+
+        return hasEmpty;
     }
 }
