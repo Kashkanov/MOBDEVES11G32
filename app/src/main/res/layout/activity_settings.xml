@@ -13,7 +13,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:background="@drawable/rounded_button"
+        android:background="@drawable/rounded_layout_red"
         android:text="@string/deleteAccount"
         android:textColor="@color/orangeAppColor"
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_inner_right"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:padding="10dp"
-            android:text="Incognito mode"
+            android:text="Dark mode"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,19 +74,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="0dp"
         app:layout_constraintGuide_percent="0.95" />
-
-    <TextView
-        android:id="@+id/tv_incognito_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/incognitoText"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/gl_settings_inner_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_settings_inner_left"
-        app:layout_constraintTop_toBottomOf="@+id/cl_settings_child_incognito" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_settings_inner_left"
@@ -161,7 +148,7 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_incognito_description">
+        app:layout_constraintTop_toBottomOf="@+id/cl_settings_child_incognito">
 
         <TextView
             android:id="@+id/tv_settings_location_title"
