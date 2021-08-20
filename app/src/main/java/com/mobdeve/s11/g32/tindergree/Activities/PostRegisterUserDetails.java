@@ -27,6 +27,9 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostRegisterUserDetails extends AppCompatActivity {
 
     private ConstraintLayout clDogOption,clCatOption;
@@ -35,6 +38,10 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     private boolean ivDogIsChecked,ivCatIsChecked;
     private Button btnPostRegisterDetails;
     private EditText etBirthday,etBreed,etName;
+
+    private FirebaseAuth mAuth;
+    private FirebaseStorage storage;
+    private FirebaseFirestore firestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +58,6 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         firestore.setFirestoreSettings(settings);
 
         initData();
-
-
     }
 
     private void initData(){
@@ -115,7 +120,6 @@ public class PostRegisterUserDetails extends AppCompatActivity {
                 if(checkEmptyFields())
                     return;
 
-                // TODO: Call the Firestore save data function here
                 saveDataToFirestore();
             }
         });
