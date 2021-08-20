@@ -1,5 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -12,24 +13,48 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PostRegisterUserDetails extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
 
     private ConstraintLayout clDogOption,clCatOption;
     private ImageView ivDogCheck,ivCatCheck;
     private TextView tvDogOption,tvCatOption;
     private boolean ivDogIsChecked,ivCatIsChecked;
     private Button btnPostRegisterDetails;
+    private EditText etBirthday, etBreed, etName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_user_details);
+
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(false)
+                .build();
+        firestore.setFirestoreSettings(settings);
+
         initData();
 
 
@@ -42,7 +67,11 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         ivCatCheck = findViewById(R.id.iv_post_register_user_details_check_cat);
         tvDogOption = findViewById(R.id.tv_post_register_user_details_dog);
         tvCatOption = findViewById(R.id.tv_post_register_user_details_cat);
+        etBirthday = findViewById(R.id.et_post_register_user_details_birthday);
+        etBreed = findViewById(R.id.et_post_register_user_details_breed);
+        etName = findViewById(R.id.et_post_register_user_details_name);
         btnPostRegisterDetails = findViewById(R.id.btn_post_register_user_details_continue);
+
 
         ivDogIsChecked = false;
         ivCatIsChecked = false;
@@ -86,9 +115,8 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         btnPostRegisterDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PostRegisterUserDetails.this,SwipeActivity.class);
-                startActivity(i);
-                finish();
+                // TODO: Call the Firestore save data function here
+                saveDataToFirestore();
             }
         });
     }
@@ -102,5 +130,37 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     {
         super.finish();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    private void saveDataToFirestore() {
+        String uid = mAuth.getCurrentUser().getUid();
+
+        Map<String, Object> userData = new HashMap<>();
+        if (ivDogIsChecked == true)
+            userData.put("animal", "dog");
+        else if (ivCatIsChecked == true)
+            userData.put("animal", "cat");
+        userData.put("birthday", etBirthday.getText().toString());
+        userData.put("breed", etBreed.getText().toString());
+        userData.put("petName", etName.getText().toString());
+        userData.put("uid", uid);
+
+        firestore.collection("Pets").document(uid).set(userData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot successfully written!");
+
+                        Intent i = new Intent(PostRegisterUserDetails.this,SwipeActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(SwipeActivity.firebaseLogKey, "Error writing document", e);
+                    }
+                });
     }
 }
