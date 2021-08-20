@@ -370,8 +370,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             //system os less than marshallow
             pickImageFromGallery();
         }
-
-        
     }
 
     @Override
@@ -382,9 +380,9 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    protected void onStart() {
+        super.onStart();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
 }

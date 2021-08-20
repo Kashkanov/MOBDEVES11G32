@@ -108,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerAccount(String email, String password, String displayName) {
-        // This is a shit input validation. TODO: Implement proper validation. Just make it simple, I don't think miss cares too much about it.
+
         if(checkEmptyFields(email,password))
             return;
         registerPb.setVisibility(View.VISIBLE);
@@ -180,13 +180,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             return hasEmpty;
 
-    }
-
-    @Override
-    protected void onPause()
-    {
-        super.onPause();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
 }
