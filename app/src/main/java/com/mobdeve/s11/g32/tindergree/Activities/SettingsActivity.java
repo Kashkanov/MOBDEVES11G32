@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 public class SettingsActivity extends AppCompatActivity {
 
     private Button logoutBtn;
+    private ConstraintLayout clDeveloperNotes;
 
     private FirebaseAuth mAuth;
 
@@ -29,6 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         logoutBtn = findViewById(R.id.btn_settings_log_out);
+        clDeveloperNotes = findViewById(R.id.cl_settings_developer_notes);
 
         Intent i = getIntent();
 
@@ -46,6 +49,14 @@ public class SettingsActivity extends AppCompatActivity {
                 sendBroadcast(intent);
 
                 finish(); // Destroy activity
+            }
+        });
+
+        clDeveloperNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this,DeveloperNotesActivity.class);
+                startActivity(intent);
             }
         });
     }
