@@ -370,6 +370,21 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             //system os less than marshallow
             pickImageFromGallery();
         }
+
+        
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
 }
