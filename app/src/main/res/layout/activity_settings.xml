@@ -24,12 +24,12 @@
         android:id="@+id/cl_settings_child_incognito"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/layout_border"
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_settings_header">
+        app:layout_constraintTop_toBottomOf="@+id/cl_settings_profile_activity">
 
         <TextView
             android:id="@+id/tv_settings_incognito"
@@ -248,4 +248,41 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/iv_settings_logo"
         app:layout_constraintTop_toBottomOf="@+id/iv_settings_logo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_settings_profile_activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/layout_border_orange"
+        app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_settings_header">
+
+        <ImageView
+            android:id="@+id/iv_settings_next_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:padding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_next_gray" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:padding="15dp"
+            android:text="Update profile"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

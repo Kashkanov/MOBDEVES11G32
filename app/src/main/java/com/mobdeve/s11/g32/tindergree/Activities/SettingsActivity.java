@@ -15,7 +15,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 public class SettingsActivity extends AppCompatActivity {
 
     private Button logoutBtn;
-    private ConstraintLayout clDeveloperNotes;
+    private ConstraintLayout clDeveloperNotes,clProfileActivity;
 
     private FirebaseAuth mAuth;
 
@@ -32,7 +32,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         logoutBtn = findViewById(R.id.btn_settings_log_out);
         clDeveloperNotes = findViewById(R.id.cl_settings_developer_notes);
-
+        clProfileActivity = findViewById(R.id.cl_settings_profile_activity);
         Intent i = getIntent();
 
         // Sign out the user on click and destroy activities
@@ -56,6 +56,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingsActivity.this,DeveloperNotesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        clProfileActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this,UserProfilePageActivity.class);
                 startActivity(intent);
             }
         });
