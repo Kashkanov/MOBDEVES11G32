@@ -49,13 +49,19 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_user_details);
 
-        mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        try {
+            mAuth = FirebaseAuth.getInstance();
+            firestore = FirebaseFirestore.getInstance();
 
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build();
-        firestore.setFirestoreSettings(settings);
+            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                    .setPersistenceEnabled(false)
+                    .build();
+            firestore.setFirestoreSettings(settings);
+        }
+        catch (IllegalStateException e) {
+            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        }
+
 
         initData();
     }
