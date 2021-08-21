@@ -19,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
@@ -52,7 +53,12 @@ public class SwipeActivity extends AppCompatActivity {
 
     public static String firebaseLogKey = "AUTH_TEST";
 
-    // BroadcastReceiver to end the activity from another activity.
+    private Query cardQuery;
+
+    /**
+     * BroadcastReceiver to end this activity from another activity.
+     * This only happens if the user is attempting to log out from the Settings.
+     */
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
 
         @Override
@@ -135,7 +141,7 @@ public class SwipeActivity extends AppCompatActivity {
         });
 
         Log.d("MyApp","I am here");
-        this.initRecyclerView();
+        this.initRecyclerView(); // Instantiate the Cards
     }
 
     public void initRecyclerView(){

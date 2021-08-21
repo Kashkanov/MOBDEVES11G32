@@ -60,6 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:paddingBottom="8dp"
         android:text="My pet is a.."
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
@@ -69,11 +70,10 @@
         android:id="@+id/cl_post_register_user_details_dog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/layout_border"
         app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
         app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_label">
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_error_message">
 
         <TextView
             android:id="@+id/tv_post_register_user_details_dog"
@@ -228,5 +228,18 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
         app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
         app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_name" />
+
+    <TextView
+        android:id="@+id/tv_post_register_user_details_pet_error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="8dp"
+        android:text="Please choose an option"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_label" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
