@@ -176,20 +176,24 @@
                 android:layout_width="69dp"
                 android:layout_height="69dp"
                 android:background="@layout/circlebutton_layout"
+                android:padding="20dp"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ib_no"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/checkbox_on_background" />
+                app:srcCompat="@mipmap/check_icon_foreground" />
 
             <ImageButton
                 android:id="@+id/ib_no"
                 android:layout_width="69dp"
                 android:layout_height="69dp"
                 android:background="@layout/circlebutton_layout"
+                android:padding="20dp"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toStartOf="@+id/ib_yes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@android:drawable/ic_delete" />
+                app:srcCompat="@mipmap/cross_icon_foreground" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
