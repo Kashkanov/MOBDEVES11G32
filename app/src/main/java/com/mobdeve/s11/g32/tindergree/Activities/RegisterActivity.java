@@ -24,11 +24,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.mobdeve.s11.g32.tindergree.Models.Matches;
 import com.mobdeve.s11.g32.tindergree.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firestore;
 
     private EditText emailEt;
     private EditText passwordEt;
@@ -88,6 +92,16 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
+
+        // Comment these lines if production Firebase should be used instead of emulator
+        try {
+            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+            firestore.useEmulator("10.0.2.2", 8080);
+        }
+        catch (IllegalStateException e) {
+            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        }
     }
 
     // When the user wants to login instead.
@@ -113,6 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         registerPb.setVisibility(View.VISIBLE);
 
+        // Create the account in Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -134,6 +149,12 @@ public class RegisterActivity extends AppCompatActivity {
                                             }
                                         }
                                     });
+                            // Initialize Match record in the database
+                            Matches initMatch = new Matches(currentUser.getUid());
+                            initMatch.initializeMatches();
+
+                            firestore.collection("Matches").document(currentUser.getUid().toString()).set(initMatch);
+
                             Log.d(SwipeActivity.firebaseLogKey, "createUserWithEmail:success");
                             successfulRegisterRedirect();
                         } else {
