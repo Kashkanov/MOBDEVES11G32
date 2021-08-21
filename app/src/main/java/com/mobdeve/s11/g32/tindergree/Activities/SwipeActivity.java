@@ -74,12 +74,12 @@ public class SwipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swipe);
         registerReceiver(broadcastReceiver, new IntentFilter("finish_main_activity"));
 
-        // Initialize Firebase Auth
+//        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        // Comment these lines if production Firebase should be used instead of emulator
+//        // Comment these lines if production Firebase should be used instead of emulator
         try {
             FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
@@ -104,6 +104,7 @@ public class SwipeActivity extends AppCompatActivity {
             startActivity(authenticateIntent);
 
             finish(); // Destroy activity
+            return;
         }
 
         this.ib_openchats = findViewById(R.id.ib_openchats);
@@ -196,7 +197,9 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setCanScrollHorizontal(true);
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
+
         this.rv_cardarea.setLayoutManager(this.manager);
+
         this.cardAdapter = new CardAdapter(this.profiles);
         this.rv_cardarea.setAdapter(this.cardAdapter);
 
