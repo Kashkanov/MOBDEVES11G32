@@ -146,14 +146,13 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
+        this.initRecyclerView(); // Instantiate the Cards
         Log.d("MyApp","I am here");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        this.initRecyclerView(); // Instantiate the Cards
     }
 
     public void initRecyclerView(){
@@ -162,8 +161,9 @@ public class SwipeActivity extends AppCompatActivity {
         System.out.println("pasok sa init");
 
         this.profiles = carddataHelper.loadProfileData();
+        carddataHelper.loadProfiles();
 
-        this.rv_cardarea = findViewById(R.id.cs_cardarea);
+        pb_swipeActivity.setVisibility(View.GONE);
 
         this.manager = new CardStackLayoutManager(this, new CardStackListener() {
             @Override
@@ -223,8 +223,11 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
 
+        this.rv_cardarea = findViewById(R.id.cs_cardarea);
+
         this.rv_cardarea.setLayoutManager(this.manager);
 
+        // Load the data onto the cards
         this.cardAdapter = new CardAdapter(this.profiles);
         this.rv_cardarea.setAdapter(this.cardAdapter);
     }
