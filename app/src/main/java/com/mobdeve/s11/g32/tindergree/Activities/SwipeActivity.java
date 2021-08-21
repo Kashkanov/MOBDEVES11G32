@@ -48,14 +48,13 @@ public class SwipeActivity extends AppCompatActivity {
     private ImageButton ib_opensettings;
     private ImageButton ib_opennotifs;
     private ProgressBar pb_swipeActivity;
+    private TextView tv_swipesysnotif;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
 
     public static String firebaseLogKey = "AUTH_TEST";
-
-    private Query cardQuery;
 
     /**
      * BroadcastReceiver to end this activity from another activity.
@@ -116,6 +115,9 @@ public class SwipeActivity extends AppCompatActivity {
         this.ib_opensettings = findViewById(R.id.ib_opensettings);
         this.ib_opennotifs = findViewById(R.id.ib_opennotifs);
         this.pb_swipeActivity = findViewById(R.id.pb_swipeActivity);
+        this.tv_swipesysnotif = findViewById(R.id.tv_swipesysnotif);
+
+        this.tv_swipesysnotif.setVisibility(View.GONE);
 
         this.fab_openchats.setOnClickListener(new View.OnClickListener() {
             @Override

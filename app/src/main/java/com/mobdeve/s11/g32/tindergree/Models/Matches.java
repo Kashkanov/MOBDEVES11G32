@@ -6,6 +6,7 @@ public class Matches {
 
     public String uid;
     public ArrayList<String> uidMatches;
+    public ArrayList<String> uidMatchRequests;
 
     public Matches(String uid, ArrayList<String> uidMatches) {
         this.uid = uid;
@@ -21,6 +22,7 @@ public class Matches {
      */
     public void initializeMatches() {
         this.uidMatches = new ArrayList<>();
+        this.uidMatchRequests = new ArrayList<>();
     }
 
 }
