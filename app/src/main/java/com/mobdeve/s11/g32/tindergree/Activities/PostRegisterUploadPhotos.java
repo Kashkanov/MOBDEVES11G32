@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.net.sip.SipAudioCall;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -65,12 +67,20 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     private ImageButton ibPostRegister1,ibPostRegister2,ibPostRegister3,
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
+
     private ImageButton btnPostRegister;
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
+
+
+    //TODO : Pictures should be uploaded from left to right, top to bottom regardless of what ib was clicked, tho I should not prioritize this first.
+    //
+    private boolean ibPostRegister1HasImage,ibPostRegister2HasImage,
+                    ibPostRegister3HasImage,ibPostRegister4HasImage,
+                    ibPostRegister5HasImage,ibPostRegister6HasImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +136,13 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         ibPostRegister6 = findViewById(R.id.ib_post_register_photo6);
 
         btnPostRegister = findViewById(R.id.ib_post_register_next);
+
+        ibPostRegister1HasImage = false;
+        ibPostRegister2HasImage = false;
+        ibPostRegister3HasImage = false;
+        ibPostRegister4HasImage = false;
+        ibPostRegister5HasImage = false;
+        ibPostRegister6HasImage = false;
     }
 
     @Override
@@ -220,44 +237,70 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
        {
            case 1:
                this.userPhotosToUpload.set(0, compressedImageFile);
-               setImage(ibPostRegister1,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister1,requestCode, resultCode, Uri.fromFile(compressedImageFile),1);
                break;
            case 2:
                this.userPhotosToUpload.set(1, compressedImageFile);
-               setImage(ibPostRegister2,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister2,requestCode, resultCode, Uri.fromFile(compressedImageFile),2);
                break;
            case 3:
                this.userPhotosToUpload.set(2, compressedImageFile);
-               setImage(ibPostRegister3,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister3,requestCode, resultCode, Uri.fromFile(compressedImageFile),3);
                break;
            case 4:
                this.userPhotosToUpload.set(3, compressedImageFile);
-               setImage(ibPostRegister4,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister4,requestCode, resultCode, Uri.fromFile(compressedImageFile),4);
                break;
            case 5:
                this.userPhotosToUpload.set(4, compressedImageFile);
-               setImage(ibPostRegister5,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister5,requestCode, resultCode, Uri.fromFile(compressedImageFile),5);
                break;
            case 6:
                this.userPhotosToUpload.set(5, compressedImageFile);
-               setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile));
+               setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile),6);
                break;
        }
 
     }
 
-    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri) {
+    private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri,int imageButtonNumber) {
         if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
             ibPostRegister.setImageURI(compressedImageUri);
 
             ibPostRegister.setAdjustViewBounds(true);
             ibPostRegister.setScaleType(ImageView.ScaleType.FIT_XY);
             ibPostRegister.setPadding(15,15,15,15);
+
+            switch (imageButtonNumber)
+            {
+                case 1:
+                    ibPostRegister1HasImage = true;
+                    break;
+                case 2:
+                    ibPostRegister2HasImage = true;
+                    break;
+                case 3:
+                    ibPostRegister3HasImage = true;
+                    break;
+                case 4:
+                    ibPostRegister4HasImage = true;
+                    break;
+                case 5:
+                    ibPostRegister5HasImage = true;
+                    break;
+                case 6:
+                    ibPostRegister6HasImage = true;
+                    break;
+            }
         }
     }
 
     private void uploadImage() {
         // TODO: Enable loading circle view and disable the next button.
+
+       if(checkIfNoProfilePicture()){
+           return;
+       };
 
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
 
@@ -434,6 +477,26 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     protected void onStart() {
         super.onStart();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private boolean checkIfNoProfilePicture(){
+
+        boolean hasNoProfilePicture = false;
+
+        if(ibPostRegister1HasImage == false){
+
+            hasNoProfilePicture = true;
+
+            Toast toast = Toast.makeText(this, "Upload a profile picture!", Toast.LENGTH_SHORT);
+            View view = toast.getView();
+            view.setBackgroundResource(R.drawable.rounded_layout_red);
+            TextView text = (TextView) view.findViewById(android.R.id.message);
+            /*Here you can do anything with above textview like text.setTextColor(Color.parseColor("#000000"));*/
+            text.setTextColor(Color.parseColor("#FFFFFF"));
+            text.setPadding(20,5,20,5);
+            toast.show();
+        }
+        return hasNoProfilePicture;
     }
 
 }
