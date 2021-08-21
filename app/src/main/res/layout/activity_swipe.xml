@@ -21,9 +21,10 @@
         android:id="@+id/cl_logoarea"
         android:layout_width="425dp"
         android:layout_height="84dp"
-        android:layout_marginTop="-5dp"
+        android:layout_marginTop="4dp"
         android:background="@layout/upper_tray_border_layout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -31,13 +32,16 @@
             android:id="@+id/ib_opensettings"
             android:layout_width="70dp"
             android:layout_height="53dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
             android:backgroundTint="#FFFFFF"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
-            app:layout_constraintHorizontal_bias="0.421"
+            app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline33"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@mipmap/settings_icon_foreground" />
 
         <ImageView
@@ -51,21 +55,54 @@
             app:srcCompat="@drawable/orangepaw" />
 
         <ImageButton
-            android:id="@+id/ib_openchats"
+            android:id="@+id/ib_opennotifs"
             android:layout_width="70dp"
             android:layout_height="53dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+
             android:backgroundTint="#FFFFFF"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.529"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/chat_icon_foreground" />
+            app:layout_constraintTop_toTopOf="@+id/guideline33"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@mipmap/bell_icon_foreground" />
+
+        <ImageView
+            android:id="@+id/iv_notifdot"
+            android:layout_width="38dp"
+            android:layout_height="24dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="@+id/ib_opennotifs"
+            app:layout_constraintTop_toTopOf="@+id/guideline33"
+            app:srcCompat="@mipmap/red_dot_foreground" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="16dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_openchats"
+        android:layout_width="76dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="40dp"
+        android:clickable="true"
+        app:backgroundTint="#FF914D"
+        app:fabCustomSize="70dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cs_cardarea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:maxImageSize="40dp"
+        app:srcCompat="@mipmap/white_chat_icon_foreground" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

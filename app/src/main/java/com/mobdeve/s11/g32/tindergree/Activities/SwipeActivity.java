@@ -1,6 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
-//TODO: collapsible rv of otherpics
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
+import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -40,8 +42,9 @@ public class SwipeActivity extends AppCompatActivity {
     private CardStackLayoutManager manager;
     private CardAdapter cardAdapter;
     private ArrayList<Profile> profiles;
-    private ImageButton ib_openchats;
+    private FloatingActionButton fab_openchats;
     private ImageButton ib_opensettings;
+    private ImageButton ib_opennotifs;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -100,10 +103,11 @@ public class SwipeActivity extends AppCompatActivity {
             finish(); // Destroy activity
         }
 
-        this.ib_openchats = findViewById(R.id.ib_openchats);
+        this.fab_openchats = findViewById(R.id.fab_openchats);
         this.ib_opensettings = findViewById(R.id.ib_opensettings);
+        this.ib_opennotifs = findViewById(R.id.ib_opennotifs);
 
-        this.ib_openchats.setOnClickListener(new View.OnClickListener() {
+        this.fab_openchats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), DisplayChatsActivity.class);
@@ -116,6 +120,15 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), SettingsActivity.class);
+
+                v.getContext().startActivity(i);
+            }
+        });
+
+        this.ib_opennotifs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), MatchRequestsActivity.class);
 
                 v.getContext().startActivity(i);
             }
