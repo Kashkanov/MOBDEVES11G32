@@ -14,8 +14,10 @@
         android:layout_marginTop="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_logoarea" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_logoarea"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_logoarea"
@@ -92,17 +94,27 @@
         android:id="@+id/fab_openchats"
         android:layout_width="76dp"
         android:layout_height="69dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="28dp"
         android:clickable="true"
         app:backgroundTint="#FF914D"
         app:fabCustomSize="70dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cs_cardarea"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.921"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:maxImageSize="40dp"
         app:srcCompat="@mipmap/white_chat_icon_foreground" />
 
+    <ProgressBar
+        android:id="@+id/pb_swipeActivity"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:translationZ="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
