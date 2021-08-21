@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class SwipeActivity extends AppCompatActivity {
     private FloatingActionButton fab_openchats;
     private ImageButton ib_opensettings;
     private ImageButton ib_opennotifs;
+    private ProgressBar pb_swipeActivity;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -77,12 +79,12 @@ public class SwipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swipe);
         registerReceiver(broadcastReceiver, new IntentFilter("finish_main_activity"));
 
-//        // Initialize Firebase Auth
+        // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-//        // Comment these lines if production Firebase should be used instead of emulator
+        // Comment these lines if production Firebase should be used instead of emulator
         try {
             FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
@@ -113,6 +115,7 @@ public class SwipeActivity extends AppCompatActivity {
         this.fab_openchats = findViewById(R.id.fab_openchats);
         this.ib_opensettings = findViewById(R.id.ib_opensettings);
         this.ib_opennotifs = findViewById(R.id.ib_opennotifs);
+        this.pb_swipeActivity = findViewById(R.id.pb_swipeActivity);
 
         this.fab_openchats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +145,12 @@ public class SwipeActivity extends AppCompatActivity {
         });
 
         Log.d("MyApp","I am here");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         this.initRecyclerView(); // Instantiate the Cards
     }
 
@@ -151,6 +160,7 @@ public class SwipeActivity extends AppCompatActivity {
         System.out.println("pasok sa init");
 
         this.profiles = carddataHelper.loadProfileData();
+
         this.rv_cardarea = findViewById(R.id.cs_cardarea);
 
         this.manager = new CardStackLayoutManager(this, new CardStackListener() {
@@ -215,8 +225,5 @@ public class SwipeActivity extends AppCompatActivity {
 
         this.cardAdapter = new CardAdapter(this.profiles);
         this.rv_cardarea.setAdapter(this.cardAdapter);
-
     }
-
-
 }
