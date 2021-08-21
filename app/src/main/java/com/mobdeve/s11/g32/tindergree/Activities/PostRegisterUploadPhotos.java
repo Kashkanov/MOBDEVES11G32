@@ -22,12 +22,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -264,7 +266,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
         // Track the number of images yet to upload
         final int[] numImagesToUpload = {this.userPhotosToUpload.size()};
-        final String[] filenames = new String[numImagesToUpload[0]];
 
         Log.d(SwipeActivity.firebaseLogKey, "Total images to upload: " + String.valueOf(this.userPhotosToUpload.size()));
 
@@ -275,25 +276,31 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
             // Get the filename of each images and track them
             String filename = Uri.fromFile(this.userPhotosToUpload.get(i)).getLastPathSegment();
-            filenames[i] = filename; // redundant??
 
             // Prepare document
             Map<String, Object> filenameDocument = new HashMap<>();
             filenameDocument.put("filename", filename);
             filenameDocument.put("uid", uid);
             filenameDocument.put("uriTemp", Uri.fromFile(this.userPhotosToUpload.get(i)).toString());
+            // Save information about the profile picture set at the upper left.
+            if (i == 0)
+                filenameDocument.put("isProfilePicture", true);
+            else
+                filenameDocument.put("isProfilePicture", false);
+
+            // URL to the profile picture
+            final Uri[] profilePictureUrl = new Uri[1];
 
             // Add document to Firestore
-            firestore.collection("filenames").document(uid)
-                    .set(filenameDocument)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+            firestore.collection("filenames")
+                    .add(filenameDocument)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot successfully written!");
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot added with ID: " + documentReference.getId());
 
                             // Get the file name on the saved document
-                            DocumentReference docRef = firestore.collection("filenames").document(uid);
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
@@ -310,12 +317,50 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
                                             UploadTask uploadTask = imageUploadReference.putFile(uploadImageUri);
 
+                                            // Save the URL of the profile picture
+                                            if (document.getBoolean("isProfilePicture")) {
+                                                Log.d(SwipeActivity.firebaseLogKey, "Profile picture upload detected.");
+                                                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                                    @Override
+                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                        if (!task.isSuccessful()) {
+                                                            throw task.getException();
+                                                        }
+                                                        // Continue with the task to get the download URL
+                                                        return imageUploadReference.getDownloadUrl();
+                                                    }
+                                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Uri> task) {
+                                                        if (task.isSuccessful()) {
+                                                            profilePictureUrl[0] = task.getResult();
+                                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                                    .setPhotoUri(Uri.parse(profilePictureUrl[0].toString()))
+                                                                    .build();
+
+                                                            // Update account with new profile picture
+                                                            user.updateProfile(profileUpdates)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful())
+                                                                                Log.d(SwipeActivity.firebaseLogKey, "User profile updated with new profile picture. " +
+                                                                                        "\nLink: " + Uri.parse(profilePictureUrl[0].toString()));
+                                                                            }
+                                                                        });
+                                                            } else {
+                                                                // Handle failures
+                                                            }
+                                                    }
+                                                });
+                                            }
+
                                             // Register observers to listen for when the upload is done or if it fails
                                             uploadTask.addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception exception) {
                                                     exception.printStackTrace();
-                                                    // TODO: Handle failure of image upload task
+                                                    // TODO: Handle failure of image upload task. Re-enable the next button.
                                                 }
                                             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
@@ -332,7 +377,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
                                                         finish();
                                                     }
-
                                                 }
                                             });
                                         } else {
@@ -348,7 +392,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.w(SwipeActivity.firebaseLogKey, "Error writing document", e);
+                            Log.w(SwipeActivity.firebaseLogKey, "Error adding document", e);
                         }
                     });
         }
