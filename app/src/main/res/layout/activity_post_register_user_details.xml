@@ -1,245 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".PostRegisterUserDetails">
-
-    <TextView
-        android:id="@+id/tv_post_register_add_photos2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/tellOthersAboutYourPet"
-        android:textColor="@color/orangeAppColor"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toTopOf="@+id/gl_post_register_user_details_top" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_post_register_user_details_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent="0.10" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_post_register_user_details_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent="0.90" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/gl_post_register_user_details_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="0dp"
-        app:layout_constraintGuide_percent="0.07" />
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Add some details about your pet to help other pets get to know more."
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_add_photos2" />
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_pet_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="8dp"
-        android:text="My pet is a.."
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_description" />
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_post_register_user_details_dog"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_error_message">
+        android:background="@color/white"
+        tools:context=".PostRegisterUserDetails">
+
+        <EditText
+            android:id="@+id/et_post_register_user_details_about_pet"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:fontFamily="sans-serif"
+            android:gravity="top|left"
+            android:hint="Start by introducing your pet!"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:paddingTop="0dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            android:typeface="sans"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_about_pet" />
 
         <TextView
-            android:id="@+id/tv_post_register_user_details_dog"
+            android:id="@+id/tv_post_register_add_photos2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tellOthersAboutYourPet"
+            android:textColor="@color/orangeAppColor"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toTopOf="@+id/gl_post_register_user_details_top" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_post_register_user_details_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:padding="10dp"
-            android:text="@string/dog"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="0dp"
+            app:layout_constraintGuide_percent="0.10" />
 
-        <ImageView
-            android:id="@+id/iv_post_register_user_details_check_dog"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_post_register_user_details_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_check" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="400dp"
+            app:layout_constraintGuide_percent="0.90" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_post_register_user_details_cat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_border"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_dog">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_post_register_user_details_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="0dp"
+            app:layout_constraintGuide_percent="0.07" />
 
         <TextView
-            android:id="@+id/tv_post_register_user_details_cat"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_post_register_user_details_description"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:padding="10dp"
-            android:text="@string/cat"
+            android:layout_marginTop="12dp"
+            android:text="Add some details about your pet to help other pets get to know more."
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_add_photos2" />
 
-        <ImageView
-            android:id="@+id/iv_post_register_user_details_check_cat"
+        <TextView
+            android:id="@+id/tv_post_register_user_details_pet_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="8dp"
+            android:text="My pet is a.."
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_description" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_post_register_user_details_dog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_border"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_error_message">
+
+            <TextView
+                android:id="@+id/tv_post_register_user_details_dog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="@string/dog"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_post_register_user_details_check_dog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_check" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_post_register_user_details_cat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_dog">
+
+            <TextView
+                android:id="@+id/tv_post_register_user_details_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="@string/cat"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_post_register_user_details_check_cat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_check" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_post_register_user_details_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/birthday"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_cat" />
+
+        <EditText
+            android:id="@+id/et_post_register_user_details_birthday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_birthday" />
+
+        <TextView
+            android:id="@+id/tv_post_register_user_details_breed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/breed"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_birthday" />
+
+        <EditText
+            android:id="@+id/et_post_register_user_details_breed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="Corgi"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_breed" />
+
+        <TextView
+            android:id="@+id/tv_post_register_user_details_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_breed" />
+
+        <EditText
+            android:id="@+id/et_post_register_user_details_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            android:ems="10"
+            android:hint="@string/milo"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textCursorDrawable="@drawable/cursor_orange"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_name" />
+
+        <Button
+            android:id="@+id/btn_post_register_user_details_continue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_button_orange"
+            android:text="@string/continueText"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_about_pet" />
+
+        <TextView
+            android:id="@+id/tv_post_register_user_details_pet_error_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="8dp"
+            android:text="Please choose an option"
+            android:textColor="@color/red"
+            android:textStyle="bold"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_check" />
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_label" />
+
+        <TextView
+            android:id="@+id/tv_post_register_user_details_about_pet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/aboutMe"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_birthday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/birthday"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_cat" />
-
-    <EditText
-        android:id="@+id/et_post_register_user_details_birthday"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_border"
-        android:ems="10"
-        android:hint="DD/MM/YYYY"
-        android:inputType="date"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray"
-        android:textCursorDrawable="@drawable/cursor_orange"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_birthday" />
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_breed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/breed"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_birthday" />
-
-    <EditText
-        android:id="@+id/et_post_register_user_details_breed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_border"
-        android:ems="10"
-        android:hint="Corgi"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray"
-        android:textCursorDrawable="@drawable/cursor_orange"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_breed" />
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/name"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_breed" />
-
-    <EditText
-        android:id="@+id/et_post_register_user_details_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_border"
-        android:ems="10"
-        android:hint="@string/milo"
-        android:inputType="textPersonName"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/gray"
-        android:textCursorDrawable="@drawable/cursor_orange"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_name" />
-
-    <Button
-        android:id="@+id/btn_post_register_user_details_continue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/rounded_button_orange"
-        android:text="@string/continueText"
-        app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_name" />
-
-    <TextView
-        android:id="@+id/tv_post_register_user_details_pet_error_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingBottom="8dp"
-        android:text="Please choose an option"
-        android:textColor="@color/red"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_pet_label" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -37,7 +37,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     private TextView tvDogOption,tvCatOption,tvErrorMessage;
     private boolean ivDogIsChecked,ivCatIsChecked;
     private Button btnPostRegisterDetails;
-    private EditText etBirthday,etBreed,etName;
+    private EditText etBirthday,etBreed,etName,etAboutPet;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -67,6 +67,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     }
 
     private void initData(){
+
         clDogOption = findViewById(R.id.cl_post_register_user_details_dog);
         clCatOption = findViewById(R.id.cl_post_register_user_details_cat);
         ivDogCheck = findViewById(R.id.iv_post_register_user_details_check_dog);
@@ -78,6 +79,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         etBirthday = findViewById(R.id.et_post_register_user_details_birthday);
         etBreed = findViewById(R.id.et_post_register_user_details_breed);
         etName = findViewById(R.id.et_post_register_user_details_name);
+        etAboutPet = findViewById(R.id.et_post_register_user_details_about_pet);
 
         ivDogIsChecked = false;
         ivCatIsChecked = false;
@@ -180,6 +182,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         String birthday = etBirthday.getText().toString();
         String breed = etBreed.getText().toString();
         String name = etName.getText().toString();
+        String aboutPet = etAboutPet.getText().toString();
 
         if((ivDogIsChecked || ivCatIsChecked) == false){
             tvErrorMessage.setVisibility(View.VISIBLE);
@@ -199,6 +202,11 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         else if(name.isEmpty()){
             etName.setError("Please enter your pets name!");
             etName.requestFocus();
+            hasEmpty = true;
+        }
+        else if(aboutPet.length() <= 8){
+            etAboutPet.setError("Please enter at least 8 characters!");
+            etAboutPet.requestFocus();
             hasEmpty = true;
         }
 
