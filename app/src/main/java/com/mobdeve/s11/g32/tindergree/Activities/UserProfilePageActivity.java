@@ -3,27 +3,34 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.mobdeve.s11.g32.tindergree.R;
 
+import java.util.Calendar;
+
 public class UserProfilePageActivity extends AppCompatActivity {
 
-    private EditText etAboutYourPet,etBirthday,etBreed,etName;
+    private EditText etAboutYourPet,etBreed,etName;
+    private TextView tvBirthday;
     private ImageButton ibProfile1,ibProfile2,ibProfile3,
                         ibProfile4,ibProfile5,ibProfile6;
-    ConstraintLayout clDogOption,clCatoption;
+    ConstraintLayout clDogOption,clCatoption,clBirthdayContainer;
     private boolean ivDogIsChecked,ivCatIsChecked;
     private ImageView ivDogCheck,ivCatCheck;
     private Button btnUpdate;
+    private DatePickerDialog datePickerDialog;
 
-    //TODO For the date, there should be a date picker instead of the user inputting text.
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,7 @@ public class UserProfilePageActivity extends AppCompatActivity {
     private void initData(){
 
         etAboutYourPet = findViewById(R.id.et_user_profile_about_your_pet);
-        etBirthday = findViewById(R.id.et_user_profile_birthday);
+        tvBirthday= findViewById(R.id.tv_user_profile_page_birthday_value);
         etBreed = findViewById(R.id.et_user_profile_breed);
         etName = findViewById(R.id.et_user_profile_name);
 
@@ -49,9 +56,13 @@ public class UserProfilePageActivity extends AppCompatActivity {
 
         clDogOption = findViewById(R.id.cl_user_profile_dog);
         clCatoption = findViewById(R.id.cl_user_profile_cat);
+        clBirthdayContainer = findViewById(R.id.cl_user_profile_page_birthday);
 
         ivDogCheck = findViewById(R.id.iv_user_profile_check_dog);
         ivCatCheck = findViewById(R.id.iv_user_profile_check_cat);
+
+        initDatePicker();
+        tvBirthday.setText(getTodaysDate());
 
         /*
         TODO Based on whether the user is a cat or dog: set the boolean ivDogIsChecked or ivCatisChecked to true
@@ -68,6 +79,13 @@ public class UserProfilePageActivity extends AppCompatActivity {
             }
         });
 
+        clBirthdayContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDatePicker(v);
+            }
+        });
+
     }
 
     private boolean checkEmptyFields(){
@@ -75,7 +93,7 @@ public class UserProfilePageActivity extends AppCompatActivity {
         boolean hasEmpty = false;
 
         String aboutYourPet = etAboutYourPet.getText().toString();
-        String birthday = etBirthday.getText().toString();
+        String birthday = tvBirthday.getText().toString();
         String breed = etBreed.getText().toString();
         String name = etName.getText().toString();
 
@@ -85,8 +103,8 @@ public class UserProfilePageActivity extends AppCompatActivity {
             hasEmpty = true;
         }
         else if(birthday.isEmpty()){
-            etBirthday.setError("Please enter your pets birthday!");
-            etBirthday.requestFocus();
+            tvBirthday.setError("Please enter your pets birthday!");
+            tvBirthday.requestFocus();
             hasEmpty= true;
         }
         else if(breed.isEmpty()){
@@ -105,7 +123,90 @@ public class UserProfilePageActivity extends AppCompatActivity {
     }
 
 
+    private void initDatePicker(){
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int day) {
+                month = month + 1;
+                String date = makeDateString(day,month,year);
+                tvBirthday.setText(date);
+            }
+        };
 
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        datePickerDialog = new DatePickerDialog(this,dateSetListener,year,month,day);
+
+    }
+
+    public String makeDateString(int day, int month, int year){
+
+        return getMonthFormat(month) + " " + day + " " + year;
+
+    }
+
+    private String getMonthFormat(int month){
+
+        String monthReturned = "";
+
+        switch(month)
+        {
+            case 1:
+                monthReturned = "January";
+                break;
+            case 2:
+                monthReturned =  "February";
+                break;
+            case 3:
+                monthReturned =  "March";
+                break;
+            case 4:
+                monthReturned =  "April";
+                break;
+            case 5:
+                monthReturned =  "May";
+                break;
+            case 6:
+                monthReturned =  "June";
+                break;
+            case 7:
+                monthReturned = "July";
+                break;
+            case 8:
+                monthReturned =  "August";
+                break;
+            case 9:
+                monthReturned =  "September";
+                break;
+            case 10:
+                monthReturned =  "October";
+                break;
+            case 11:
+                monthReturned =  "November";
+                break;
+            case 12:
+                monthReturned =  "December";
+                break;
+        }
+        return monthReturned;
+    }
+
+    public void openDatePicker(View view){
+        datePickerDialog.show();
+    }
+
+    private String getTodaysDate(){
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month +1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        return makeDateString(day,month,year);
+
+    }
 
 
 }
