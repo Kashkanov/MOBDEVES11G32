@@ -19,9 +19,9 @@ public class OtherPicsAdapter extends RecyclerView.Adapter<OtherPicsViewHolder> 
     public OtherPicsAdapter(ArrayList<OtherPic> otherpics){
         this.otherpics = otherpics;
     }
+
     @NonNull
     @Override
-
     public OtherPicsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.otherpics_layout, parent, false);
@@ -33,8 +33,7 @@ public class OtherPicsAdapter extends RecyclerView.Adapter<OtherPicsViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull OtherPicsViewHolder holder, int position) {
-        holder.setIv_otherpic(otherpics.get(position).getPicid());
-
+        holder.setIv_otherpic(otherpics.get(position).getImageBitmap());
     }
 
     @Override

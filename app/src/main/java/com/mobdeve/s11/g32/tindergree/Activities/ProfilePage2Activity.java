@@ -41,8 +41,6 @@ public class ProfilePage2Activity extends AppCompatActivity {
         this.tv_profname.setText(profname);
         String profdesc = i.getStringExtra(MatchRequestAdapter.KEY_MATCHREQDESC);
         this.tv_profdesc.setText(profdesc);
-        Bundle bundleObject = getIntent().getExtras();
-        this.otherpics = (ArrayList<OtherPic>) bundleObject.getSerializable("KEY_OTHERPICS");
 
         initRecyclerView();
     }

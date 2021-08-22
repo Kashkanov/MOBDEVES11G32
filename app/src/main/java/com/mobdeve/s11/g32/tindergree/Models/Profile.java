@@ -4,9 +4,10 @@ import com.mobdeve.s11.g32.tindergree.R;
 
 import java.util.ArrayList;
 
+
+// TODO: DELETE THIS CLASS!
 public class Profile {
     private int profpicid;
-    private ArrayList<OtherPic> otherpics;
     private String petname, petdesc;
     private Boolean hasclicked; //for swipeactivity only
 
@@ -15,11 +16,6 @@ public class Profile {
         this.petname = petname;
         this.petdesc = petdesc;
         this.hasclicked = false;
-        this.otherpics = new ArrayList<OtherPic>();
-        this.otherpics.add(new OtherPic(R.mipmap.dog3_foreground));
-        this.otherpics.add(new OtherPic(R.mipmap.dog4_foreground));
-        this.otherpics.add(new OtherPic(R.mipmap.dog5_foreground));
-
     }
 
     public int getProfpicid() {
@@ -32,10 +28,6 @@ public class Profile {
 
     public String getPetdesc(){
         return this.petdesc;
-    }
-
-    public ArrayList<OtherPic> getOtherpics() {
-        return this.otherpics;
     }
 
     public Boolean getHasclicked(){

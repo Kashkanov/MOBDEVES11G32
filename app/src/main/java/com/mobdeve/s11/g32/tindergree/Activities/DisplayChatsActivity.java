@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
+import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
 
@@ -27,11 +28,11 @@ public class DisplayChatsActivity extends AppCompatActivity {
 
     private RecyclerView rv_matches;
     private MatchAdapter matchAdapter;
-    private ArrayList<Profile> profiles;
+    private ArrayList<CardProfile> profiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent i = getIntent(); // This returns the intent that started this activity.
+        profiles = new ArrayList<>();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_chats);
@@ -41,7 +42,10 @@ public class DisplayChatsActivity extends AppCompatActivity {
     public void initRecyclerView(){
         CardDataHelper carddataHelper = new CardDataHelper();
 
-        this.profiles = carddataHelper.loadProfileData();
+        carddataHelper.loadProfiles(this, profiles);
+    }
+
+    public void finalizeReyclerView() {
         this.rv_matches = findViewById(R.id.rv_matches);
 
         GridLayoutManager manager = new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false);
@@ -49,7 +53,6 @@ public class DisplayChatsActivity extends AppCompatActivity {
         this.rv_matches.setLayoutManager(manager);
         this.matchAdapter = new MatchAdapter(this.profiles);
         this.rv_matches.setAdapter(this.matchAdapter);
-
     }
 
     @Override

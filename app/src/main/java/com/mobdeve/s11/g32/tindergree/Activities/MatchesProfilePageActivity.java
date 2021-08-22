@@ -24,6 +24,8 @@ public class MatchesProfilePageActivity extends AppCompatActivity {
     private RecyclerView rv_otherpics;
     private OtherPicsAdapter otherPicsAdapter;
 
+    // TODO: This is mostly identical to OtherPicsActivity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +36,10 @@ public class MatchesProfilePageActivity extends AppCompatActivity {
         this.tv_profdesc = findViewById(R.id.tv_profdesc);
 
         Intent i = getIntent();
-        int profprofpic = i.getIntExtra(ChatActivity.KEY_KACHATPIC,0);
-        this.iv_profprofpic.setImageResource(profprofpic);
         String profname = i.getStringExtra(ChatActivity.KEY_KACHATNAME);
         this.tv_profname.setText(profname);
         String profdesc = i.getStringExtra(ChatActivity.KEY_KACHATDESC);
         this.tv_profdesc.setText(profdesc);
-        Bundle bundleObject = getIntent().getExtras();
-        this.otherpics = (ArrayList<OtherPic>) bundleObject.getSerializable("KEY_OTHERPICS");
 
         initRecyclerView();
     }

@@ -1,5 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.ViewHolders;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,8 +32,8 @@ public class CardViewHolder extends RecyclerView.ViewHolder{
         this.ib_seeotherpics = itemView.findViewById(R.id.ib_seeotherpics);
     }
 
-    public void setIv_petpic(int petpic) {
-        this.iv_petpic.setImageResource(petpic);
+    public void setIv_petpic(Bitmap petpic) {
+        this.iv_petpic.setImageBitmap(petpic);
     }
 
     public void setTv_petname(String petname){

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class CardProfile {
     private Bitmap userProfilePicture;
     private String uid;
-    private ArrayList<Bitmap> otherpics;
     private String petname, petdesc;
     private Boolean hasclicked; //for swipeactivity only
 
@@ -17,13 +16,17 @@ public class CardProfile {
         this.userProfilePicture = userProfilePicture;
         this.petname = petname;
         this.petdesc = petdesc;
-        this.hasclicked = false;
-        this.otherpics = new ArrayList<Bitmap>();
         this.uid = uid;
+
+        this.hasclicked = false;
     }
 
-    private void addOtherPics() {
-        // Cloud Storage and Firestore implementation
+    public CardProfile(String petname, String petdesc, String uid){
+        this.petname = petname;
+        this.petdesc = petdesc;
+        this.uid = uid;
+
+        this.hasclicked = false;
     }
 
     public Bitmap getuserProfilePicture() {
@@ -38,13 +41,17 @@ public class CardProfile {
         return this.petdesc;
     }
 
-    public ArrayList<Bitmap> getOtherpics() { return this.otherpics; }
-
     public Boolean getHasclicked(){
         return this.hasclicked;
+    }
+
+    public String getUid(){
+        return this.uid;
     }
 
     public void setHasclicked(Boolean hasclicked) {
         this.hasclicked = hasclicked;
     }
+
+    public void setUserProfilePicture(Bitmap profilePicture) { this.userProfilePicture = profilePicture; }
 }

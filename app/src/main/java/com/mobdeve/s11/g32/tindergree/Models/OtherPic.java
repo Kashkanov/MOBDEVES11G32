@@ -1,15 +1,17 @@
 package com.mobdeve.s11.g32.tindergree.Models;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 public class OtherPic implements Serializable {
-    private int picid;
+    private Bitmap image;
 
-    public OtherPic(int picid){
-        this.picid = picid;
+    public OtherPic(Bitmap image){
+        this.image = image;
     }
 
-    public int getPicid(){
-        return this.picid;
+    public Bitmap getImageBitmap(){
+        return this.image;
     }
 }

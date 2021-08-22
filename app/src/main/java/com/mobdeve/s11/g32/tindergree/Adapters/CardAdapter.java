@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.ViewHolders.CardViewHolder;
 import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
 import com.mobdeve.s11.g32.tindergree.Activities.OtherPicsActivity;
@@ -20,7 +21,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
-    private ArrayList<Profile> profiles;
+    private ArrayList<CardProfile> profiles;
     private ImageButton ib_seeotherpics;
     private RecyclerView rv_otherpicarea2;
     public ConstraintLayout cl_buttonarea;
@@ -28,8 +29,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public static final String KEY_PROFNAME = "KEY_PROFNAME";
     public static final String KEY_PROFPIC = "KEY_PROFPIC";
     public static final String KEY_PROFDESC = "KEY_PROFDESC";
+    public static final String KEY_PROFUID = "KEY_PROFUID";
 
-    public CardAdapter(ArrayList<Profile> profiles){
+    public CardAdapter(ArrayList<CardProfile> profiles){
         this.profiles = profiles;
     }
 
@@ -49,23 +51,18 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
     private boolean clicked;
     @Override
     public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-        holder.setIv_petpic(profiles.get(position).getProfpicid());
+        holder.setIv_petpic(profiles.get(position).getuserProfilePicture());
         holder.setTv_petname(profiles.get(position).getPetname());
         holder.setTv_petdesc(profiles.get(position).getPetdesc());
         String profname = profiles.get(position).getPetname();
         String profdesc = profiles.get(position).getPetdesc();
-        int profpic = profiles.get(position).getProfpicid();
-        otherpics = profiles.get(position).getOtherpics();
         holder.getIb_seeotherpics().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), OtherPicsActivity.class);
                 i.putExtra(KEY_PROFNAME, profname);
                 i.putExtra(KEY_PROFDESC, profdesc);
-                i.putExtra(KEY_PROFPIC, profpic);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("KEY_OTHERPICS", otherpics);
-                i.putExtras(bundle);
+                i.putExtra(KEY_PROFUID, profiles.get(position).getUid());
                 v.getContext().startActivity(i);
             }
         });

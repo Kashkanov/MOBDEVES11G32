@@ -24,6 +24,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
+import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
@@ -35,6 +36,7 @@ import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
 
@@ -53,6 +55,8 @@ public class SwipeActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
+
+    private ArrayList<CardProfile> profiles2 = new ArrayList<>();
 
     public static String firebaseLogKey = "AUTH_TEST";
 
@@ -94,6 +98,7 @@ public class SwipeActivity extends AppCompatActivity {
         }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        firestore.clearPersistence();
 
         // If not signed in, destroy this activity and redirect to Register activity
         if(currentUser != null){
@@ -147,7 +152,6 @@ public class SwipeActivity extends AppCompatActivity {
         });
 
         this.initRecyclerView(); // Instantiate the Cards
-        Log.d("MyApp","I am here");
     }
 
     @Override
@@ -156,15 +160,31 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
+        this.rv_cardarea = findViewById(R.id.cs_cardarea);
+
+        rv_cardarea.setVisibility(View.GONE);
+        pb_swipeActivity.setVisibility(View.VISIBLE);
+        tv_swipesysnotif.setVisibility(View.GONE); // Show this error message view if no available profiles are fetched.
+
         CardDataHelper carddataHelper = new CardDataHelper();
 
-        System.out.println("pasok sa init");
+        Log.d(SwipeActivity.firebaseLogKey, "Loading cards...");
+        carddataHelper.loadProfiles(this, profiles2);
+    }
 
-        this.profiles = carddataHelper.loadProfileData();
-        carddataHelper.loadProfiles();
-
+    /**
+     * Call when there are no available matches.
+     */
+    public void showMessage() {
+        rv_cardarea.setVisibility(View.GONE);
         pb_swipeActivity.setVisibility(View.GONE);
+        tv_swipesysnotif.setVisibility(View.VISIBLE); // Show this error message view if no available profiles are fetched.
+    }
 
+    public void finalizeRecyclerView() {
+        Log.d(SwipeActivity.firebaseLogKey, "All candidates have been fetched! Setting up the RecyclerView now...");
+
+        // Setup the CardStackLayoutManager
         this.manager = new CardStackLayoutManager(this, new CardStackListener() {
             @Override
             public void onCardDragging(Direction direction, float ratio) {
@@ -223,12 +243,17 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
 
-        this.rv_cardarea = findViewById(R.id.cs_cardarea);
-
+        // Assign the CardStackLayoutManager to the RecyclerView
         this.rv_cardarea.setLayoutManager(this.manager);
 
-        // Load the data onto the cards
-        this.cardAdapter = new CardAdapter(this.profiles);
+        // Load the data onto the CardAdapter
+        this.cardAdapter = new CardAdapter(this.profiles2);
+
+        // Set the RecyclerView's adapter
         this.rv_cardarea.setAdapter(this.cardAdapter);
+
+        rv_cardarea.setVisibility(View.VISIBLE);
+        pb_swipeActivity.setVisibility(View.GONE);
+        tv_swipesysnotif.setVisibility(View.GONE);
     }
 }

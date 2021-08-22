@@ -1,5 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.ViewHolders;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,11 +22,10 @@ public class MatchViewHolder extends RecyclerView.ViewHolder {
 
         this.ib_matchpic = itemView.findViewById(R.id.ib_matchpic);
         this.tv_matchname = itemView.findViewById(R.id.tv_matchname);
-
     }
 
-    public void setIb_matchpic(int matchpic) {
-        this.ib_matchpic.setImageResource(matchpic);
+    public void setIb_matchpic(Bitmap matchpic) {
+        this.ib_matchpic.setImageBitmap(matchpic);
     }
 
     public void setTv_matchname(String matchname){

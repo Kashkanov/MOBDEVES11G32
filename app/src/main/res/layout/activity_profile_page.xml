@@ -143,5 +143,19 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="25dp" />
 
+    <ProgressBar
+        android:id="@+id/pb_otherPicsLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="36dp"
+        android:translationZ="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_profname2"
+        app:layout_constraintVertical_bias="0.79" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

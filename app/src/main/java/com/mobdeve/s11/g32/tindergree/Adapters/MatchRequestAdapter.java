@@ -24,7 +24,6 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
     public static String KEY_MATCHREQPIC = "KEY_MATCHREQPIC";
     public static String KEY_MATCHREQNAME = "KEY_MATCHREQNAME";
     public static String KEY_MATCHREQDESC = "KEY_MATCHREQDESC";
-    private ArrayList<OtherPic> otherpics;
 
     public MatchRequestAdapter(ArrayList<MatchRequest> mrs){
         this.mrs = mrs;
@@ -46,7 +45,6 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
         String matchreqname = mrs.get(position).getProfile().getPetname();
         String matchreqdesc = mrs.get(position).getProfile().getPetdesc();
         int matchreqpic = mrs.get(position).getProfile().getProfpicid();
-        otherpics = mrs.get(position).getProfile().getOtherpics();
         holder.getIb_mrPic().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,9 +52,6 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
                 i.putExtra(KEY_MATCHREQNAME, matchreqname);
                 i.putExtra(KEY_MATCHREQDESC, matchreqdesc);
                 i.putExtra(KEY_MATCHREQPIC, matchreqpic);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("KEY_OTHERPICS", otherpics);
-                i.putExtras(bundle);
                 v.getContext().startActivity(i);
             }
         });

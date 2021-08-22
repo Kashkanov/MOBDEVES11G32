@@ -1,5 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.ViewHolders;
 
+import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,7 +19,7 @@ public class OtherPicsViewHolder extends RecyclerView.ViewHolder {
         this.iv_otherpic = itemView.findViewById(R.id.iv_otherpic);
     }
 
-    public void setIv_otherpic(int otherpic){
-        this.iv_otherpic.setImageResource(otherpic);
+    public void setIv_otherpic(Bitmap otherpic){
+        this.iv_otherpic.setImageBitmap(otherpic);
     }
 }

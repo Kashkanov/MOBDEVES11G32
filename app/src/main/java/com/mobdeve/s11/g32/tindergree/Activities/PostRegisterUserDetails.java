@@ -179,6 +179,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         userData.put("birthday", tvBirthday.getText().toString());
         userData.put("breed", etBreed.getText().toString());
         userData.put("petName", etName.getText().toString());
+        userData.put("petDescription", etAboutPet.getText().toString());
         userData.put("uid", uid);
 
         firestore.collection("Pets").document(uid).set(userData)
