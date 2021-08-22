@@ -43,6 +43,8 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
 
+    //TODO For the date, there should be a date picker instead of the user inputting text.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
@@ -204,7 +206,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
             etName.requestFocus();
             hasEmpty = true;
         }
-        else if(aboutPet.length() <= 8){
+        else if(aboutPet.length() < 8){
             etAboutPet.setError("Please enter at least 8 characters!");
             etAboutPet.requestFocus();
             hasEmpty = true;

@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_user_profile_page_photos_header">
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/ib_user_profile_photo1"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
@@ -46,7 +46,7 @@
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
-                android:id="@+id/imageButton3"
+                android:id="@+id/ib_user_profile_photo2"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_weight="0.33"
@@ -54,7 +54,7 @@
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/ib_user_profile_photo3"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
@@ -91,7 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_row1_user_profile">
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/ib_user_profile_photo4"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_marginRight="10dp"
@@ -100,7 +100,7 @@
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/ib_user_profile_photo5"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_weight="0.33"
@@ -108,7 +108,7 @@
                 app:srcCompat="@drawable/ic_add_photo" />
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/ib_user_profile_photo6"
                 android:layout_width="33dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
@@ -140,7 +140,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_row2_user_profile" />
 
         <EditText
-            android:id="@+id/et_user_profile_about_me"
+            android:id="@+id/et_user_profile_about_your_pet"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginTop="8dp"
@@ -177,7 +177,7 @@
             android:text="My pet is a.."
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
-            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_about_me" />
+            app:layout_constraintTop_toBottomOf="@+id/et_user_profile_about_your_pet" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_user_profile_dog"
@@ -335,7 +335,7 @@
             android:id="@+id/btn_user_profile_update"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_button_orange"
             android:text="update"
             app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
