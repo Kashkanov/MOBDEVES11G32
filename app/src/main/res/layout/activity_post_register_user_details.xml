@@ -171,33 +171,15 @@
             app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
             app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_cat" />
 
-        <EditText
-            android:id="@+id/et_post_register_user_details_birthday"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/layout_border"
-            android:ems="10"
-            android:hint="DD/MM/YYYY"
-            android:inputType="date"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray"
-            android:textCursorDrawable="@drawable/cursor_orange"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
-            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_birthday" />
-
         <TextView
             android:id="@+id/tv_post_register_user_details_breed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:text="@string/breed"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
-            app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_birthday" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_post_register_user_details_birthday" />
 
         <EditText
             android:id="@+id/et_post_register_user_details_breed"
@@ -249,7 +231,7 @@
             android:id="@+id/btn_post_register_user_details_continue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/rounded_button_orange"
             android:text="@string/continueText"
             app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
@@ -278,6 +260,39 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
             app:layout_constraintTop_toBottomOf="@+id/et_post_register_user_details_name" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_post_register_user_details_birthday"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/layout_border"
+            app:layout_constraintEnd_toStartOf="@+id/gl_post_register_user_details_right"
+            app:layout_constraintStart_toStartOf="@+id/gl_post_register_user_details_left"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post_register_user_details_birthday">
+
+            <TextView
+                android:id="@+id/tv_post_register_user_details_birthday_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="January 4 2020"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_calendar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
