@@ -29,6 +29,13 @@ public class CardProfile {
         this.hasclicked = false;
     }
 
+    public CardProfile(String petname, String uid){
+        this.petname = petname;
+        this.uid = uid;
+
+        this.hasclicked = false;
+    }
+
     public Bitmap getuserProfilePicture() {
         return this.userProfilePicture;
     }

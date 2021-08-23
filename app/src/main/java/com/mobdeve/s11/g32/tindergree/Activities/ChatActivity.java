@@ -75,7 +75,7 @@ public class ChatActivity extends AppCompatActivity {
         this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MatchesProfilePageActivity.class);
+                Intent i = new Intent(v.getContext(), MatchesProfilePageActivity.class); // TODO: Redirect to OtherPicsActivity
                 i.putExtra(KEY_KACHATNAME, kachatname);
                 i.putExtra(KEY_KACHATDESC, kachatdesc);
                 i.putExtra(KEY_UID, uid);

@@ -10,22 +10,32 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
 import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
+import com.mobdeve.s11.g32.tindergree.Models.Matches;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
@@ -35,8 +45,11 @@ import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.StackFrom;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
@@ -45,10 +58,10 @@ public class SwipeActivity extends AppCompatActivity {
     private CardStackView rv_cardarea;
     private CardStackLayoutManager manager;
     private CardAdapter cardAdapter;
-    private ArrayList<Profile> profiles;
     private FloatingActionButton fab_openchats;
     private ImageButton ib_opensettings;
     private ImageButton ib_opennotifs;
+    private ImageView iv_notifdot;
     private ProgressBar pb_swipeActivity;
     private TextView tv_swipesysnotif;
 
@@ -121,8 +134,10 @@ public class SwipeActivity extends AppCompatActivity {
         this.ib_opennotifs = findViewById(R.id.ib_opennotifs);
         this.pb_swipeActivity = findViewById(R.id.pb_swipeActivity);
         this.tv_swipesysnotif = findViewById(R.id.tv_swipesysnotif);
+        this.iv_notifdot = findViewById(R.id.iv_notifdot);
 
         this.tv_swipesysnotif.setVisibility(View.GONE);
+        iv_notifdot.setVisibility(View.INVISIBLE);
 
         this.fab_openchats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,6 +172,7 @@ public class SwipeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        fetchMatchRequests();
     }
 
     public void initRecyclerView(){
@@ -170,6 +186,9 @@ public class SwipeActivity extends AppCompatActivity {
 
         Log.d(SwipeActivity.firebaseLogKey, "Loading cards...");
         carddataHelper.loadProfiles(this, profiles2);
+
+        Log.d(SwipeActivity.firebaseLogKey, "Loading matches...");
+
     }
 
     /**
@@ -195,12 +214,15 @@ public class SwipeActivity extends AppCompatActivity {
             public void onCardSwiped(Direction direction) {
                 Log.d(TAG, "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
                 if (direction == Direction.Right){
+                    sendMatchRequest(profiles2.get(0).getUid());
+                    profiles2.remove(0);
                     Toast.makeText(SwipeActivity.this, "Direction Right", Toast.LENGTH_SHORT).show();
                 }
                 /*if (direction == Direction.Top){
                     Toast.makeText(MainActivity.this, "Direction Top", Toast.LENGTH_SHORT).show();
                 }*/
                 if (direction == Direction.Left){
+                    profiles2.remove(0);
                     Toast.makeText(SwipeActivity.this, "Direction Left", Toast.LENGTH_SHORT).show();
                 }/*
                 if (direction == Direction.Bottom){
@@ -255,5 +277,64 @@ public class SwipeActivity extends AppCompatActivity {
         rv_cardarea.setVisibility(View.VISIBLE);
         pb_swipeActivity.setVisibility(View.GONE);
         tv_swipesysnotif.setVisibility(View.GONE);
+    }
+
+    private void fetchMatchRequests() {
+        firestore.collection("Matches")
+                .whereEqualTo("uid", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(SwipeActivity.firebaseLogKey, "MATCH data:" + " => " + document.getData());
+                                ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatchRequests");
+
+                                if (uidMatches.size() == 0) {
+                                    iv_notifdot.setVisibility(View.INVISIBLE);
+                                    Log.d(SwipeActivity.firebaseLogKey, "No match requests available.");
+                                }
+                                else {
+                                    iv_notifdot.setVisibility(View.VISIBLE);
+                                    Log.d(SwipeActivity.firebaseLogKey, "Match requests available.");
+                                }
+                            }
+                        } else {
+                            Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void sendMatchRequest(String receipientUid) {
+        DocumentReference matchesRequestsRef = firestore.collection("Matches").document(receipientUid);
+
+        // Get the matches data and save it
+        firestore.collection("Matches")
+                .whereEqualTo("uid", receipientUid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map fetchedMatchRecord = document.getData();
+                                ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
+                                ArrayList<String> uidMatchRequests = (ArrayList<String>) document.getData().get("uidMatchRequests");
+
+                                Matches matches = new Matches(receipientUid, uidMatches, uidMatchRequests);
+
+                                matches.addMatchRequest(mAuth.getUid());
+
+                                // Update database
+                                firestore.collection("Matches").document(receipientUid).set(matches);
+                                Log.d(SwipeActivity.firebaseLogKey, "Sent match request!");
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
     }
 }

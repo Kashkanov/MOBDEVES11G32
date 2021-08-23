@@ -78,7 +78,7 @@ public class OtherPicsActivity extends AppCompatActivity {
         this.tv_profname = findViewById(R.id.tv_profname);
         this.tv_profdesc = findViewById(R.id.tv_profdesc);
 
-        Intent i = getIntent();
+        Intent i = getIntent(); // Required: Pet name, Description, UID
         this.profname = i.getStringExtra(CardAdapter.KEY_PROFNAME);
         this.tv_profname.setText(profname);
         this.profdesc = i.getStringExtra(CardAdapter.KEY_PROFDESC);
@@ -126,6 +126,7 @@ public class OtherPicsActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             maxNumberofImages = task.getResult().size();
                             if (maxNumberofImages == 0) { // The user has no other pictures besides their profile picture
+                                Log.d(SwipeActivity.firebaseLogKey, "No other pictures found.");
                                 rv_otherpics.setVisibility(View.INVISIBLE);
                                 pb_otherPicsLoading.setVisibility(View.INVISIBLE);
                                 return;

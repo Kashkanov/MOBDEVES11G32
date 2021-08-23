@@ -1,14 +1,15 @@
 package com.mobdeve.s11.g32.tindergree.Models;
 
+// For populating the Recycler View
 public class MatchRequest {
-    private Profile profile;
+    private CardProfile profile;
     private Boolean status;
 
-    public MatchRequest(Profile profile){
+    public MatchRequest(CardProfile profile){
         this.profile = profile;
     }
 
-    public Profile getProfile(){
+    public CardProfile getProfile(){
         return this.profile;
     }
 

@@ -25,6 +25,8 @@ public class ProfilePage2Activity extends AppCompatActivity {
     private RecyclerView rv_otherpics;
     private OtherPicsAdapter otherPicsAdapter;
 
+    // This is mostly similar to OtherPicsActivity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

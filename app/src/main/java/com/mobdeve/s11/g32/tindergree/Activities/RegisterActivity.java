@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Matches initMatch = new Matches(currentUser.getUid());
                             initMatch.initializeMatches();
 
-                            firestore.collection("Matches").document(currentUser.getUid().toString()).set(initMatch);
+                            firestore.collection("Matches").document(currentUser.getUid()).set(initMatch);
 
                             Log.d(SwipeActivity.firebaseLogKey, "createUserWithEmail:success");
                             successfulRegisterRedirect();

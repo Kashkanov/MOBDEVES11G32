@@ -21,6 +21,7 @@ import com.google.firebase.storage.StorageReference;
 import com.mobdeve.s11.g32.tindergree.Activities.DisplayChatsActivity;
 import com.mobdeve.s11.g32.tindergree.Activities.SwipeActivity;
 import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
+import com.mobdeve.s11.g32.tindergree.Models.Matches;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
 
@@ -43,7 +44,6 @@ public class CardDataHelper {
      */
     public void loadProfiles(SwipeActivity swipeActivity, ArrayList<CardProfile> profiles2) {
         // The card area corresponds to the matches of the user.
-        final boolean[] endMethod = {false};
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -64,34 +64,21 @@ public class CardDataHelper {
 
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to get candidates...");
 
-        // TODO: Load data from Firebase, and filter to only show unmatched candidates.
-        // For each candidate Pet, get their UID
-        firestore.collection("Pets")
-                .whereNotEqualTo("uid", mAuth.getUid())
+        // Fetch the UIDs of matched users (to know which ones to exclude in the swipe cards)
+        firestore.collection("Matches")
+                .whereEqualTo("uid", mAuth.getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    Log.d(SwipeActivity.firebaseLogKey, "Fetched all candidates!! Now adding to app...");
                         if (task.isSuccessful()) {
-                            numberOfCandidates[0] = task.getResult().size();
-                            if (numberOfCandidates[0] == 0) swipeActivity.showMessage(); // No available candiates.
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // For each candidate pet, fetch information about them
-                                Log.d(SwipeActivity.firebaseLogKey, document.getId() + " => " + document.getData());
-                                String candidateUid = document.getData().get("uid").toString();
-                                String petName = document.getData().get("petName").toString();
-                                String petDescription = "Some desc."; //document.getData().get("petDescription").toString(); // TODO: Wait for them to add the edit texts on Registration. Then come back to this.
+                                ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
 
-                                // Add their information to the app
-                                CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
-                                fetchImage(tempCardProfile, swipeActivity, profiles2);
-
-                                Log.d(SwipeActivity.firebaseLogKey, "Profile saved!");
+                                fetchCandidates(swipeActivity, profiles2, uidMatches); // Fetch pets
                             }
                         } else {
                             Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
-                            endMethod[0] = true;
                         }
                     }
                 });
@@ -118,9 +105,65 @@ public class CardDataHelper {
             Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
         }
 
-        Log.d(SwipeActivity.firebaseLogKey, "Now attempting to get candidates...");
+        Log.d(SwipeActivity.firebaseLogKey, "Now attempting to get matched users...");
+        // Fetch the UIDs of matched users (to know which ones to exclude in the swipe cards)
+        firestore.collection("Matches")
+                .whereEqualTo("uid", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
 
-        // TODO: Load data from Firebase, and filter to only show unmatched candidates.
+                                fetchCandidates(displayChatsActivity, profiles2, uidMatches); // Fetch pets
+                            }
+                        } else {
+                            Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void fetchCandidates(SwipeActivity swipeActivity, ArrayList<CardProfile> profiles2, ArrayList<String> uidMatches) {
+        // For each candidate Pet, get their UID, exclude matched ones
+        firestore.collection("Pets")
+                .whereNotEqualTo("uid", mAuth.getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        Log.d(SwipeActivity.firebaseLogKey, "Fetched all candidates!! Now adding to app...");
+                        if (task.isSuccessful()) {
+                            numberOfCandidates[0] = task.getResult().size();
+                            if (numberOfCandidates[0] == 0) swipeActivity.showMessage(); // No available candiates.
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // For each candidate pet, fetch information about them
+                                Log.d(SwipeActivity.firebaseLogKey, document.getId() + " => " + document.getData());
+                                String candidateUid = document.getData().get("uid").toString();
+                                String petName = document.getData().get("petName").toString();
+                                String petDescription = document.getData().get("petDescription").toString();
+
+                                // Add their information to the app, exclude them if matched
+                                if (!uidMatches.contains(candidateUid)) {
+                                    CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
+                                    fetchImage(tempCardProfile, swipeActivity, profiles2);
+                                }
+                                else {
+                                    numberOfCandidates[0]--;
+                                }
+
+                                Log.d(SwipeActivity.firebaseLogKey, "Profile saved!");
+                            }
+                        } else {
+                            Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void fetchCandidates(DisplayChatsActivity displayChatsActivity, ArrayList<CardProfile> profiles2, ArrayList<String> uidMatches) {
         // For each candidate Pet, get their UID
         firestore.collection("Pets")
                 .whereNotEqualTo("uid", mAuth.getUid())
@@ -138,15 +181,19 @@ public class CardDataHelper {
                                 String petName = document.getData().get("petName").toString();
                                 String petDescription = document.getData().get("petDescription").toString();; // TODO: Wait for them to add the edit texts on Registration. Then come back to this.
 
-                                // Add their information to the app
-                                CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
-                                fetchImage(tempCardProfile, displayChatsActivity, profiles2);
+                                // Add their information to the app, only include those matched
+                                if (uidMatches.contains(candidateUid)) {
+                                    CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
+                                    fetchImage(tempCardProfile, displayChatsActivity, profiles2);
+                                }
+                                else {
+                                    numberOfCandidates[0]--;
+                                }
 
                                 Log.d(SwipeActivity.firebaseLogKey, "Profile saved!");
                             }
                         } else {
                             Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
-                            endMethod[0] = true;
                         }
                     }
                 });
