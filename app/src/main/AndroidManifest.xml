@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.SplashScreenActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.DeveloperNotesActivity"></activity>
         <activity android:name=".Activities.UserProfilePageActivity" />
         <activity android:name=".Activities.SettingsActivity" />
@@ -30,10 +37,10 @@
 <!--            </intent-filter>-->
         </activity>
         <activity android:name=".Activities.SwipeActivity">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+<!--             <intent-filter>-->
+<!--             <action android:name="android.intent.action.MAIN" />-->
+<!--             <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
         </activity>
         <activity android:name=".Activities.ProfilePage2Activity"/>
         <activity android:name=".Activities.MatchRequestsActivity"/>

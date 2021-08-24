@@ -5,7 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ public class MatchesProfilePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+        changeStatusBarColor();
 
         this.iv_profprofpic = findViewById(R.id.iv_profprofpic);
         this.tv_profname = findViewById(R.id.tv_profname);
@@ -44,7 +48,12 @@ public class MatchesProfilePageActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
-
+    private void changeStatusBarColor(){
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FF914D"));
+    }
 
     public void initRecyclerView(){
         this.rv_otherpics = findViewById(R.id.rv_profotherpics);

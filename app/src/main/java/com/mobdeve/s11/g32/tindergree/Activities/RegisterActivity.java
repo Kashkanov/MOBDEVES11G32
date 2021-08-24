@@ -7,10 +7,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -62,6 +65,19 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         registerReceiver(broadcastReceiver, new IntentFilter("finish_activity"));
 
+
+        changeStatusBarColor();
+        initData();
+    }
+
+    private void changeStatusBarColor(){
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FF914D"));
+    }
+
+    private void initData(){
         emailEt = findViewById(R.id.et_register_emailaddress);
         passwordEt = findViewById(R.id.et_register_password);
         confirmPasswordEt = findViewById(R.id.et_register_confirm);
@@ -82,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     protected void onResume() {
