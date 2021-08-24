@@ -477,13 +477,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     }
 
     @Override
-    protected void onPause()
-    {
-        super.onPause();
-        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
