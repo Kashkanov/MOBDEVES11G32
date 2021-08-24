@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,17 +14,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
-import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
 import com.mobdeve.s11.g32.tindergree.R;
-
-import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -34,8 +36,7 @@ public class ChatActivity extends AppCompatActivity {
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
     public static final String KEY_UID = "KEY_UID";
-
-    private String uid;
+    private String kachatuid;
 
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
@@ -70,24 +71,27 @@ public class ChatActivity extends AppCompatActivity {
         String kachatdesc = i.getStringExtra(MatchAdapter.KEY_MATCHDESC);
         this.tv_kachatdesc.setText(kachatdesc);
 
-        this.uid = i.getStringExtra(MatchAdapter.KEY_UID);
+        this.kachatuid = i.getStringExtra(MatchAdapter.KEY_UID);
 
         this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), MatchesProfilePageActivity.class); // TODO: Redirect to OtherPicsActivity
-                i.putExtra(KEY_KACHATNAME, kachatname);
-                i.putExtra(KEY_KACHATDESC, kachatdesc);
-                i.putExtra(KEY_UID, uid);
+                Intent i = new Intent(v.getContext(), OtherPicsActivity.class);
+                i.putExtra(CardAdapter.KEY_PROFNAME, kachatname);
+                i.putExtra(CardAdapter.KEY_PROFDESC, kachatdesc);
+                i.putExtra(CardAdapter.KEY_PROFUID, kachatuid);
                 v.getContext().startActivity(i);
             }
         });
+
+        fetchProfilePicture();
     }
 
-    // TODO: Continue off this
     private void fetchProfilePicture() {
+        StorageReference storageRef = storage.getReference();
+
         firestore.collection("filenames")
-                .whereEqualTo("uid", this.uid)
+                .whereEqualTo("uid", this.kachatuid)
                 .whereEqualTo("isProfilePicture", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -97,7 +101,24 @@ public class ChatActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String filename = document.getData().get("filename").toString();
 
-                                // TODO: this.
+                                // Got the filename, now fetch the image file from storage
+                                StorageReference profilePicRef = storageRef.child("Users/" + kachatuid + "/" + filename);
+
+                                final long MAX_BYE_SIZE = 1024 * 10024;
+                                profilePicRef.getBytes(MAX_BYE_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        // Show the profile picture to the app
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+                                        ib_kachatpic.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle any errors
+                                    }
+                                });
+
                             }
                         } else {
                             Log.d(SwipeActivity.firebaseLogKey, "Failed to get profile picture");
@@ -106,7 +127,6 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-    //TODO: implement chatting feature
-    //TODO: pass array of otherpics
+    // TODO: implement chatting feature
 }
 

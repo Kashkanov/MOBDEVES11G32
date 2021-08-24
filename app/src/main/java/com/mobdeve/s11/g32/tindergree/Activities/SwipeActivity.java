@@ -120,8 +120,6 @@ public class SwipeActivity extends AppCompatActivity {
         }
         else {
             Log.d(firebaseLogKey, "User has NOT signed in.");
-            Toast.makeText(SwipeActivity.this, "To bypass this, comment out codes " +
-                    "at SwipeActivity starting at line 58.", Toast.LENGTH_LONG).show();
             Intent authenticateIntent = new Intent(SwipeActivity.this, RegisterActivity.class);
             startActivity(authenticateIntent);
 
@@ -213,23 +211,24 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onCardSwiped(Direction direction) {
                 Log.d(TAG, "onCardSwiped: p=" + manager.getTopPosition() + " d=" + direction);
+
                 if (direction == Direction.Right){
                     sendMatchRequest(profiles2.get(0).getUid());
+
                     profiles2.remove(0);
-                    Toast.makeText(SwipeActivity.this, "Direction Right", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SwipeActivity.this, "Direction Right: Sent request.", Toast.LENGTH_SHORT).show();
+
+                    cardAdapter.notifyItemRemoved(0);
+                    cardAdapter.notifyItemRangeChanged(0, profiles2.size());
                 }
-                /*if (direction == Direction.Top){
-                    Toast.makeText(MainActivity.this, "Direction Top", Toast.LENGTH_SHORT).show();
-                }*/
+
                 if (direction == Direction.Left){
                     profiles2.remove(0);
-                    Toast.makeText(SwipeActivity.this, "Direction Left", Toast.LENGTH_SHORT).show();
-                }/*
-                if (direction == Direction.Bottom){
-                    Toast.makeText(MainActivity.this, "Direction Bottom", Toast.LENGTH_SHORT).show();
-                }*/
+                    Toast.makeText(SwipeActivity.this, "Direction Left: Ignore match.", Toast.LENGTH_SHORT).show();
 
-
+                    cardAdapter.notifyItemRemoved(0);
+                    cardAdapter.notifyItemRangeChanged(0, profiles2.size());
+                }
             }
 
             @Override

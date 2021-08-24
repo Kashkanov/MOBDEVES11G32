@@ -30,7 +30,6 @@ import com.mobdeve.s11.g32.tindergree.Adapters.OtherPicsAdapter;
 import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
 import com.mobdeve.s11.g32.tindergree.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class OtherPicsActivity extends AppCompatActivity {
@@ -43,7 +42,7 @@ public class OtherPicsActivity extends AppCompatActivity {
     private OtherPicsAdapter otherPicsAdapter;
     private ProgressBar pb_otherPicsLoading;
 
-    private String Uid, profname, profdesc;
+    private String profUid, profname, profdesc;
 
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
@@ -83,16 +82,19 @@ public class OtherPicsActivity extends AppCompatActivity {
         this.tv_profname.setText(profname);
         this.profdesc = i.getStringExtra(CardAdapter.KEY_PROFDESC);
         this.tv_profdesc.setText(profdesc);
-        this.Uid = i.getStringExtra(CardAdapter.KEY_PROFUID);
+        this.profUid = i.getStringExtra(CardAdapter.KEY_PROFUID);
 
         otherpics = new ArrayList<>();
+        fetchProfilePicture();
         fetchImages();
     }
 
     // TODO: Continue off this
     private void fetchProfilePicture() {
+        StorageReference storageRef = storage.getReference();
+
         firestore.collection("filenames")
-                .whereEqualTo("uid", this.Uid)
+                .whereEqualTo("uid", this.profUid)
                 .whereEqualTo("isProfilePicture", true)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -102,7 +104,24 @@ public class OtherPicsActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String filename = document.getData().get("filename").toString();
 
-                                // TODO: this.
+                                // Got the filename, now fetch the image file from storage
+                                StorageReference profilePicRef = storageRef.child("Users/" + profUid + "/" + filename);
+
+                                final long MAX_BYE_SIZE = 1024 * 10024;
+                                profilePicRef.getBytes(MAX_BYE_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                                    @Override
+                                    public void onSuccess(byte[] bytes) {
+                                        // Show the profile picture to the app
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+                                        iv_profprofpic.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle any errors
+                                    }
+                                });
+
                             }
                         } else {
                             Log.d(SwipeActivity.firebaseLogKey, "Failed to get profile picture");
@@ -117,7 +136,7 @@ public class OtherPicsActivity extends AppCompatActivity {
 
         // First, fetch the filenames of the images
         firestore.collection("filenames")
-                .whereEqualTo("uid", this.Uid)
+                .whereEqualTo("uid", this.profUid)
                 .whereEqualTo("isProfilePicture", false)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -138,7 +157,7 @@ public class OtherPicsActivity extends AppCompatActivity {
                                 String filename = document.getData().get("filename").toString();
 
                                 // Fetch the image now
-                                StorageReference imageRef = storageRef.child("Users/" + Uid + "/" + filename);
+                                StorageReference imageRef = storageRef.child("Users/" + profUid + "/" + filename);
 
                                 final long MAX_BYE_SIZE = 1024 * 10024;
                                 imageRef.getBytes(MAX_BYE_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {

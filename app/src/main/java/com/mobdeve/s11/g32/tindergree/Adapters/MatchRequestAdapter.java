@@ -1,7 +1,6 @@
 package com.mobdeve.s11.g32.tindergree.Adapters;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobdeve.s11.g32.tindergree.Activities.MatchRequestsActivity;
 import com.mobdeve.s11.g32.tindergree.Activities.OtherPicsActivity;
-import com.mobdeve.s11.g32.tindergree.Activities.ProfilePage2Activity;
 import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
-import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
 import com.mobdeve.s11.g32.tindergree.R;
 import com.mobdeve.s11.g32.tindergree.ViewHolders.MatchRequestViewHolder;
-import com.mobdeve.s11.g32.tindergree.ViewHolders.MatchViewHolder;
 
 import java.util.ArrayList;
 
@@ -56,10 +52,10 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
         holder.getIb_mrPic().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ProfilePage2Activity.class); // TODO: Redirect to OtherPicsActivity
-                i.putExtra(KEY_MATCHREQNAME, matchreqname);
-                i.putExtra(KEY_MATCHREQDESC, matchreqdesc);
-                i.putExtra(KEY_MATCHUID, matchUid);
+                Intent i = new Intent(v.getContext(), OtherPicsActivity.class);
+                i.putExtra(CardAdapter.KEY_PROFNAME, matchreqname);
+                i.putExtra(CardAdapter.KEY_PROFDESC, matchreqdesc);
+                i.putExtra(CardAdapter.KEY_PROFUID, matchUid);
                 v.getContext().startActivity(i);
             }
         });

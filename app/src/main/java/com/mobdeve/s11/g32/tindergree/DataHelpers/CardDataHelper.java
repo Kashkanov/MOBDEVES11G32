@@ -72,7 +72,9 @@ public class CardDataHelper {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            QuerySnapshot x = task.getResult();
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                // These are the UIDs to exclude from the card swipes
                                 ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
 
                                 fetchCandidates(swipeActivity, profiles2, uidMatches); // Fetch pets

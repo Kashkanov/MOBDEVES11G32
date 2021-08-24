@@ -27,7 +27,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
     public ConstraintLayout cl_buttonarea;
     private ArrayList<OtherPic> otherpics;
     public static final String KEY_PROFNAME = "KEY_PROFNAME";
-    public static final String KEY_PROFPIC = "KEY_PROFPIC";
     public static final String KEY_PROFDESC = "KEY_PROFDESC";
     public static final String KEY_PROFUID = "KEY_PROFUID";
 
