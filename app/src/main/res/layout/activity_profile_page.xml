@@ -155,6 +155,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profname2"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/my_progress_indeterminate"
         app:layout_constraintVertical_bias="0.79" />
 
 

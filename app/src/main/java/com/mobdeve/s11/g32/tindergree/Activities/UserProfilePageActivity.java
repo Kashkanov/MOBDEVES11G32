@@ -5,8 +5,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -36,6 +39,7 @@ public class UserProfilePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_page);
+        changeStatusBarColor();
 
         initData();
     }
@@ -86,6 +90,13 @@ public class UserProfilePageActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void changeStatusBarColor(){
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FF914D"));
     }
 
     private boolean checkEmptyFields(){

@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -86,6 +88,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_register_upload_photos);
+        changeStatusBarColor();
 
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
@@ -115,6 +118,13 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
         setImageOnClickListeners();
 
+    }
+
+    private void changeStatusBarColor(){
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FF914D"));
     }
 
     private void setImageOnClickListeners(){

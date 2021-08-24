@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,7 +28,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-
+    private TextView registerTv;
     private EditText emailEt;
     private EditText passwordEt;
     private Button loginBtn;
@@ -36,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        changeStatusBarColor();
+
+        registerTv = findViewById(R.id.tv_login_register);
         emailEt = findViewById(R.id.et_login_emailaddress);
         passwordEt = findViewById(R.id.et_login_password);
         loginBtn = findViewById(R.id.btn_login);
@@ -50,6 +56,22 @@ public class LoginActivity extends AppCompatActivity {
                 signIn(emailEt.getText().toString(), passwordEt.getText().toString());
             }
         });
+
+        registerTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private void changeStatusBarColor(){
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FF914D"));
     }
 
     @Override
