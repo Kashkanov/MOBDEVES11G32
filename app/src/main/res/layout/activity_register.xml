@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<ScrollView android:background="@color/white"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F8FFF0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_register"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="#F8FFF0">
 
         <!-- TODO (3) Add icons to each edit text    -->
         <!-- TODO (4) Change the font of edit text hints if necessary  -->
@@ -34,14 +34,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="16dp"
             android:ems="10"
             android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
+            android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_description" />
 
@@ -50,15 +55,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_first_name"
+            android:drawablePadding="16dp"
             android:ems="10"
             android:hint="@string/first_name"
             android:inputType="text"
+            android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
-            app:layout_constraintHorizontal_bias="1.0"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/et_register_emailaddress" />
 
@@ -67,15 +76,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_last_name"
+            android:drawablePadding="16dp"
             android:ems="10"
             android:hint="@string/last_name"
             android:inputType="text"
+            android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/et_register_first_name" />
 
@@ -84,15 +97,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="16dp"
             android:ems="10"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
+            android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/et_register_last_name" />
 
@@ -101,15 +118,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/layout_border"
+            android:backgroundTint="@color/white"
+            android:drawableLeft="@drawable/ic_confirm"
+            android:drawablePadding="16dp"
             android:ems="10"
             android:hint="@string/confirm_pasword"
             android:inputType="textPassword"
+            android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_left_icons"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/et_register_password" />
 
@@ -128,20 +149,12 @@
             app:layout_constraintTop_toBottomOf="@+id/et_register_confirm" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_register_left_icons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="0dp"
-            app:layout_constraintGuide_percent="0.80" />
-
-        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_register_right_of_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="0dp"
-            app:layout_constraintGuide_percent="0.90" />
+            app:layout_constraintGuide_percent="0.85" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_register_left_of_email"
@@ -149,7 +162,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_begin="0dp"
-            app:layout_constraintGuide_percent="0.10" />
+            app:layout_constraintGuide_percent="0.15" />
 
         <TextView
             android:id="@+id/tv_register_logo_description"
@@ -160,9 +173,9 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/tv_register_logo_name" />
 
         <TextView
@@ -174,18 +187,18 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toBottomOf="@+id/iv_register_logo" />
 
         <ImageView
             android:id="@+id/iv_register_logo"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gl_register_left_of_email"
             app:layout_constraintTop_toTopOf="@+id/gl_register_above_logo"
             app:srcCompat="@drawable/orangepaw" />
 
@@ -196,59 +209,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="0dp"
             app:layout_constraintGuide_percent="0.07" />
-
-        <ImageView
-            android:id="@+id/iv_register_email_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_register_emailaddress"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
-            app:layout_constraintHorizontal_bias="0.588"
-            app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
-            app:srcCompat="@drawable/ic_email" />
-
-        <ImageView
-            android:id="@+id/iv_register_first_name_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_register_first_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
-            app:srcCompat="@drawable/ic_first_name" />
-
-        <ImageView
-            android:id="@+id/iv_register_last_name_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_register_last_name"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
-            app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
-            app:srcCompat="@drawable/ic_last_name" />
-
-        <ImageView
-            android:id="@+id/iv_register_password_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_register_password"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
-            app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
-            app:srcCompat="@drawable/ic_password" />
-
-        <ImageView
-            android:id="@+id/iv_register_confirm_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@+id/et_register_confirm"
-            app:layout_constraintEnd_toStartOf="@+id/gl_register_right_of_image"
-            app:layout_constraintStart_toStartOf="@+id/gl_register_left_icons"
-            app:srcCompat="@drawable/ic_confirm" />
 
         <ProgressBar
             android:id="@+id/pb_register"
