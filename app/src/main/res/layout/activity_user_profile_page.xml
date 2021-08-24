@@ -5,7 +5,7 @@
     android:id="@+id/sv_user_profile_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fafafa"
+    android:background="#F8FFF0"
     tools:context=".Activities.UserProfilePageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout

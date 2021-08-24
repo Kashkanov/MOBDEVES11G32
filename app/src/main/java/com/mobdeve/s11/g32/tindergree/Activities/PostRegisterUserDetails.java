@@ -167,10 +167,12 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         });
     }
 
+
+
     @Override
-    public void onResume(){
-        super.onResume();
-        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    public void onStart(){
+        super.onStart();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
     @Override public void finish()
     {
