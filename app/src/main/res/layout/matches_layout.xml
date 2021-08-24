@@ -41,27 +41,36 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_matchpic" />
 
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FFFFFF"
-                android:foreground="@layout/border_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_matchpic"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+
+                android:layout_marginTop="4dp"
+                android:layout_centerInParent="true"
+                app:shapeAppearanceOverlay="@style/Circular"
+
+                android:foreground="@layout/circlebutton_layout"
+                android:scaleType="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/dog4_foreground" />
+
+            <Button
+                android:id="@+id/btn_matchpic"
+                android:layout_width="63dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="4dp"
+                android:background="#00FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/ib_matchpic"
-                    android:layout_width="74dp"
-                    android:layout_height="64dp"
-
-                    android:scaleType="center"
-                    app:srcCompat="@mipmap/dog4_foreground" />
-            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

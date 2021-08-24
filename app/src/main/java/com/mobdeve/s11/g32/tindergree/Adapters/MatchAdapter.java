@@ -45,10 +45,10 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MatchViewHolder holder, int position) {
-        holder.setIb_matchpic(profiles.get(position).getuserProfilePicture());
+        holder.setIv_matchpic(profiles.get(position).getuserProfilePicture());
         holder.setTv_matchname(profiles.get(position).getPetname());
 
-        holder.getIb_matchpic().setOnClickListener(new View.OnClickListener() {
+        holder.getBtn_matchpic().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), ChatActivity.class);

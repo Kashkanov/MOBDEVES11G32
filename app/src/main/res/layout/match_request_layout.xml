@@ -39,17 +39,19 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="134dp" />
 
-        <ImageButton
-            android:id="@+id/ib_mrPic"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:backgroundTint="#FFFFFF"
-            android:foreground="@layout/border_layout"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_mrPic"
+            android:layout_width="84dp"
+            android:layout_height="83dp"
+            android:layout_centerInParent="true"
+
+            android:foreground="@layout/circlebutton_layout"
             android:scaleType="center"
             app:layout_constraintBottom_toTopOf="@+id/guideline38"
             app:layout_constraintEnd_toStartOf="@+id/guideline37"
             app:layout_constraintStart_toStartOf="@+id/guideline34"
             app:layout_constraintTop_toTopOf="@+id/guideline36"
+            app:shapeAppearanceOverlay="@style/Circular"
             tools:srcCompat="@mipmap/dog6_foreground" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -103,6 +105,17 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline39"
             app:layout_constraintTop_toBottomOf="@+id/tv_mrname" />
+
+        <Button
+            android:id="@+id/btn_mrPic"
+            android:layout_width="74dp"
+            android:layout_height="63dp"
+            android:backgroundTint="#00FFFFFF"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_mrPic"
+            app:layout_constraintEnd_toStartOf="@+id/guideline37"
+            app:layout_constraintStart_toStartOf="@+id/guideline34"
+            app:layout_constraintTop_toTopOf="@+id/guideline36" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_buttongroup"

@@ -41,7 +41,7 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
 
     @Override
     public void onBindViewHolder(@NonNull MatchRequestViewHolder holder, int position) {
-        holder.setIb_mrPic(mrs.get(position).getProfile().getuserProfilePicture());
+        holder.setIv_mrPic(mrs.get(position).getProfile().getuserProfilePicture());
         holder.setTv_mrName(mrs.get(position).getProfile().getPetname());
 
         String matchreqname = mrs.get(position).getProfile().getPetname();
@@ -49,7 +49,7 @@ public class MatchRequestAdapter extends RecyclerView.Adapter<MatchRequestViewHo
         String matchUid = mrs.get(position).getProfile().getUid();
 
         // Go to profile
-        holder.getIb_mrPic().setOnClickListener(new View.OnClickListener() {
+        holder.getBtn_mrPic().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), OtherPicsActivity.class);
