@@ -490,14 +490,14 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
             hasNoProfilePicture = true;
 
-            Toast toast = Toast.makeText(this, "Upload a profile picture!", Toast.LENGTH_SHORT);
-            View view = toast.getView();
-            view.setBackgroundResource(R.drawable.rounded_layout_red);
-            TextView text = (TextView) view.findViewById(android.R.id.message);
-            /*Here you can do anything with above textview like text.setTextColor(Color.parseColor("#000000"));*/
-            text.setTextColor(Color.parseColor("#FFFFFF"));
-            text.setPadding(20,5,20,5);
-            toast.show();
+            Toast.makeText(getApplicationContext(), "Upload a profile picture!", Toast.LENGTH_SHORT).show();
+//            View view = toast.getView();
+//            view.setBackgroundResource(R.drawable.rounded_layout_red);
+//            TextView text = (TextView) view.findViewById(android.R.id.message);
+//            /*Here you can do anything with above textview like text.setTextColor(Color.parseColor("#000000"));*/
+//            text.setTextColor(Color.parseColor("#FFFFFF"));
+//            text.setPadding(20,5,20,5);
+//            toast.show();
         }
         return hasNoProfilePicture;
     }
