@@ -15,7 +15,7 @@
         android:layout_marginStart="20dp"
         android:background="@drawable/rounded_layout_red"
         android:text="@string/deleteAccount"
-        android:textColor="@color/orangeAppColor"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_inner_right"
         app:layout_constraintStart_toEndOf="@+id/btn_settings_log_out"
         app:layout_constraintTop_toTopOf="@+id/btn_settings_log_out" />
@@ -144,42 +144,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_settings_child_location"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/layout_border"
-        app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
-        app:layout_constraintTop_toBottomOf="@+id/cl_settings_child_notification">
-
-        <TextView
-            android:id="@+id/tv_settings_location_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:padding="10dp"
-            android:text="@string/locationTitle"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.545" />
-
-        <TextView
-            android:id="@+id/tv_settings_location_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="Philippines"
-            android:textColor="#C8C8C8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_settings_developer_notes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -188,7 +152,7 @@
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
-        app:layout_constraintTop_toBottomOf="@+id/cl_settings_child_location">
+        app:layout_constraintTop_toBottomOf="@+id/cl_settings_child_notification">
 
         <TextView
             android:id="@+id/textView7"
@@ -219,7 +183,7 @@
         android:id="@+id/btn_settings_log_out"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/rounded_button"
         android:text="@string/logOut"
         android:textColor="@color/orangeAppColor"
@@ -251,7 +215,8 @@
         android:textAllCaps="true"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/iv_settings_logo"
+        app:layout_constraintEnd_toStartOf="@+id/gl_settings_inner_right"
+        app:layout_constraintStart_toStartOf="@+id/gl_settings_inner_left"
         app:layout_constraintTop_toBottomOf="@+id/iv_settings_logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
