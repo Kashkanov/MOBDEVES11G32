@@ -167,8 +167,8 @@ public class SwipeActivity extends AppCompatActivity {
                 v.getContext().startActivity(i);
             }
         });
+        this.rv_cardarea = findViewById(R.id.cs_cardarea);
 
-        this.initRecyclerView(); // Instantiate the Cards
     }
 
     private void changeStatusBarColor(){
@@ -181,12 +181,12 @@ public class SwipeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        profiles2.clear();
+        this.initRecyclerView(); // Instantiate the Cards
         fetchMatchRequests();
     }
 
     public void initRecyclerView(){
-        this.rv_cardarea = findViewById(R.id.cs_cardarea);
-
         rv_cardarea.setVisibility(View.GONE);
         pb_swipeActivity.setVisibility(View.VISIBLE);
         tv_swipesysnotif.setVisibility(View.GONE); // Show this error message view if no available profiles are fetched.
@@ -240,6 +240,7 @@ public class SwipeActivity extends AppCompatActivity {
                     cardAdapter.notifyItemRemoved(0);
                     cardAdapter.notifyItemRangeChanged(0, profiles2.size());
                 }
+
             }
 
             @Override
@@ -287,6 +288,9 @@ public class SwipeActivity extends AppCompatActivity {
         rv_cardarea.setVisibility(View.VISIBLE);
         pb_swipeActivity.setVisibility(View.GONE);
         tv_swipesysnotif.setVisibility(View.GONE);
+
+        if (profiles2.size() == 0)
+            showMessage();
     }
 
     private void fetchMatchRequests() {

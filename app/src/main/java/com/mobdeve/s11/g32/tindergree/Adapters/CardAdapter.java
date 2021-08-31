@@ -21,11 +21,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 import java.util.ArrayList;
 
 public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
-    private ArrayList<CardProfile> profiles;
-    private ImageButton ib_seeotherpics;
-    private RecyclerView rv_otherpicarea2;
-    public ConstraintLayout cl_buttonarea;
-    private ArrayList<OtherPic> otherpics;
+    private ArrayList<CardProfile> profiles; // dataset
     public static final String KEY_PROFNAME = "KEY_PROFNAME";
     public static final String KEY_PROFDESC = "KEY_PROFDESC";
     public static final String KEY_PROFUID = "KEY_PROFUID";
@@ -35,10 +31,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
     }
 
     @NonNull
-
     @Override
     public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.card_layout, parent, false);
 
@@ -65,37 +59,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
                 v.getContext().startActivity(i);
             }
         });
-       /*this.clicked = true;
-       holder.setIb_seeotherpicsOnclickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if(clicked) {
-                   Toast.makeText(v.getContext(), "clicked", Toast.LENGTH_SHORT).show();
-                   profiles.get(position).setHasclicked(true);
-                   initRecyclerView(holder, profiles.get(position).getOtherpics());
-                   clicked = false;
-               }
-               else {
-                   Toast.makeText(v.getContext(), "unclicked", Toast.LENGTH_SHORT).show();
-                   profiles.get(position).setHasclicked(false);
-                   clicked = true;
-               }
-               holder.setCls(profiles.get(position).getHasclicked());
-           }
-       });
-
     }
 
-    private OtherPicsAdapter otherPicsAdapter;
-    public void initRecyclerView(CardViewHolder holder, ArrayList<OtherPic> otherpics){
-
-        LinearLayoutManager manager = new LinearLayoutManager(holder.rv_otherpicarea2.getContext(),LinearLayoutManager.HORIZONTAL, false);
-        holder.rv_otherpicarea2.setLayoutManager(manager);
-        otherPicsAdapter = new OtherPicsAdapter(otherpics);
-        holder.rv_otherpicarea2.setAdapter(otherPicsAdapter);
-    }
-*/
-    }
     @Override
     public int getItemCount() {
         return this.profiles.size();

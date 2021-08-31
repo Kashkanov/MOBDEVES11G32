@@ -76,8 +76,10 @@ public class CardDataHelper {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 // These are the UIDs to exclude from the card swipes
                                 ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
+                                ArrayList<String> uidMatches2 = (ArrayList<String>) document.getData().get("uidMatchRequests");
 
-                                fetchCandidates(swipeActivity, profiles2, uidMatches); // Fetch pets
+                                uidMatches.addAll(uidMatches2);
+                                fetchCandidates(swipeActivity, profiles2, uidMatches); // Use the UIDs to fetch information of users
                             }
                         } else {
                             Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
@@ -154,6 +156,10 @@ public class CardDataHelper {
                                 }
                                 else {
                                     numberOfCandidates[0]--;
+                                }
+
+                                if (numberOfCandidates[0] == 0) {
+                                    swipeActivity.finalizeRecyclerView();
                                 }
 
                                 Log.d(SwipeActivity.firebaseLogKey, "Profile saved!");

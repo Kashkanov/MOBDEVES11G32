@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Matches {
 
     public String uid;
+
     public ArrayList<String> uidMatches;
     public ArrayList<String> uidMatchRequests;
 
@@ -16,6 +17,14 @@ public class Matches {
         this.uid = uid;
         this.uidMatches = uidMatches;
         this.uidMatchRequests = uidMatchRequests;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     /**
