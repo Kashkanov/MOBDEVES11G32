@@ -180,6 +180,7 @@ public class MatchRequestsActivity extends AppCompatActivity {
                                 String uid = document.getData().get("uid").toString();
                                 ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatches");
                                 ArrayList<String> uidMatchRequests = (ArrayList<String>) document.getData().get("uidMatchRequests");
+                                uidMatches.add(mAuth.getUid());
 
                                 senderMatches = new Matches(uid, uidMatches, uidMatchRequests);
 
