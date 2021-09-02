@@ -33,8 +33,6 @@ public class UserProfilePageActivity extends AppCompatActivity {
     private Button btnUpdate;
     private DatePickerDialog datePickerDialog;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +77,9 @@ public class UserProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO call necessary function here and move checkEmptyFields to that function
-                checkEmptyFields();
+                if (checkEmptyFields()) // Empty fields, stop.
+                    return;
+
             }
         });
 
@@ -219,5 +219,7 @@ public class UserProfilePageActivity extends AppCompatActivity {
 
     }
 
-
+    private void updateProfile() {
+        // TODO
+    }
 }

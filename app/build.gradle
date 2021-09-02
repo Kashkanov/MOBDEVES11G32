@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth' // Authentication
     implementation 'com.google.firebase:firebase-storage' // Cloud Storage
     implementation 'com.google.firebase:firebase-firestore' // Firestore
+    implementation 'com.google.firebase:firebase-database' // Realtime Database (Java)
 
     // Image Compressor
     implementation 'id.zelory:compressor:2.1.1'

@@ -2,6 +2,9 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,28 +23,46 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
+import com.mobdeve.s11.g32.tindergree.Adapters.ChatAdapter;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.ChatDataHelper;
+import com.mobdeve.s11.g32.tindergree.Models.Chat;
+import com.mobdeve.s11.g32.tindergree.Models.ChatUid;
 import com.mobdeve.s11.g32.tindergree.R;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
     private ImageButton ib_kachatpic;
     private TextView tv_kachatname;
     private TextView tv_kachatdesc;
+    private RecyclerView rv_chat;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
     public static final String KEY_UID = "KEY_UID";
     private String kachatuid;
 
+    private ArrayList<Chat> messages;
+    private String chatUid;
+
+    private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +73,16 @@ public class ChatActivity extends AppCompatActivity {
         changeStatusBarColor();
 
         // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        database = FirebaseDatabase.getInstance(); // TODO: Don't forget to change the parameters if switching between emulator / production.
 
         // Comment these lines if production Firebase should be used instead of emulator
         try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            database.useEmulator("10.0.2.2", 9000);
+            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
             FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
             firestore.useEmulator("10.0.2.2", 8080);
@@ -76,6 +102,7 @@ public class ChatActivity extends AppCompatActivity {
         this.tv_kachatdesc.setText(kachatdesc);
 
         this.kachatuid = i.getStringExtra(MatchAdapter.KEY_UID);
+        this.chatUid = getChatUid();
 
         this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +115,10 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        messages = new ArrayList<>();
+
         fetchProfilePicture();
+        loadChatting();
     }
 
     private void changeStatusBarColor(){
@@ -98,7 +128,6 @@ public class ChatActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.parseColor("#FF914D"));
     }
 
-    // TODO: Continue off this
     private void fetchProfilePicture() {
         StorageReference storageRef = storage.getReference();
 
@@ -139,6 +168,60 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
+    private void initializeChatRecyclerView() {
+        this.rv_chat = findViewById(R.id.rv_chat);
+    }
+
+    public void finalizeChatRecyclerView() {
+        this.rv_chat = findViewById(R.id.rv_chat);
+        LinearLayoutManager manager = new LinearLayoutManager(this, GridLayoutManager.VERTICAL,false);
+
+        this.rv_chat.setLayoutManager(manager);
+        this.rv_chat.setAdapter(new ChatAdapter(messages));
+    }
+
+    private String getChatUid() {
+        String toHash; // Concatentation of two UIDs to hash
+        String chatUID; // Hashed Chat ID
+
+        if (mAuth.getCurrentUser().getUid().compareTo(kachatuid) < 0) {
+            toHash = mAuth.getCurrentUser().getUid().concat(kachatuid);
+        }
+        else {
+            toHash = kachatuid.concat(mAuth.getCurrentUser().getUid());
+        }
+
+        chatUID = String.valueOf(toHash.hashCode());
+
+        return chatUID;
+    }
+
     // TODO: implement chatting feature
+    // Compare two UIDs, combine, get hash
+    // Set hash as Chat UID on realtime database
+    // Use that Chat UID to retrieve messages
+    // Save messages using push()
+    private void loadChatting() {
+        Log.d(SwipeActivity.firebaseLogKey, "Loading chat messages...");
+
+        // Load the chat messages from Realtime Database using the Chat UID
+        new ChatDataHelper().testLoadMessages(this, this.messages, this);
+        // new ChatDataHelper().loadMessages(this, this.messages, this.chatUid);
+    }
+
+    /**
+     * Registers the callback for new incoming messages.
+     * Allows the front-end to be updated in real-time.
+     */
+    private void registerMessageListener() {
+
+    }
+
+    private void sendMessage() {
+        // TODO: Continue here (Register onclick event to the Send button first) (use test chat data)
+
+        //Chat testChat = new Chat("AAAAAAAA!", "UID HERE");
+        //myRef.push().setValue(testChat);
+    }
 }
 
