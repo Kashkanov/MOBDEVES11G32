@@ -15,12 +15,16 @@
     </style>
 
 
-        <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-            <item name="android:windowBackground">@drawable/splash_background</item>
-            <item name="colorPrimary">@color/orangeAppColor</item>
-            <item name="colorPrimaryDark">@color/orangeAppColor</item>
-            <item name="colorAccent">@color/orangeAppColor</item>
-            <item name="android:statusBarColor">@color/orangeAppColor</item>
-        </style>
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="colorPrimary">@color/orangeAppColor</item>
+        <item name="colorPrimaryDark">@color/orangeAppColor</item>
+        <item name="colorAccent">@color/orangeAppColor</item>
+        <item name="android:statusBarColor">@color/orangeAppColor</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="android:Theme.Holo">
+        <item name="android:homeAsUpIndicator">@drawable/back_button_image</item>
+    </style>
 
 </resources>

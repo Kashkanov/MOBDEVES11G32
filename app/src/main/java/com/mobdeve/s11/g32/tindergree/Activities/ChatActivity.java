@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +47,7 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private ImageButton ib_kachatpic;
+    private ShapeableImageView ib_kachatpic;
     private TextView tv_kachatname;
     private TextView tv_kachatdesc;
     private RecyclerView rv_chat;
