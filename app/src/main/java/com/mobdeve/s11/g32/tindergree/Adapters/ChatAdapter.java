@@ -18,8 +18,14 @@ import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     private ArrayList<Chat> chatDataset;
+    private String uid;
+    private String kachatName;
 
-    public ChatAdapter(ArrayList<Chat> chatDataset) { this.chatDataset = chatDataset; }
+    public ChatAdapter(ArrayList<Chat> chatDataset, String uid, String kachatName) {
+        this.chatDataset = chatDataset;
+        this.uid = uid;
+        this.kachatName = kachatName;
+    }
 
     @NonNull
     @NotNull
@@ -33,7 +39,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ChatViewHolder holder, int position) {
-        holder.setTv_sender(chatDataset.get(position).getSender());
+        if (chatDataset.get(position).getSender().compareTo(uid) == 0)
+            holder.setTv_sender("You:");
+        else
+            holder.setTv_sender(kachatName + ":");
+
         holder.setTv_message(chatDataset.get(position).getMessage());
     }
 

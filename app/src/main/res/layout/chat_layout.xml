@@ -14,7 +14,8 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
         android:textColor="@color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:text="User says:" />
 
     <TextView
         android:id="@+id/tv_message"
@@ -23,5 +24,6 @@
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textAlignment="viewStart"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        tools:text="Hello!" />
 </LinearLayout>

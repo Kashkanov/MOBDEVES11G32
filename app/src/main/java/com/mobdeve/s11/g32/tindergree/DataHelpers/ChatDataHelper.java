@@ -17,12 +17,13 @@ import com.mobdeve.s11.g32.tindergree.Models.Chat;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ChatDataHelper {
     private FirebaseDatabase database;
 
     public ChatDataHelper() {
-        database = FirebaseDatabase.getInstance(); // Don't forget to change the parameters if switching between emulator / production.
+        database = FirebaseDatabase.getInstance(); // TODO: Don't forget to change the parameters if switching between emulator / production.
 
         // Comment these lines if production Firebase should be used instead of emulator
         try {
@@ -34,6 +35,7 @@ public class ChatDataHelper {
         }
     }
 
+    // For testing purposes
     public void testLoadMessages(ChatActivity chatActivity, ArrayList<Chat> messages, ChatActivity activity) {
         messages.add(new Chat("Hello po!", "UID HERE"));
         messages.add(new Chat("Hello Again!", "UID HERE"));
@@ -42,9 +44,12 @@ public class ChatDataHelper {
 
     public void loadMessages(ChatActivity chatActivity, ArrayList<Chat> messages, String chatUid) {
         DatabaseReference chatUIDRef = database.getReference("ChatMessages");
+        Log.d(SwipeActivity.firebaseLogKey, "Loading chat from ChatUID: " + chatUid);
 
         // TODO: Continue from here. Test out handling of empty retrieval.
-        chatUIDRef.child(chatUid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        chatUIDRef.child(chatUid)
+                .orderByKey()
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -52,10 +57,13 @@ public class ChatDataHelper {
                 }
                 else {
                     Log.d(SwipeActivity.firebaseLogKey, String.valueOf("Got results! " + String.valueOf(task.getResult().getValue())));
-                    if (task.getResult().exists() == false) // No chat history
+                    if (task.getResult().exists() == false) { // No chat history
+                        Log.d(SwipeActivity.firebaseLogKey, "No chat history.");
                         return;
+                    }
 
-                    Map<String, Object> chatEntries = (Map<String, Object>) task.getResult().getValue();
+                    Map<String, Object> chatEntriesTemp = (Map<String, Object>) task.getResult().getValue();
+                    Map <String, Object> chatEntries = new TreeMap<>(chatEntriesTemp);
 
                     // Retrieve each message
                     for (Map.Entry<String, Object> chatEntry : chatEntries.entrySet()) { // -MiMTkAGO_bqnMlbhemc={sender=UID HERE, message=Hello po!}
@@ -67,7 +75,8 @@ public class ChatDataHelper {
                         messages.add(new Chat(message, sender));
                     }
 
-                    chatActivity.finalizeChatRecyclerView(); // TODO: Move this to ChatDataHelper (once messages have been loaded)
+                    chatActivity.finalizeChatRecyclerView();
+                    chatActivity.readyToListenToIncomingMessage = true;
                 }
             }
         });

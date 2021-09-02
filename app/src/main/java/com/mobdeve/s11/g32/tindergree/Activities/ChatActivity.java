@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,8 +25,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +45,8 @@ import com.mobdeve.s11.g32.tindergree.Models.Chat;
 import com.mobdeve.s11.g32.tindergree.Models.ChatUid;
 import com.mobdeve.s11.g32.tindergree.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,12 +57,16 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton ib_kachatpic;
     private TextView tv_kachatname;
     private TextView tv_kachatdesc;
+    private EditText et_message;
     private RecyclerView rv_chat;
+    private Button btn_sendmessage;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
     public static final String KEY_UID = "KEY_UID";
     private String kachatuid;
+
+    public Boolean readyToListenToIncomingMessage;
 
     private ArrayList<Chat> messages;
     private String chatUid;
@@ -63,6 +75,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
     private FirebaseDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +107,8 @@ public class ChatActivity extends AppCompatActivity {
         this.ib_kachatpic = findViewById(R.id.ib_kachatpic);
         this.tv_kachatname = findViewById(R.id.tv_kachatname);
         this.tv_kachatdesc = findViewById(R.id.tv_kachatdesc);
+        this.et_message = findViewById(R.id.et_message);
+        this.btn_sendmessage = findViewById(R.id.btn_sendmessage);
 
         Intent i = getIntent();
         String kachatname =i.getStringExtra(MatchAdapter.KEY_MATCHNAME);
@@ -115,10 +130,26 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        this.btn_sendmessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMessage();
+            }
+        });
+
         messages = new ArrayList<>();
 
         fetchProfilePicture();
+        getChatUid();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        readyToListenToIncomingMessage = false;
         loadChatting();
+        registerMessageListener();
     }
 
     private void changeStatusBarColor(){
@@ -168,16 +199,12 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-    private void initializeChatRecyclerView() {
-        this.rv_chat = findViewById(R.id.rv_chat);
-    }
-
     public void finalizeChatRecyclerView() {
         this.rv_chat = findViewById(R.id.rv_chat);
         LinearLayoutManager manager = new LinearLayoutManager(this, GridLayoutManager.VERTICAL,false);
 
         this.rv_chat.setLayoutManager(manager);
-        this.rv_chat.setAdapter(new ChatAdapter(messages));
+        this.rv_chat.setAdapter(new ChatAdapter(messages, mAuth.getUid(), tv_kachatname.getText().toString()));
     }
 
     private String getChatUid() {
@@ -205,8 +232,7 @@ public class ChatActivity extends AppCompatActivity {
         Log.d(SwipeActivity.firebaseLogKey, "Loading chat messages...");
 
         // Load the chat messages from Realtime Database using the Chat UID
-        new ChatDataHelper().testLoadMessages(this, this.messages, this);
-        // new ChatDataHelper().loadMessages(this, this.messages, this.chatUid);
+        new ChatDataHelper().loadMessages(this, this.messages, this.chatUid);
     }
 
     /**
@@ -214,14 +240,87 @@ public class ChatActivity extends AppCompatActivity {
      * Allows the front-end to be updated in real-time.
      */
     private void registerMessageListener() {
+        // If incoming message is from other user, add to view.
+        if (readyToListenToIncomingMessage == false)
+            return;
 
+        DatabaseReference chatMessagesRef = database.getReference("ChatMessages").child(chatUid);
+
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                Log.d(SwipeActivity.firebaseLogKey, "onChildAdded:" + snapshot.getKey());
+
+                String key = snapshot.getKey();
+                Map<String, Object> chatEntry = (Map<String, Object>) snapshot.getValue();
+
+                String message = (String) chatEntry.get("message");
+                String sender = (String) chatEntry.get("sender");
+
+                Chat newMessage = new Chat(message, sender);
+                if (newMessage.getSender().compareTo(mAuth.getUid()) != 0) { // New message from other user
+                    Log.d(SwipeActivity.firebaseLogKey, "New incoming message!");
+                    messages.add(newMessage);
+                    if (messages.size() == 1) {
+                        finalizeChatRecyclerView();
+                    }
+                    else {
+                        rv_chat.getAdapter().notifyItemChanged(messages.size());
+                        rv_chat.getAdapter().notifyItemRangeChanged(messages.size(), messages.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                Log.d(SwipeActivity.firebaseLogKey, "onChildChanged:" + snapshot.getKey());
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull @NotNull DataSnapshot snapshot) {
+                // Something
+            }
+
+            @Override
+            public void onChildMoved(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                // Something
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+                // Something
+            }
+        };
+
+        chatMessagesRef.addChildEventListener(childEventListener);
     }
 
     private void sendMessage() {
-        // TODO: Continue here (Register onclick event to the Send button first) (use test chat data)
+        this.rv_chat = findViewById(R.id.rv_chat);
+        DatabaseReference chatMessagesRef = database.getReference("ChatMessages");
 
-        //Chat testChat = new Chat("AAAAAAAA!", "UID HERE");
-        //myRef.push().setValue(testChat);
+        Log.d(SwipeActivity.firebaseLogKey, "Saving message to ChatUID: " + this.chatUid);
+
+        String message = this.et_message.getText().toString();
+        if (message.length() == 0) {
+            this.et_message.setError("Do not leave blank!");
+            return;
+        }
+
+        Chat messageEntry = new Chat(message, mAuth.getUid());
+
+        chatMessagesRef.child(this.chatUid).push().setValue(messageEntry);
+
+        this.messages.add(messageEntry);
+        if (this.messages.size() == 1) {
+            finalizeChatRecyclerView();
+        }
+        else {
+            this.rv_chat.getAdapter().notifyItemChanged(this.messages.size());
+            this.rv_chat.getAdapter().notifyItemRangeChanged(this.messages.size(), this.messages.size());
+        }
+
+        this.et_message.setText("");
     }
 }
 
