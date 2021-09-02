@@ -2,19 +2,27 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.net.sip.SipAudioCall;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -43,8 +51,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mobdeve.s11.g32.tindergree.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -74,12 +86,12 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
-    private static final int IMAGE_PICK_CODE = 1000;
-    private static final int PERMISSION_CODE = 1001;
+    private static final int CAMERA_PICK_CODE = 0;
+    private static final int IMAGE_PICK_CODE = 1;
+    private static final int PERMISSION_CODE_GALLERY = 1000;
+    private static final int PERMISSION_CODE_CAMERA = 1001;
+    private Uri mUri;
 
-
-    //TODO : Pictures should be uploaded from left to right, top to bottom regardless of what ib was clicked, tho I should not prioritize this first.
-    //
     private boolean ibPostRegister1HasImage,ibPostRegister2HasImage,
                     ibPostRegister3HasImage,ibPostRegister4HasImage,
                     ibPostRegister5HasImage,ibPostRegister6HasImage;
@@ -93,6 +105,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         mAuth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
+
+        askPermissions();
 
         // Comment these lines if production Firebase should be used instead of emulator
         try {
@@ -118,6 +132,25 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
 
         setImageOnClickListeners();
 
+    }
+
+    private void askPermissions(){
+        if(ContextCompat.checkSelfPermission(PostRegisterUploadPhotos.this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(PostRegisterUploadPhotos.this,
+                    new String[]{
+                            Manifest.permission.CAMERA
+                    }, PERMISSION_CODE_CAMERA);
+
+        }
+        if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED) {
+            //Permission not granted, request
+
+            String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+            //show popup for runtime permission
+            requestPermissions(permissions, PERMISSION_CODE_GALLERY);
+        }
     }
 
     private void changeStatusBarColor(){
@@ -160,53 +193,31 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         switch(v.getId()){
             case R.id.ib_post_register_photo1:
                 this.currentButtonClicked = 1;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo2:
                 this.currentButtonClicked = 2;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo3:
                 this.currentButtonClicked = 3;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo4:
                 this.currentButtonClicked = 4;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo5:
                 this.currentButtonClicked = 5;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo6:
                 this.currentButtonClicked = 6;
-                changeImageOnClick();
+                chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_next:
                 uploadImage();
                 break;
-        }
-
-    }
-
-    private void pickImageFromGallery(){
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @org.jetbrains.annotations.NotNull String[] permissions, @NonNull @org.jetbrains.annotations.NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode){
-            case PERMISSION_CODE:{
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pickImageFromGallery();
-                }else{
-                    Toast.makeText(this,"Permission was denied.",Toast.LENGTH_SHORT).show();
-                }
-            }
         }
 
     }
@@ -225,56 +236,114 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         return result;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_CANCELED)
-            return;
-
-        Uri selectedImageUri = data.getData();
-        File originalImageFile = new File(getRealPathFromURI(selectedImageUri));
-        File compressedImageFile = null;
-
-        // Compress the image
-        try {
-            compressedImageFile = new Compressor(PostRegisterUploadPhotos.this).compressToFile(originalImageFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        switch(this.currentButtonClicked)
-       {
-           case 1:
-               this.userPhotosToUpload.set(0, compressedImageFile);
-               setImage(ibPostRegister1,requestCode, resultCode, Uri.fromFile(compressedImageFile),1);
-               break;
-           case 2:
-               this.userPhotosToUpload.set(1, compressedImageFile);
-               setImage(ibPostRegister2,requestCode, resultCode, Uri.fromFile(compressedImageFile),2);
-               break;
-           case 3:
-               this.userPhotosToUpload.set(2, compressedImageFile);
-               setImage(ibPostRegister3,requestCode, resultCode, Uri.fromFile(compressedImageFile),3);
-               break;
-           case 4:
-               this.userPhotosToUpload.set(3, compressedImageFile);
-               setImage(ibPostRegister4,requestCode, resultCode, Uri.fromFile(compressedImageFile),4);
-               break;
-           case 5:
-               this.userPhotosToUpload.set(4, compressedImageFile);
-               setImage(ibPostRegister5,requestCode, resultCode, Uri.fromFile(compressedImageFile),5);
-               break;
-           case 6:
-               this.userPhotosToUpload.set(5, compressedImageFile);
-               setImage(ibPostRegister6,requestCode, resultCode, Uri.fromFile(compressedImageFile),6);
-               break;
-       }
-
+    public Uri getImageUri(Context ctx, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(ctx.getContentResolver(),
+                bitmap, "Temp", null);
+        return Uri.parse(path);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+            if (requestCode == CAMERA_PICK_CODE) {
+
+                    Bitmap image = (Bitmap) data.getExtras().get("data");
+
+                    Uri uriLocal = getImageUri(PostRegisterUploadPhotos.this,image);
+
+                    File originalImageFile = new File(getRealPathFromURI(uriLocal));
+                    File compressedImageFile = null;
+
+                    // Compress the image
+                    try {
+                        compressedImageFile = new Compressor(PostRegisterUploadPhotos.this).compressToFile(originalImageFile);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    switch(this.currentButtonClicked) {
+                        case 1:
+                            this.userPhotosToUpload.set(0, compressedImageFile);
+                            setImage(ibPostRegister1, requestCode, resultCode, Uri.fromFile(compressedImageFile), 1);
+                            break;
+                        case 2:
+                            this.userPhotosToUpload.set(1, compressedImageFile);
+                            setImage(ibPostRegister2, requestCode, resultCode, Uri.fromFile(compressedImageFile), 2);
+                            break;
+                        case 3:
+                            this.userPhotosToUpload.set(2, compressedImageFile);
+                            setImage(ibPostRegister3, requestCode, resultCode, Uri.fromFile(compressedImageFile), 3);
+                            break;
+                        case 4:
+                            this.userPhotosToUpload.set(3, compressedImageFile);
+                            setImage(ibPostRegister4, requestCode, resultCode, Uri.fromFile(compressedImageFile), 4);
+                            break;
+                        case 5:
+                            this.userPhotosToUpload.set(4, compressedImageFile);
+                            setImage(ibPostRegister5, requestCode, resultCode, Uri.fromFile(compressedImageFile), 5);
+                            break;
+                        case 6:
+                            this.userPhotosToUpload.set(5, compressedImageFile);
+                            setImage(ibPostRegister6, requestCode, resultCode, Uri.fromFile(compressedImageFile), 6);
+                            break;
+                    }
+
+                } else if (requestCode == IMAGE_PICK_CODE) {
+
+                        Uri selectedImageUri = data.getData();
+                        File originalImageFile2 = new File(getRealPathFromURI(selectedImageUri));
+                        File compressedImageFile2 = null;
+
+                        // Compress the image
+                        try {
+                            compressedImageFile2 = new Compressor(PostRegisterUploadPhotos.this).compressToFile(originalImageFile2);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        switch (this.currentButtonClicked) {
+                            case 1:
+                                this.userPhotosToUpload.set(0, compressedImageFile2);
+                                setImage(ibPostRegister1, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 1);
+                                break;
+                            case 2:
+                                this.userPhotosToUpload.set(1, compressedImageFile2);
+                                setImage(ibPostRegister2, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 2);
+                                break;
+                            case 3:
+                                this.userPhotosToUpload.set(2, compressedImageFile2);
+                                setImage(ibPostRegister3, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 3);
+                                break;
+                            case 4:
+                                this.userPhotosToUpload.set(3, compressedImageFile2);
+                                setImage(ibPostRegister4, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 4);
+                                break;
+                            case 5:
+                                this.userPhotosToUpload.set(4, compressedImageFile2);
+                                setImage(ibPostRegister5, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 5);
+                                break;
+                            case 6:
+                                this.userPhotosToUpload.set(5, compressedImageFile2);
+                                setImage(ibPostRegister6, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 6);
+                                break;
+                        }
+
+
+
+                }
+
+
+
+
+         }
+
+
     private void setImage(ImageButton ibPostRegister,int requestCode, int resultCode, Uri compressedImageUri,int imageButtonNumber) {
-        if(resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE){
+
             ibPostRegister.setImageURI(compressedImageUri);
 
             ibPostRegister.setAdjustViewBounds(true);
@@ -301,7 +370,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                 case 6:
                     ibPostRegister6HasImage = true;
                     break;
-            }
+
         }
     }
 
@@ -456,26 +525,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         }
     }
 
-    private void changeImageOnClick(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_DENIED){
-                //Permission not granted, request
-
-                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                //show popup for runtime permission
-                requestPermissions(permissions,PERMISSION_CODE);
-
-            }else{
-                //permission granted
-                pickImageFromGallery();
-            }
-        }else{
-            //system os less than marshallow
-            pickImageFromGallery();
-        }
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -491,15 +540,43 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             hasNoProfilePicture = true;
 
             Toast.makeText(getApplicationContext(), "Upload a profile picture!", Toast.LENGTH_SHORT).show();
-//            View view = toast.getView();
-//            view.setBackgroundResource(R.drawable.rounded_layout_red);
-//            TextView text = (TextView) view.findViewById(android.R.id.message);
-//            /*Here you can do anything with above textview like text.setTextColor(Color.parseColor("#000000"));*/
-//            text.setTextColor(Color.parseColor("#FFFFFF"));
-//            text.setPadding(20,5,20,5);
-//            toast.show();
+
         }
         return hasNoProfilePicture;
     }
 
+    private void chooseImage(Context context){
+        final CharSequence[] optionsMenu = {"Take photo with camera", "Choose from gallery", "Exit" }; // create a menuOption Array
+        // create a dialog for showing the optionsMenu
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // set the items in builder
+        builder.setItems(optionsMenu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(optionsMenu[i].equals("Take photo with camera")){
+                    // Open the camera and get the photo
+                    if(Build.VERSION.SDK_INT>=24){
+                        try{
+                            Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                            m.invoke(null);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePicture, CAMERA_PICK_CODE);
+                }
+                else if(optionsMenu[i].equals("Choose from gallery")){
+                    // choose from  external storage
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(pickPhoto , IMAGE_PICK_CODE);
+                }
+                else if (optionsMenu[i].equals("Exit")) {
+                    dialogInterface.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
 }
