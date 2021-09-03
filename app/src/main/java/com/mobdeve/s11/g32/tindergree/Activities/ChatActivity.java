@@ -3,6 +3,7 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,11 +58,12 @@ import java.util.Map;
 public class ChatActivity extends AppCompatActivity {
 
     private ShapeableImageView ib_kachatpic;
+    private Toolbar toolbar;
     private TextView tv_kachatname;
     private TextView tv_kachatdesc;
     private EditText et_message;
     private RecyclerView rv_chat;
-    private Button btn_sendmessage;
+    private ImageButton btn_sendmessage;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
@@ -110,6 +113,8 @@ public class ChatActivity extends AppCompatActivity {
         this.tv_kachatdesc = findViewById(R.id.tv_kachatdesc);
         this.et_message = findViewById(R.id.et_message);
         this.btn_sendmessage = findViewById(R.id.btn_sendmessage);
+        this.toolbar = findViewById(R.id.chat_toolbar);
+
 
         Intent i = getIntent();
         String kachatname =i.getStringExtra(MatchAdapter.KEY_MATCHNAME);
@@ -135,6 +140,14 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
+            }
+        });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatActivity.this,DisplayChatsActivity.class);
+                startActivity(intent);
             }
         });
 
