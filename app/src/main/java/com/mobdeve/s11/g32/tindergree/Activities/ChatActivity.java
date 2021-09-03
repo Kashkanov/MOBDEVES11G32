@@ -148,6 +148,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChatActivity.this,DisplayChatsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

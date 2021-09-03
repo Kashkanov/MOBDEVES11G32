@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
@@ -32,6 +33,8 @@ public class UserProfilePageActivity extends AppCompatActivity {
     private ImageView ivDogCheck,ivCatCheck;
     private Button btnUpdate;
     private DatePickerDialog datePickerDialog;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,15 @@ public class UserProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openDatePicker(v);
+            }
+        });
+
+        toolbar = findViewById(R.id.user_profile_page_toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

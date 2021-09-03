@@ -1,6 +1,7 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Button logoutBtn;
     private ConstraintLayout clDeveloperNotes,clProfileActivity;
+    private Toolbar toolbar;
 
     private FirebaseAuth mAuth;
 
@@ -27,6 +29,15 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         changeStatusBarColor();
+
+        this.toolbar = findViewById(R.id.settings_toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         // Use Firebase emulator instead
         FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);

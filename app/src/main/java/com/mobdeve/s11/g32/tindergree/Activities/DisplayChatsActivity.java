@@ -2,6 +2,7 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -32,16 +34,20 @@ public class DisplayChatsActivity extends AppCompatActivity {
     private RecyclerView rv_matches;
     private MatchAdapter matchAdapter;
     private ArrayList<CardProfile> profiles;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        profiles = new ArrayList<>();
-
-        changeStatusBarColor();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_chats);
+        changeStatusBarColor();
+        profiles = new ArrayList<>();
+        toolbar = findViewById(R.id.display_chats_toolbar);
+        setToolbar();
+
+
         this.initRecyclerView();
+
     }
 
     private void changeStatusBarColor(){
@@ -67,6 +73,17 @@ public class DisplayChatsActivity extends AppCompatActivity {
         this.rv_matches.setAdapter(this.matchAdapter);
     }
 
+    private void setToolbar(){
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DisplayChatsActivity.this,SwipeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -78,5 +95,12 @@ public class DisplayChatsActivity extends AppCompatActivity {
         super.onPause();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,12 +53,20 @@ public class OtherPicsActivity extends AppCompatActivity {
 
     private int maxNumberofImages;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
         changeStatusBarColor();
-
+        toolbar = findViewById(R.id.profile_page_toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // Initialize Firebase Auth
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
