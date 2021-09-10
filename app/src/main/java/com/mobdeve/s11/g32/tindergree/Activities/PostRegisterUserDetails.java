@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,6 +52,8 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
+
+    private ProgressBar pb;
 
 
 
@@ -110,6 +113,8 @@ public class PostRegisterUserDetails extends AppCompatActivity {
 
         ivDogIsChecked = false;
         ivCatIsChecked = false;
+
+        pb = findViewById(R.id.pb_post_register_user_details);
 
         setOnClickListeners();
     }
@@ -183,6 +188,8 @@ public class PostRegisterUserDetails extends AppCompatActivity {
     private void saveDataToFirestore() {
         String uid = mAuth.getCurrentUser().getUid();
 
+        pb.setVisibility(View.VISIBLE);
+
         Map<String, Object> userData = new HashMap<>();
         if (ivDogIsChecked == true)
             userData.put("animal", "dog");
@@ -199,7 +206,7 @@ public class PostRegisterUserDetails extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot successfully written!");
-
+                        pb.setVisibility(View.GONE);
                         Intent i = new Intent(PostRegisterUserDetails.this,SwipeActivity.class);
                         startActivity(i);
                         finish();

@@ -131,18 +131,6 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tv_settings_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/settingsHeader"
-        android:textColor="@color/orangeAppColor"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toStartOf="@+id/gl_settings_inner_right"
-        app:layout_constraintStart_toStartOf="@+id/gl_settings_inner_left"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_settings_developer_notes"
         android:layout_width="0dp"
@@ -223,11 +211,11 @@
         android:id="@+id/cl_settings_profile_activity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/layout_border_orange"
         app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
         app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
-        app:layout_constraintTop_toBottomOf="@+id/tv_settings_header">
+        app:layout_constraintTop_toBottomOf="@+id/cl_settings_header">
 
         <ImageView
             android:id="@+id/iv_settings_next_profile"
@@ -253,6 +241,44 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_settings_header"
+        android:background="#F8FFF0"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#F8FFF0"
+            android:backgroundTint="#F8FFF0"
+            android:paddingTop="16dp"
+            android:theme="@style/ToolbarSettings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:navigationIcon="?attr/homeAsUpIndicator" />
+
+        <TextView
+            android:id="@+id/tv_settings_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settingsHeader"
+            android:textColor="@color/orangeAppColor"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

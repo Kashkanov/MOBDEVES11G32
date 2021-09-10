@@ -17,17 +17,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/display_chats_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@color/white"
+            android:backgroundTint="@color/white"
+            android:paddingTop="16dp"
+            android:theme="@style/ToolbarTheme"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+
+        </androidx.appcompat.widget.Toolbar>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="180dp"
             android:layout_height="47dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/display_chats_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/orangepaw" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -65,4 +81,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="14dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,13 +2,16 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -42,6 +45,8 @@ public class MatchRequestsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseDatabase database;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +75,19 @@ public class MatchRequestsActivity extends AppCompatActivity {
 
         this.matchRequests = new ArrayList<MatchRequest>();
         this.initrecyclerview();
+
+        toolbar = findViewById(R.id.match_requests_toolbar);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MatchRequestsActivity.this,SwipeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
     }
 
     private void changeStatusBarColor(){

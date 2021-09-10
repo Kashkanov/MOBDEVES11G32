@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:backgroundTint="#FFFFFF"
-    tools:context=".Activities.MatchesProfilePageActivity">
+        >
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,6 +34,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/profile_page_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@color/white"
+                    android:backgroundTint="@color/white"
+                    android:paddingTop="16dp"
+                    android:theme="@style/ToolbarTheme"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navigationIcon="?attr/homeAsUpIndicator">
+
+
+                </androidx.appcompat.widget.Toolbar>
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="180dp"

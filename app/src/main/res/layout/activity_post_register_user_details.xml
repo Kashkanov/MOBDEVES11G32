@@ -12,6 +12,20 @@
         android:background="#F8FFF0"
         tools:context=".PostRegisterUserDetails">
 
+        <ProgressBar
+            android:id="@+id/pb_post_register_user_details"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateDrawable="@drawable/my_progress_indeterminate"
+            android:translationZ="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/et_post_register_user_details_about_pet"
             android:layout_width="0dp"
