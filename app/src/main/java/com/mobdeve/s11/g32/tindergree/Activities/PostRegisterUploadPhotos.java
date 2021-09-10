@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +84,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                         ibPostRegister4,ibPostRegister5,ibPostRegister6;
 
     private ImageButton btnPostRegister;
+
+    private ProgressBar pb;
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
@@ -186,6 +189,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         ibPostRegister4HasImage = false;
         ibPostRegister5HasImage = false;
         ibPostRegister6HasImage = false;
+
+        pb = findViewById(R.id.pb_post_register_upload);
     }
 
     @Override
@@ -381,6 +386,8 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
            return;
        };
 
+       pb.setVisibility(View.VISIBLE);
+
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
 
         FirebaseUser user = mAuth.getCurrentUser();
@@ -498,7 +505,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                                                     // Proceed to next Activity if all images have been uploaded
                                                     if (numImagesToUpload[0] == 0) {
                                                         Log.d(SwipeActivity.firebaseLogKey, "All images uploaded!");
-
+                                                        pb.setVisibility(View.GONE);
                                                         Intent i = new Intent(PostRegisterUploadPhotos.this,PostRegisterUserDetails.class);
                                                         startActivity(i);
 

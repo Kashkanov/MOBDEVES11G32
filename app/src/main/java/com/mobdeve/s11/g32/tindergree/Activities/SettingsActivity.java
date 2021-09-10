@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mAuth.signOut();
                 Log.d(SwipeActivity.firebaseLogKey, "User signed out.");
-                Intent authenticateIntent = new Intent(SettingsActivity.this, RegisterActivity.class);
+                Intent authenticateIntent = new Intent(SettingsActivity.this, LoginActivity.class);
                 startActivity(authenticateIntent);
 
                 // End Register Activity.
