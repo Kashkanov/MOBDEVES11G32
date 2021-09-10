@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +61,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView tv_kachatdesc;
     private EditText et_message;
     private RecyclerView rv_chat;
-    private Button btn_sendmessage;
+    private ImageView iv_sendmessage;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
@@ -109,7 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         this.tv_kachatname = findViewById(R.id.tv_kachatname);
         this.tv_kachatdesc = findViewById(R.id.tv_kachatdesc);
         this.et_message = findViewById(R.id.et_message);
-        this.btn_sendmessage = findViewById(R.id.btn_sendmessage);
+        this.iv_sendmessage = findViewById(R.id.btn_sendmessage);
 
         Intent i = getIntent();
         String kachatname =i.getStringExtra(MatchAdapter.KEY_MATCHNAME);
@@ -131,7 +132,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        this.btn_sendmessage.setOnClickListener(new View.OnClickListener() {
+        this.iv_sendmessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();
