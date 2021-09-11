@@ -109,7 +109,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
-        askPermissions();
+        askPermissions(); // Camera permissions
 
         // Comment these lines if production Firebase should be used instead of emulator
         try {
@@ -126,15 +126,12 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
             Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
         }
 
-        initData();
-
         userPhotosToUpload = new ArrayList<>();
         for (int i = 0; i < 6; i++) userPhotosToUpload.add(null);
 
-        initData();
+        initData(); // findViewById
 
-        setImageOnClickListeners();
-
+        setImageOnClickListeners(); // add event listeners for image selection
     }
 
     private void askPermissions(){
@@ -197,7 +194,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     public void onClick(View v){
         switch(v.getId()){
             case R.id.ib_post_register_photo1:
-                this.currentButtonClicked = 1;
+                this.currentButtonClicked = 1; // Only this is used
                 chooseImage(PostRegisterUploadPhotos.this);
                 break;
             case R.id.ib_post_register_photo2:
@@ -252,7 +249,6 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
             if (requestCode == CAMERA_PICK_CODE) {
 
@@ -336,14 +332,7 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
                                 setImage(ibPostRegister6, requestCode, resultCode, Uri.fromFile(compressedImageFile2), 6);
                                 break;
                         }
-
-
-
                 }
-
-
-
-
          }
 
 
