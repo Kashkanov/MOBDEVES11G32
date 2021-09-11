@@ -28,11 +28,11 @@ import com.mobdeve.s11.g32.tindergree.R;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextView registerTv;
-    private EditText emailEt;
-    private EditText passwordEt;
-    private Button loginBtn;
-    private ProgressBar loginPb;
+    private TextView tvRegister;
+    private EditText etEmail;
+    private EditText etPassword;
+    private Button btnLogin;
+    private ProgressBar pbLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,23 +41,23 @@ public class LoginActivity extends AppCompatActivity {
 
         changeStatusBarColor();
 
-        registerTv = findViewById(R.id.tv_login_register);
-        emailEt = findViewById(R.id.et_login_emailaddress);
-        passwordEt = findViewById(R.id.et_login_password);
-        loginBtn = findViewById(R.id.btn_login);
-        loginPb = findViewById(R.id.pb_login);
+        tvRegister = findViewById(R.id.tv_login_register);
+        etEmail = findViewById(R.id.et_login_emailaddress);
+        etPassword = findViewById(R.id.et_login_password);
+        btnLogin = findViewById(R.id.btn_login);
+        pbLogin = findViewById(R.id.pb_login);
 
         mAuth = FirebaseAuth.getInstance();
 
         // Login button click event
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn(emailEt.getText().toString(), passwordEt.getText().toString());
+                signIn(etEmail.getText().toString(), etPassword.getText().toString());
             }
         });
 
-        registerTv.setOnClickListener(new View.OnClickListener() {
+        tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void successLoginRedirect() {
         // End Register Activity.
-        loginPb.setVisibility(View.GONE);
+        pbLogin.setVisibility(View.GONE);
         Intent intent = new Intent("finish_activity");
         sendBroadcast(intent);
 
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         if(checkEmptyFields(email,password))
             return;
 
-        loginPb.setVisibility(View.VISIBLE);
+        pbLogin.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(SwipeActivity.firebaseLogKey, "signInWithEmail:success");
                         } else {
                             // If sign in fails, display a message to the user.
-                            loginPb.setVisibility(View.GONE);
+                            pbLogin.setVisibility(View.GONE);
                             Log.w(SwipeActivity.firebaseLogKey, "signInWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed. Check credentials.",
                                     Toast.LENGTH_SHORT).show();
@@ -139,12 +139,12 @@ public class LoginActivity extends AppCompatActivity {
         boolean hasEmpty = false;
 
         if(email.isEmpty()){
-            emailEt.setError("Please enter your email!");
-            emailEt.requestFocus();
+            etEmail.setError("Please enter your email!");
+            etEmail.requestFocus();
             hasEmpty = true;
         }else if(password.isEmpty()){
-            passwordEt.setError("Please enter your password!");
-            passwordEt.requestFocus();
+            etPassword.setError("Please enter your password!");
+            etPassword.requestFocus();
             hasEmpty = true;
         }
 

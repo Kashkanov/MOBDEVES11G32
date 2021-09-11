@@ -38,13 +38,13 @@ import java.util.ArrayList;
 
 public class OtherPicsActivity extends AppCompatActivity {
 
-    private ImageView iv_profprofpic;
-    private TextView tv_profname;
-    private TextView tv_profdesc;
+    private ImageView ivProfProfPic;
+    private TextView tvProfName;
+    private TextView tvProfDesc;
     private ArrayList<OtherPic> otherpics;
-    private RecyclerView rv_otherpics;
+    private RecyclerView rvOtherPics;
     private OtherPicsAdapter otherPicsAdapter;
-    private ProgressBar pb_otherPicsLoading;
+    private ProgressBar pbOtherPicsLoading;
 
     private String profUid, profname, profdesc;
 
@@ -81,20 +81,20 @@ public class OtherPicsActivity extends AppCompatActivity {
             Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
         }
 
-        this.pb_otherPicsLoading = findViewById(R.id.pb_otherPicsLoading);
-        this.rv_otherpics = findViewById(R.id.rv_profotherpics);
-        pb_otherPicsLoading.setVisibility(View.VISIBLE);
-        rv_otherpics.setVisibility(View.GONE);
+        this.pbOtherPicsLoading = findViewById(R.id.pb_otherPicsLoading);
+        this.rvOtherPics = findViewById(R.id.rv_profotherpics);
+        pbOtherPicsLoading.setVisibility(View.VISIBLE);
+        rvOtherPics.setVisibility(View.GONE);
 
-        this.iv_profprofpic = findViewById(R.id.iv_profprofpic);
-        this.tv_profname = findViewById(R.id.tv_profname);
-        this.tv_profdesc = findViewById(R.id.tv_profdesc);
+        this.ivProfProfPic = findViewById(R.id.iv_profprofpic);
+        this.tvProfName = findViewById(R.id.tv_profname);
+        this.tvProfDesc = findViewById(R.id.tv_profdesc);
 
         Intent i = getIntent(); // Required: Pet name, Description, UID
         this.profname = i.getStringExtra(CardAdapter.KEY_PROFNAME);
-        this.tv_profname.setText(profname);
+        this.tvProfName.setText(profname);
         this.profdesc = i.getStringExtra(CardAdapter.KEY_PROFDESC);
-        this.tv_profdesc.setText(profdesc);
+        this.tvProfDesc.setText(profdesc);
         this.profUid = i.getStringExtra(CardAdapter.KEY_PROFUID);
 
         otherpics = new ArrayList<>();
@@ -133,7 +133,7 @@ public class OtherPicsActivity extends AppCompatActivity {
                                     public void onSuccess(byte[] bytes) {
                                         // Show the profile picture to the app
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
-                                        iv_profprofpic.setImageBitmap(bitmap);
+                                        ivProfProfPic.setImageBitmap(bitmap);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -166,8 +166,8 @@ public class OtherPicsActivity extends AppCompatActivity {
                             maxNumberofImages = task.getResult().size();
                             if (maxNumberofImages == 0) { // The user has no other pictures besides their profile picture
                                 Log.d(SwipeActivity.firebaseLogKey, "No other pictures found.");
-                                rv_otherpics.setVisibility(View.INVISIBLE);
-                                pb_otherPicsLoading.setVisibility(View.INVISIBLE);
+                                rvOtherPics.setVisibility(View.INVISIBLE);
+                                pbOtherPicsLoading.setVisibility(View.INVISIBLE);
                                 return;
                             }
 
@@ -215,11 +215,11 @@ public class OtherPicsActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
 
-        this.rv_otherpics.setLayoutManager(manager);
+        this.rvOtherPics.setLayoutManager(manager);
         this.otherPicsAdapter = new OtherPicsAdapter(this.otherpics);
-        this.rv_otherpics.setAdapter(this.otherPicsAdapter);
+        this.rvOtherPics.setAdapter(this.otherPicsAdapter);
 
-        pb_otherPicsLoading.setVisibility(View.GONE);
-        rv_otherpics.setVisibility(View.VISIBLE);
+        pbOtherPicsLoading.setVisibility(View.GONE);
+        rvOtherPics.setVisibility(View.VISIBLE);
     }
 }

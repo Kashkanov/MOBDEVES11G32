@@ -18,7 +18,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button logoutBtn;
+    private Button btnLogout;
     private ConstraintLayout clDeveloperNotes,clProfileActivity;
     private Toolbar toolbar;
 
@@ -45,13 +45,13 @@ public class SettingsActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        logoutBtn = findViewById(R.id.btn_settings_log_out);
+        btnLogout = findViewById(R.id.btn_settings_log_out);
         clDeveloperNotes = findViewById(R.id.cl_settings_developer_notes);
         clProfileActivity = findViewById(R.id.cl_settings_profile_activity);
         Intent i = getIntent();
 
         // Sign out the user on click and destroy activities
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();

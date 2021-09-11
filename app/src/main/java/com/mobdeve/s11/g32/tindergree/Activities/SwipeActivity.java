@@ -58,15 +58,15 @@ import static android.content.ContentValues.TAG;
 
 public class SwipeActivity extends AppCompatActivity {
 
-    private CardStackView rv_cardarea;
+    private CardStackView rvCardArea;
     private CardStackLayoutManager manager;
     private CardAdapter cardAdapter;
-    private FloatingActionButton fab_openchats;
-    private ImageButton ib_opensettings;
-    private ImageButton ib_opennotifs;
-    private ImageView iv_notifdot;
-    private ProgressBar pb_swipeActivity;
-    private TextView tv_swipesysnotif;
+    private FloatingActionButton fabOpenChats;
+    private ImageButton ibOpenSettings;
+    private ImageButton ibOpenNotifs;
+    private ImageView ivNotifDot;
+    private ProgressBar pbSwipeActivity;
+    private TextView tvSwipeNotify;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -131,17 +131,17 @@ public class SwipeActivity extends AppCompatActivity {
             return;
         }
 
-        this.fab_openchats = findViewById(R.id.fab_openchats);
-        this.ib_opensettings = findViewById(R.id.ib_opensettings);
-        this.ib_opennotifs = findViewById(R.id.ib_opennotifs);
-        this.pb_swipeActivity = findViewById(R.id.pb_swipeActivity);
-        this.tv_swipesysnotif = findViewById(R.id.tv_swipesysnotif);
-        this.iv_notifdot = findViewById(R.id.iv_notifdot);
+        this.fabOpenChats = findViewById(R.id.fab_openchats);
+        this.ibOpenSettings = findViewById(R.id.ib_opensettings);
+        this.ibOpenNotifs = findViewById(R.id.ib_opennotifs);
+        this.pbSwipeActivity = findViewById(R.id.pb_swipeActivity);
+        this.tvSwipeNotify = findViewById(R.id.tv_swipesysnotif);
+        this.ivNotifDot = findViewById(R.id.iv_notifdot);
 
-        this.tv_swipesysnotif.setVisibility(View.GONE);
-        iv_notifdot.setVisibility(View.INVISIBLE);
+        this.tvSwipeNotify.setVisibility(View.GONE);
+        ivNotifDot.setVisibility(View.INVISIBLE);
 
-        this.fab_openchats.setOnClickListener(new View.OnClickListener() {
+        this.fabOpenChats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), DisplayChatsActivity.class);
@@ -150,7 +150,7 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
-        this.ib_opensettings.setOnClickListener(new View.OnClickListener() {
+        this.ibOpenSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), SettingsActivity.class);
@@ -159,7 +159,7 @@ public class SwipeActivity extends AppCompatActivity {
             }
         });
 
-        this.ib_opennotifs.setOnClickListener(new View.OnClickListener() {
+        this.ibOpenNotifs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), MatchRequestsActivity.class);
@@ -167,7 +167,7 @@ public class SwipeActivity extends AppCompatActivity {
                 v.getContext().startActivity(i);
             }
         });
-        this.rv_cardarea = findViewById(R.id.cs_cardarea);
+        this.rvCardArea = findViewById(R.id.cs_cardarea);
 
     }
 
@@ -187,9 +187,9 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
-        rv_cardarea.setVisibility(View.GONE);
-        pb_swipeActivity.setVisibility(View.VISIBLE);
-        tv_swipesysnotif.setVisibility(View.GONE); // Show this error message view if no available profiles are fetched.
+        rvCardArea.setVisibility(View.GONE);
+        pbSwipeActivity.setVisibility(View.VISIBLE);
+        tvSwipeNotify.setVisibility(View.GONE); // Show this error message view if no available profiles are fetched.
 
         CardDataHelper carddataHelper = new CardDataHelper();
 
@@ -204,9 +204,9 @@ public class SwipeActivity extends AppCompatActivity {
      * Call when there are no available matches.
      */
     public void showMessage() {
-        rv_cardarea.setVisibility(View.GONE);
-        pb_swipeActivity.setVisibility(View.GONE);
-        tv_swipesysnotif.setVisibility(View.VISIBLE); // Show this error message view if no available profiles are fetched.
+        rvCardArea.setVisibility(View.GONE);
+        pbSwipeActivity.setVisibility(View.GONE);
+        tvSwipeNotify.setVisibility(View.VISIBLE); // Show this error message view if no available profiles are fetched.
     }
 
     public void finalizeRecyclerView() {
@@ -277,17 +277,17 @@ public class SwipeActivity extends AppCompatActivity {
         manager.setOverlayInterpolator(new LinearInterpolator());
 
         // Assign the CardStackLayoutManager to the RecyclerView
-        this.rv_cardarea.setLayoutManager(this.manager);
+        this.rvCardArea.setLayoutManager(this.manager);
 
         // Load the data onto the CardAdapter
         this.cardAdapter = new CardAdapter(this.profiles2);
 
         // Set the RecyclerView's adapter
-        this.rv_cardarea.setAdapter(this.cardAdapter);
+        this.rvCardArea.setAdapter(this.cardAdapter);
 
-        rv_cardarea.setVisibility(View.VISIBLE);
-        pb_swipeActivity.setVisibility(View.GONE);
-        tv_swipesysnotif.setVisibility(View.GONE);
+        rvCardArea.setVisibility(View.VISIBLE);
+        pbSwipeActivity.setVisibility(View.GONE);
+        tvSwipeNotify.setVisibility(View.GONE);
 
         if (profiles2.size() == 0)
             showMessage();
@@ -306,11 +306,11 @@ public class SwipeActivity extends AppCompatActivity {
                                 ArrayList<String> uidMatches = (ArrayList<String>) document.getData().get("uidMatchRequests");
 
                                 if (uidMatches.size() == 0) {
-                                    iv_notifdot.setVisibility(View.INVISIBLE);
+                                    ivNotifDot.setVisibility(View.INVISIBLE);
                                     Log.d(SwipeActivity.firebaseLogKey, "No match requests available.");
                                 }
                                 else {
-                                    iv_notifdot.setVisibility(View.VISIBLE);
+                                    ivNotifDot.setVisibility(View.VISIBLE);
                                     Log.d(SwipeActivity.firebaseLogKey, "Match requests available.");
                                 }
                             }

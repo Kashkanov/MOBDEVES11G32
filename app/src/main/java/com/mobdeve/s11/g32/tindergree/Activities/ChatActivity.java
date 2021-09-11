@@ -57,13 +57,13 @@ import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private ShapeableImageView ib_kachatpic;
+    private ShapeableImageView ibKaChatPic;
     private Toolbar toolbar;
-    private TextView tv_kachatname;
-    private TextView tv_kachatdesc;
-    private EditText et_message;
-    private RecyclerView rv_chat;
-    private ImageButton btn_sendmessage;
+    private TextView tvKaChatName;
+    private TextView tvKaChatDesc;
+    private EditText etMessage;
+    private RecyclerView rvChat;
+    private ImageButton btnSendMessage;
     public static final String KEY_KACHATNAME = "KEY_KACHATNAME";
     public static final String KEY_KACHATPIC = "KEY_KACHATPIC";
     public static final String KEY_KACHATDESC = "KEY_KACHATDESC";
@@ -108,24 +108,24 @@ public class ChatActivity extends AppCompatActivity {
             Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
         }
 
-        this.ib_kachatpic = findViewById(R.id.ib_kachatpic);
-        this.tv_kachatname = findViewById(R.id.tv_kachatname);
-        this.tv_kachatdesc = findViewById(R.id.tv_kachatdesc);
-        this.et_message = findViewById(R.id.et_message);
-        this.btn_sendmessage = findViewById(R.id.btn_sendmessage);
+        this.ibKaChatPic = findViewById(R.id.ib_kachatpic);
+        this.tvKaChatName = findViewById(R.id.tv_kachatname);
+        this.tvKaChatDesc = findViewById(R.id.tv_kachatdesc);
+        this.etMessage = findViewById(R.id.et_message);
+        this.btnSendMessage = findViewById(R.id.btn_sendmessage);
         this.toolbar = findViewById(R.id.chat_toolbar);
 
 
         Intent i = getIntent();
         String kachatname =i.getStringExtra(MatchAdapter.KEY_MATCHNAME);
-        this.tv_kachatname.setText(kachatname);
+        this.tvKaChatName.setText(kachatname);
         String kachatdesc = i.getStringExtra(MatchAdapter.KEY_MATCHDESC);
-        this.tv_kachatdesc.setText(kachatdesc);
+        this.tvKaChatDesc.setText(kachatdesc);
 
         this.kachatuid = i.getStringExtra(MatchAdapter.KEY_UID);
         this.chatUid = getChatUid();
 
-        this.ib_kachatpic.setOnClickListener(new View.OnClickListener() {
+        this.ibKaChatPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(v.getContext(), OtherPicsActivity.class);
@@ -136,7 +136,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        this.btn_sendmessage.setOnClickListener(new View.OnClickListener() {
+        this.btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendMessage();
@@ -197,7 +197,7 @@ public class ChatActivity extends AppCompatActivity {
                                     public void onSuccess(byte[] bytes) {
                                         // Show the profile picture to the app
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
-                                        ib_kachatpic.setImageBitmap(bitmap);
+                                        ibKaChatPic.setImageBitmap(bitmap);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -215,11 +215,11 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void finalizeChatRecyclerView() {
-        this.rv_chat = findViewById(R.id.rv_chat);
+        this.rvChat = findViewById(R.id.rv_chat);
         LinearLayoutManager manager = new LinearLayoutManager(this, GridLayoutManager.VERTICAL,false);
 
-        this.rv_chat.setLayoutManager(manager);
-        this.rv_chat.setAdapter(new ChatAdapter(messages, mAuth.getUid(), tv_kachatname.getText().toString()));
+        this.rvChat.setLayoutManager(manager);
+        this.rvChat.setAdapter(new ChatAdapter(messages, mAuth.getUid(), tvKaChatName.getText().toString()));
     }
 
     private String getChatUid() {
@@ -280,8 +280,8 @@ public class ChatActivity extends AppCompatActivity {
                         finalizeChatRecyclerView();
                     }
                     else {
-                        rv_chat.getAdapter().notifyItemChanged(messages.size());
-                        rv_chat.getAdapter().notifyItemRangeChanged(messages.size(), messages.size());
+                        rvChat.getAdapter().notifyItemChanged(messages.size());
+                        rvChat.getAdapter().notifyItemRangeChanged(messages.size(), messages.size());
                     }
                 }
             }
@@ -311,14 +311,14 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage() {
-        this.rv_chat = findViewById(R.id.rv_chat);
+        this.rvChat = findViewById(R.id.rv_chat);
         DatabaseReference chatMessagesRef = database.getReference("ChatMessages");
 
         Log.d(SwipeActivity.firebaseLogKey, "Saving message to ChatUID: " + this.chatUid);
 
-        String message = this.et_message.getText().toString();
+        String message = this.etMessage.getText().toString();
         if (message.length() == 0) {
-            this.et_message.setError("Do not leave blank!");
+            this.etMessage.setError("Do not leave blank!");
             return;
         }
 
@@ -331,11 +331,11 @@ public class ChatActivity extends AppCompatActivity {
             finalizeChatRecyclerView();
         }
         else {
-            this.rv_chat.getAdapter().notifyItemChanged(this.messages.size());
-            this.rv_chat.getAdapter().notifyItemRangeChanged(this.messages.size(), this.messages.size());
+            this.rvChat.getAdapter().notifyItemChanged(this.messages.size());
+            this.rvChat.getAdapter().notifyItemRangeChanged(this.messages.size(), this.messages.size());
         }
 
-        this.et_message.setText("");
+        this.etMessage.setText("");
     }
 }
 

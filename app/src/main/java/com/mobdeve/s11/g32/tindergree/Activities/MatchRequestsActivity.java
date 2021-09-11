@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class MatchRequestsActivity extends AppCompatActivity {
 
-    private RecyclerView rv_matchrequestarea;
+    private RecyclerView rvMatchRequestsArea;
     public ArrayList<MatchRequest> matchRequests; // Populate this for the recycler view
     public Matches matches, senderMatches; // For updating the database
     private MatchRequestAdapter matchRequestAdapter;
@@ -98,7 +98,7 @@ public class MatchRequestsActivity extends AppCompatActivity {
     }
 
     public void initrecyclerview(){
-        this.rv_matchrequestarea = findViewById(R.id.rv_matchrequestarea);
+        this.rvMatchRequestsArea = findViewById(R.id.rv_matchrequestarea);
         MatchRequestHelper matchRequestHelper = new MatchRequestHelper();
         matchRequestHelper.loadMatchRequestData(this);
     }
@@ -106,10 +106,10 @@ public class MatchRequestsActivity extends AppCompatActivity {
     public void finalizeRecyclerView() {
         LinearLayoutManager manager = new LinearLayoutManager(this, GridLayoutManager.VERTICAL,false);
 
-        this.rv_matchrequestarea.setLayoutManager(manager)  ;
+        this.rvMatchRequestsArea.setLayoutManager(manager)  ;
         this.matchRequestAdapter = new MatchRequestAdapter(this.matchRequests, this);
 
-        this.rv_matchrequestarea.setAdapter(this.matchRequestAdapter);
+        this.rvMatchRequestsArea.setAdapter(this.matchRequestAdapter);
     }
 
     @Override
