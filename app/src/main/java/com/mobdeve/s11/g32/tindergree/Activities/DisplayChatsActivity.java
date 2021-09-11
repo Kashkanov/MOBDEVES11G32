@@ -2,13 +2,16 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
@@ -35,16 +39,23 @@ public class DisplayChatsActivity extends AppCompatActivity {
     private MatchAdapter matchAdapter;
     private ArrayList<CardProfile> profiles;
     private Toolbar toolbar;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_chats);
         changeStatusBarColor();
         profiles = new ArrayList<>();
         toolbar = findViewById(R.id.display_chats_toolbar);
         setToolbar();
-
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         this.initRecyclerView();
 
@@ -84,22 +95,34 @@ public class DisplayChatsActivity extends AppCompatActivity {
         });
     }
 
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+        this.loadDayNight();
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+        this.loadDayNight();
     }
 
 

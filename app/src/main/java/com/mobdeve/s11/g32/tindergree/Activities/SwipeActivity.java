@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.CardDataHelper;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.Models.CardProfile;
 import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
 import com.mobdeve.s11.g32.tindergree.Models.Matches;
@@ -67,10 +72,13 @@ public class SwipeActivity extends AppCompatActivity {
     private ImageView ivNotifDot;
     private ProgressBar pbSwipeActivity;
     private TextView tvSwipeNotify;
+    private ConstraintLayout clmain1;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
+
+    private SharedPreferences sp;
 
     private ArrayList<CardProfile> profiles2 = new ArrayList<>();
 
@@ -94,9 +102,16 @@ public class SwipeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
         changeStatusBarColor();
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         registerReceiver(broadcastReceiver, new IntentFilter("finish_main_activity"));
 
         // Initialize Firebase Auth
@@ -137,6 +152,7 @@ public class SwipeActivity extends AppCompatActivity {
         this.pbSwipeActivity = findViewById(R.id.pb_swipeActivity);
         this.tvSwipeNotify = findViewById(R.id.tv_swipesysnotif);
         this.ivNotifDot = findViewById(R.id.iv_notifdot);
+        this.clmain1 = findViewById(R.id.cl_main1);
 
         this.tvSwipeNotify.setVisibility(View.GONE);
         ivNotifDot.setVisibility(View.INVISIBLE);
@@ -178,12 +194,22 @@ public class SwipeActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.parseColor("#FF914D"));
     }
 
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         profiles2.clear();
         this.initRecyclerView(); // Instantiate the Cards
         fetchMatchRequests();
+        this.loadDayNight();
     }
 
     public void initRecyclerView(){

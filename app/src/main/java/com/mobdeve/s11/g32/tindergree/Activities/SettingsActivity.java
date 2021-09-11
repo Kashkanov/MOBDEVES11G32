@@ -1,31 +1,46 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.R;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private Button btnLogout;
-    private ConstraintLayout clDeveloperNotes,clProfileActivity;
+    private ConstraintLayout clDeveloperNotes,clProfileActivity,clDarkMode;
+    private Switch switchDark;
     private Toolbar toolbar;
 
     private FirebaseAuth mAuth;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor spEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         changeStatusBarColor();
@@ -48,7 +63,13 @@ public class SettingsActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.btn_settings_log_out);
         clDeveloperNotes = findViewById(R.id.cl_settings_developer_notes);
         clProfileActivity = findViewById(R.id.cl_settings_profile_activity);
+        clDarkMode = findViewById(R.id.cl_settings_child_dark);
+        switchDark = findViewById(R.id.switch_dark);
         Intent i = getIntent();
+
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        this.spEditor = this.sp.edit();
+        this.loadData();
 
         // Sign out the user on click and destroy activities
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +103,25 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+    private void loadData(){
+        boolean switchDarkChecked = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        this.switchDark.setChecked(switchDarkChecked);
+        if(switchDarkChecked) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
+    }
+
+    private void saveData(){
+
+        this.spEditor.putBoolean(Keys.KEY_DARK_BOOL.name(), this.switchDark.isChecked());
+        this.spEditor.apply();
     }
 
     private void changeStatusBarColor(){
@@ -100,6 +140,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
          super.onPause();
+         this.saveData();
          overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 }

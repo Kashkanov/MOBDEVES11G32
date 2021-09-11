@@ -5,7 +5,7 @@
     android:id="@+id/cl_settings_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FFF0"
+    android:background="?attr/secondary_background"
     tools:context=".Activities.SettingsActivity">
 
     <Button
@@ -86,7 +86,47 @@
             android:layout_marginStart="8dp"
             android:padding="10dp"
             android:text="@string/notificationSettings"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_settings_child_dark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/layout_border"
+        android:padding="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/gl_settings_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/gl_settings_left"
+        app:layout_constraintTop_toBottomOf="@+id/cl_settings_profile_activity">
+
+        <Switch
+            android:id="@+id/switch_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="4dp"
+            android:background="@null"
+            android:text=""
+            android:thumbTint="@drawable/switch_tracker"
+            android:trackTint="@drawable/switch_tracker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_settings_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:padding="10dp"
+            android:text="@string/darkmodeSettings"
+            android:textColor="?attr/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -110,7 +150,7 @@
             android:layout_marginStart="8dp"
             android:padding="10dp"
             android:text="@string/developerNotes"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -217,8 +257,7 @@
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="#F8FFF0"
-            android:backgroundTint="#F8FFF0"
+            android:background="?attr/secondary_background"
             android:paddingTop="16dp"
             android:theme="@style/ToolbarSettings"
             app:layout_constraintBottom_toBottomOf="parent"

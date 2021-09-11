@@ -17,6 +17,7 @@
     <string name="incognitoText">Enable Incognito mode to hide your pet from the match queue of the other pets.
         However, the matches your pet already has can still view your pet.</string>
     <string name="notificationSettings">Notifications</string>
+    <string name="darkmodeSettings">Dark Mode</string>
     <string name="settingsHeader">Settings</string>
     <string name="locationTitle">Current location</string>
     <string name="developerNotes">Developer notes</string>

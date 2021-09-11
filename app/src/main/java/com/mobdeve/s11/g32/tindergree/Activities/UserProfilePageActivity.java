@@ -3,6 +3,7 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -13,6 +14,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,6 +23,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.Window;
@@ -31,7 +34,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.R;
 
 import java.io.ByteArrayOutputStream;
@@ -61,6 +66,7 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
     private static final int IMAGE_PICK_CODE = 1;
     private static final int PERMISSION_CODE_GALLERY = 1000;
     private static final int PERMISSION_CODE_CAMERA = 1001;
+    private SharedPreferences sp;
 
     private int currentButtonClicked; // tracks which add image button is tapped
 
@@ -72,10 +78,19 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile_page);
         changeStatusBarColor();
 
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        loadDayNight();
         askPermissions();
         initData();
         setImageOnClickListeners();
@@ -149,6 +164,17 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
         });
 
 
+    }
+
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     private void setImageOnClickListeners(){
