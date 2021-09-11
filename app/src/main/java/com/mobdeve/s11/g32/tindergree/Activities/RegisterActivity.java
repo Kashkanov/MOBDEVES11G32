@@ -37,14 +37,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
 
-    private EditText emailEt;
-    private EditText passwordEt;
-    private EditText confirmPasswordEt;
-    private EditText firstName;
-    private EditText lastName;
-    private TextView loginRedirectTv;
-    private Button registerBtn;
-    private ProgressBar registerPb;
+    private EditText etEmail;
+    private EditText etPassword;
+    private EditText etConfirmPassword;
+    private EditText etFirstName;
+    private EditText etLastName;
+    private TextView tvLoginRedirect;
+    private Button btnRegister;
+    private ProgressBar pbRegister;
 
     // BroadcastReceiver to end the activity from another activity.
     BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -78,21 +78,21 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        emailEt = findViewById(R.id.et_register_emailaddress);
-        passwordEt = findViewById(R.id.et_register_password);
-        confirmPasswordEt = findViewById(R.id.et_register_confirm);
-        firstName = findViewById(R.id.et_register_first_name);
-        lastName = findViewById(R.id.et_register_last_name);
-        loginRedirectTv = findViewById(R.id.tv_register_login);
-        registerBtn = findViewById(R.id.btn_register);
-        registerPb = findViewById(R.id.pb_register);
+        etEmail = findViewById(R.id.et_register_emailaddress);
+        etPassword = findViewById(R.id.et_register_password);
+        etConfirmPassword = findViewById(R.id.et_register_confirm);
+        etFirstName = findViewById(R.id.et_register_first_name);
+        etLastName = findViewById(R.id.et_register_last_name);
+        tvLoginRedirect = findViewById(R.id.tv_register_login);
+        btnRegister = findViewById(R.id.btn_register);
+        pbRegister = findViewById(R.id.pb_register);
         // Register button click event
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String displayName = firstName.getText().toString() + " " + lastName.getText().toString();
+                String displayName = etFirstName.getText().toString() + " " + etLastName.getText().toString();
                 // Register the account, and get the current instance of the user
-                registerAccount(emailEt.getText().toString(), passwordEt.getText().toString(), displayName); // Asynchronous
+                registerAccount(etEmail.getText().toString(), etPassword.getText().toString(), displayName); // Asynchronous
                 // TODO: Write code here that informs the user the app is currently creating the account. Probably a progress bar or something
 
             }
@@ -129,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void successfulRegisterRedirect() {
-        registerPb.setVisibility(View.GONE);
+        pbRegister.setVisibility(View.GONE);
 
         Log.d(SwipeActivity.firebaseLogKey, "User has created account.");
         Intent successfulRegister = new Intent(RegisterActivity.this, PostRegisterUploadPhotos.class);
@@ -142,7 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(checkEmptyFields(email,password))
             return;
-        registerPb.setVisibility(View.VISIBLE);
+        pbRegister.setVisibility(View.VISIBLE);
 
         // Create the account in Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
                             successfulRegisterRedirect();
                         } else {
                             // If sign in fails, display a message to the user.
-                            registerPb.setVisibility(View.GONE);
+                            pbRegister.setVisibility(View.GONE);
                             Log.w(SwipeActivity.firebaseLogKey, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -189,29 +189,29 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean checkEmptyFields(String email,String password){
         boolean hasEmpty = false;
 
-        String firstNameText = firstName.getText().toString();
-        String lastNameText = lastName.getText().toString();
-        String confirmPassword = confirmPasswordEt.getText().toString();
+        String etFirstNameText = etFirstName.getText().toString();
+        String etLastNameText = etLastName.getText().toString();
+        String confirmPassword = etConfirmPassword.getText().toString();
 
             if(email.isEmpty()) {
-                emailEt.setError("Please enter your email!");
-                emailEt.requestFocus();
+                etEmail.setError("Please enter your email!");
+                etEmail.requestFocus();
                 hasEmpty = true;
-            }else if(firstNameText.isEmpty()){
-                firstName.setError("Please enter your first name!");
-                firstName.requestFocus();
+            }else if(etFirstNameText.isEmpty()){
+                etFirstName.setError("Please enter your first name!");
+                etFirstName.requestFocus();
                 hasEmpty = true;
-            }else if(lastNameText.isEmpty()){
-                lastName.setError("Please enter your last name!");
-                lastName.requestFocus();
+            }else if(etLastNameText.isEmpty()){
+                etLastName.setError("Please enter your last name!");
+                etLastName.requestFocus();
                 hasEmpty = true;
             }else if(password.isEmpty()){
-                passwordEt.setError("Please enter your password!");
-                passwordEt.requestFocus();
+                etPassword.setError("Please enter your password!");
+                etPassword.requestFocus();
                 hasEmpty = true;
             }else if(confirmPassword.isEmpty()){
-                confirmPasswordEt.setError("Please confirm your password!");
-                confirmPasswordEt.requestFocus();
+                etConfirmPassword.setError("Please confirm your password!");
+                etConfirmPassword.requestFocus();
                 hasEmpty = true;
             }
 

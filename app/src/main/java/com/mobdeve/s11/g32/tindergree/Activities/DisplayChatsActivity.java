@@ -31,7 +31,7 @@ import java.util.ArrayList;
 
 public class DisplayChatsActivity extends AppCompatActivity {
 
-    private RecyclerView rv_matches;
+    private RecyclerView rvMatches;
     private MatchAdapter matchAdapter;
     private ArrayList<CardProfile> profiles;
     private Toolbar toolbar;
@@ -64,13 +64,13 @@ public class DisplayChatsActivity extends AppCompatActivity {
     }
 
     public void finalizeReyclerView() {
-        this.rv_matches = findViewById(R.id.rv_matches);
+        this.rvMatches = findViewById(R.id.rv_matches);
 
         GridLayoutManager manager = new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false);
 
-        this.rv_matches.setLayoutManager(manager);
+        this.rvMatches.setLayoutManager(manager);
         this.matchAdapter = new MatchAdapter(this.profiles);
-        this.rv_matches.setAdapter(this.matchAdapter);
+        this.rvMatches.setAdapter(this.matchAdapter);
     }
 
     private void setToolbar(){
