@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
-    android:backgroundTint="#FFFFFF"
+    android:background="?attr/background_color"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -14,8 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="377dp"
         android:layout_height="124dp"
-        android:background="#FFFFFF"
-        android:backgroundTint="#FFFFFF"
+        android:background="?attr/background_color"
         app:cardElevation="10dp"
         app:contentPadding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,9 +25,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            android:backgroundTint="#FFFFFF">
-
+            android:background="?attr/background_color">
 
             <TextView
                 android:id="@+id/tv_matchname"
@@ -37,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-condensed"
                 android:text="TextView"
-                android:textColor="#000000"
+                android:textColor="?attr/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

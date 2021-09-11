@@ -5,7 +5,7 @@
     android:id="@+id/sv_user_profile_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8FFF0"
+    android:background="?attr/secondary_background"
     tools:context=".Activities.UserProfilePageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,7 +123,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif"
             android:text="@string/aboutMe"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/ll_row2_user_profile" />
 
@@ -140,7 +140,7 @@
             android:inputType="textPersonName"
             android:padding="10dp"
             android:paddingTop="0dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
             android:textSize="14sp"
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="My pet is a.."
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/et_user_profile_about_your_pet" />
 
@@ -184,7 +184,7 @@
                 android:layout_marginStart="8dp"
                 android:padding="10dp"
                 android:text="@string/dog"
-                android:textColor="@color/black"
+                android:textColor="?attr/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -230,7 +230,7 @@
                 android:layout_marginStart="8dp"
                 android:padding="10dp"
                 android:text="@string/cat"
-                android:textColor="@color/black"
+                android:textColor="?attr/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -243,7 +243,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/birthday"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/cl_user_profile_cat" />
 
@@ -253,7 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/breed"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/cl_user_profile_page_birthday" />
 
@@ -267,7 +267,7 @@
             android:hint="Corgi"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
             android:textSize="14sp"
@@ -281,7 +281,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/name"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/et_user_profile_breed" />
 
@@ -295,7 +295,7 @@
             android:hint="@string/milo"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:textColorHint="@color/gray"
             android:textCursorDrawable="@drawable/cursor_orange"
             android:textSize="14sp"
@@ -341,7 +341,7 @@
                 android:layout_marginStart="8dp"
                 android:padding="10dp"
                 android:text="January 8 2020"
-                android:textColor="@color/black"
+                android:textColor="?attr/text_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -369,8 +369,7 @@
                 android:id="@+id/user_profile_page_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:background="@color/white"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="?attr/background_color"
                 android:paddingTop="16dp"
                 android:theme="@style/ToolbarTheme"
                 app:layout_constraintBottom_toBottomOf="parent"

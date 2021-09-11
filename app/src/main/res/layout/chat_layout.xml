@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?attr/background_color"
     android:orientation="horizontal"
     android:padding="4dp">
 
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
-        android:textColor="@color/black"
+        android:textColor="?attr/text_color"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:text="User says:" />
@@ -28,6 +28,6 @@
         android:padding="6dp"
         android:text="TextView"
         android:textAlignment="viewStart"
-        android:textColor="@color/black"
+        android:textColor="?attr/text_color"
         tools:text="Hello!" />
 </LinearLayout>

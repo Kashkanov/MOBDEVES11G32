@@ -3,16 +3,19 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -44,6 +47,7 @@ import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.Adapters.ChatAdapter;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchAdapter;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.ChatDataHelper;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.Models.Chat;
 import com.mobdeve.s11.g32.tindergree.Models.ChatUid;
 import com.mobdeve.s11.g32.tindergree.R;
@@ -74,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private ArrayList<Chat> messages;
     private String chatUid;
+    private SharedPreferences sp;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -83,10 +88,17 @@ public class ChatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_chat);
 
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         changeStatusBarColor();
 
         // Initialize Firebase Auth
@@ -163,6 +175,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onResume();
 
         readyToListenToIncomingMessage = false;
+        loadDayNight();
         loadChatting();
         registerMessageListener();
     }
@@ -220,6 +233,17 @@ public class ChatActivity extends AppCompatActivity {
 
         this.rvChat.setLayoutManager(manager);
         this.rvChat.setAdapter(new ChatAdapter(messages, mAuth.getUid(), tvKaChatName.getText().toString()));
+    }
+
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     private String getChatUid() {

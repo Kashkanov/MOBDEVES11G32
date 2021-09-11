@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/cl_main2"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="?attr/background_color"
     tools:context=".Activities.DisplayChatsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +22,8 @@
             android:id="@+id/display_chats_toolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:background="?attr/background_color"
+
             android:paddingTop="16dp"
             android:theme="@style/ToolbarTheme"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -63,7 +64,7 @@
         android:layout_width="0dp"
         android:layout_height="545dp"
         android:layout_marginTop="152dp"
-        android:background="#FFFFFF"
+        android:background="?attr/background_color"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintStart_toEndOf="@id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />

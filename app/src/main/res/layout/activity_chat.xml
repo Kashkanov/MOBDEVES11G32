@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:backgroundTint="#FFFFFF"
+    android:background="?attr/background_color"
     tools:context=".Activities.ChatActivity">
 
     <!--TODO:edittext overflow vertical-->
@@ -50,8 +49,7 @@
             android:id="@+id/chat_toolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:background="?attr/background_color"
             android:paddingTop="16dp"
             android:theme="@style/ToolbarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +68,7 @@
             android:layout_marginStart="15dp"
             android:fontFamily="sans-serif-medium"
             android:text="TextView"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ib_kachatpic"
@@ -146,7 +144,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/lightGray"
+        android:background="?attr/secondary_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -165,7 +163,7 @@
             android:inputType="textPersonName"
             android:padding="10dp"
             android:paddingLeft="5dp"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"

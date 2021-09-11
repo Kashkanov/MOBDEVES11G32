@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:backgroundTint="#FDFDFD"
+    android:background="?attr/background_color"
     tools:context=".Activities.MatchRequestsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,8 +21,7 @@
             android:id="@+id/match_requests_toolbar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@color/white"
-            android:backgroundTint="@color/white"
+            android:background="?attr/background_color"
             android:paddingTop="16dp"
             android:theme="@style/ToolbarTheme"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +67,8 @@
         android:layout_marginBottom="15dp"
         android:fontFamily="sans-serif-medium"
         android:text="Match Requests"
-        android:textColor="#000000"
+
+        android:textColor="?attr/text_color"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/rv_matchrequestarea"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,15 +2,18 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +34,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.mobdeve.s11.g32.tindergree.Adapters.CardAdapter;
 import com.mobdeve.s11.g32.tindergree.Adapters.OtherPicsAdapter;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.Models.OtherPic;
 import com.mobdeve.s11.g32.tindergree.R;
 
@@ -51,14 +55,24 @@ public class OtherPicsActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
 
+    private SharedPreferences sp;
+
     private int maxNumberofImages;
 
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        loadDayNight();
         changeStatusBarColor();
         toolbar = findViewById(R.id.profile_page_toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -100,6 +114,17 @@ public class OtherPicsActivity extends AppCompatActivity {
         otherpics = new ArrayList<>();
         fetchProfilePicture();
         fetchImages();
+    }
+
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
     }
 
     private void changeStatusBarColor(){

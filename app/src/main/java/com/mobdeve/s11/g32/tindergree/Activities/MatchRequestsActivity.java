@@ -2,14 +2,17 @@ package com.mobdeve.s11.g32.tindergree.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -25,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.mobdeve.s11.g32.tindergree.Adapters.MatchRequestAdapter;
+import com.mobdeve.s11.g32.tindergree.DataHelpers.Keys;
 import com.mobdeve.s11.g32.tindergree.DataHelpers.MatchRequestHelper;
 import com.mobdeve.s11.g32.tindergree.Models.ChatUid;
 import com.mobdeve.s11.g32.tindergree.Models.MatchRequest;
@@ -45,13 +49,24 @@ public class MatchRequestsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
     private FirebaseDatabase database;
 
+    private SharedPreferences sp;
+
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode()==AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_TindergreeDark);
+        }
+        else{
+            setTheme(R.style.Theme_Tindergree);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_requests);
         changeStatusBarColor();
+
+        this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        loadDayNight();
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -90,6 +105,17 @@ public class MatchRequestsActivity extends AppCompatActivity {
 
     }
 
+    private void loadDayNight(){
+        Boolean darkBool = this.sp.getBoolean(Keys.KEY_DARK_BOOL.name(), false);
+        if(darkBool) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        }
+    }
+
     private void changeStatusBarColor(){
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -115,6 +141,7 @@ public class MatchRequestsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        this.loadDayNight();
         overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
     }
 
