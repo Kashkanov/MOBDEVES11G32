@@ -1,16 +1,5 @@
 package com.mobdeve.s11.g32.tindergree.Activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -25,8 +14,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -39,11 +26,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.LogDescriptor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -51,6 +48,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -68,8 +67,6 @@ import java.util.Map;
 
 import id.zelory.compressor.Compressor;
 
-import id.zelory.compressor.Compressor;
-
 public class UserProfilePageActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FirebaseAuth mAuth;
@@ -80,7 +77,8 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
     private TextView tvBirthday;
     private ImageButton ibProfile1,ibProfile2,ibProfile3,
                         ibProfile4,ibProfile5,ibProfile6;
-    ConstraintLayout clDogOption,clCatoption,clBirthdayContainer;
+    ConstraintLayout clDogOption,clCatOption,clBirthdayContainer;
+    private TextView tvDogOption,tvCatOption;
     private boolean ivDogIsChecked,ivCatIsChecked;
     private ImageView ivDogCheck,ivCatCheck;
     private Button btnUpdate;
@@ -149,7 +147,9 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
         ibProfile6 = findViewById(R.id.ib_user_profile_photo6);
 
         clDogOption = findViewById(R.id.cl_user_profile_dog);
-        clCatoption = findViewById(R.id.cl_user_profile_cat);
+        clCatOption = findViewById(R.id.cl_user_profile_cat);
+        tvDogOption = findViewById(R.id.tv_user_profile_dog);
+        tvCatOption = findViewById(R.id.tv_user_profile_cat);
         clBirthdayContainer = findViewById(R.id.cl_user_profile_page_birthday);
 
         ivDogCheck = findViewById(R.id.iv_user_profile_check_dog);
@@ -162,25 +162,44 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
         ibProfile5HasImage = false;
         ibProfile6HasImage = false;
 
+        ivDogIsChecked = false;
+        ivCatIsChecked = false;
+
         initDatePicker();
         tvBirthday.setText(getTodaysDate());
 
-        /*
-        TODO Based on whether the user is a cat or dog: set the boolean ivDogIsChecked or ivCatisChecked to true
-        Then set ivDogCheck to visible/gone and same for ivCatCheck
-         */
+        clDogOption.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
 
-        btnUpdate = findViewById(R.id.btn_user_profile_update);
+               if (ivDogIsChecked == false) {
+                   tvDogOption.setTextColor(Color.parseColor("#FF914D"));
+                   ivDogCheck.setVisibility(v.VISIBLE);
+                   ivDogIsChecked = true;
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
+                   tvCatOption.setTextColor(Color.parseColor("#FF000000"));
+                   ivCatCheck.setVisibility(v.GONE);
+                   ivCatIsChecked = false;
+               }
+           }
+        });
+
+        clCatOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO call necessary function here and move checkEmptyFields to that function
-                if (checkEmptyFields()) // Empty fields, stop.
-                    return;
+                tvCatOption.setTextColor(Color.parseColor("#FF914D"));
+                if(ivCatIsChecked == false){
+                    ivCatCheck.setVisibility(v.VISIBLE);
+                    ivCatIsChecked = true;
 
+                    tvDogOption.setTextColor(Color.parseColor("#FF000000"));
+                    ivDogCheck.setVisibility(v.GONE);
+                    ivDogIsChecked = false;
+                }
             }
         });
+
+        btnUpdate = findViewById(R.id.btn_user_profile_update);
 
         clBirthdayContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,19 +251,23 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
             etAboutYourPet.requestFocus();
             hasEmpty = true;
         }
-        else if(birthday.isEmpty()){
+        if(birthday.isEmpty()){
             tvBirthday.setError("Please enter your pets birthday!");
             tvBirthday.requestFocus();
             hasEmpty= true;
         }
-        else if(breed.isEmpty()){
+        if(breed.isEmpty()){
             etBreed.setError("Please enter your pets breed!");
             etBreed.requestFocus();
             hasEmpty = true;
         }
-        else if(name.isEmpty()){
+        if(name.isEmpty()){
             etName.setError("Please enter your pets name!");
             etName.requestFocus();
+            hasEmpty = true;
+        }
+        if (ivCatIsChecked == false && ivDogIsChecked == false) {
+            Toast.makeText(UserProfilePageActivity.this, "Please select an animal type.",Toast.LENGTH_SHORT).show();
             hasEmpty = true;
         }
 
@@ -339,7 +362,243 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
     }
 
     private void updateProfile() {
-        // TODO
+        Log.d(SwipeActivity.firebaseLogKey, "START update profile.");
+        uploadImage();
+    }
+
+    private void resetPreviousProfilePicture(String newProfileImagefilename) {
+        String uid = mAuth.getUid();
+
+        firestore.collection("filenames")
+                .whereEqualTo("uid", uid)
+                .whereEqualTo("isProfilePicture", true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        // Get filename of previous profile picture
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String documentKey = document.getId();
+                                String filename = document.getData().get("filename").toString();
+                                Log.d(SwipeActivity.firebaseLogKey, document.getId() + " => " + documentKey);
+
+                                if (filename.compareTo(newProfileImagefilename) == 0) {
+                                    Log.d(SwipeActivity.firebaseLogKey, "New profile picture, SKIP reset.");
+                                    continue;
+                                }
+
+                                // Use that filename to reference the document and change its status
+                                DocumentReference prevProfilePicRef = firestore.collection("filenames").document(documentKey);
+
+                                prevProfilePicRef
+                                        .update("isProfilePicture", false)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(SwipeActivity.firebaseLogKey, "Updated previous profile picture status! (no longer a profile picture)");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(SwipeActivity.firebaseLogKey, "Error updating previous profile picture status.", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(SwipeActivity.firebaseLogKey, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void saveDataToFirestore() {
+        String uid = mAuth.getCurrentUser().getUid();
+
+        Map<String, Object> userData = new HashMap<>();
+        if (ivDogIsChecked == true)
+            userData.put("animal", "dog");
+        else if (ivCatIsChecked == true)
+            userData.put("animal", "cat");
+        userData.put("birthday", tvBirthday.getText().toString());
+        userData.put("breed", etBreed.getText().toString());
+        userData.put("petName", etName.getText().toString());
+        userData.put("petDescription", etAboutYourPet.getText().toString());
+        userData.put("uid", uid);
+
+        Log.d(SwipeActivity.firebaseLogKey, "Saving profile information to Firestore...");
+
+        firestore.collection("Pets").document(uid).set(userData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(SwipeActivity.firebaseLogKey, "Updated profile information on Firestore!");
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(SwipeActivity.firebaseLogKey, "Error writing document", e);
+                    }
+                });
+    }
+
+    private void uploadImage() {
+        // TODO: Enable loading circle view and disable the next button.
+
+        Log.d(SwipeActivity.firebaseLogKey, "Now attempting to upload the images...");
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        StorageReference storageRef = storage.getReference(); // Points to the root reference
+
+        String uid = user.getUid();
+
+        // Remove nulls
+        this.userPhotosToUpload.removeAll(Collections.singleton(null));
+
+        // Track the number of images yet to upload
+        final int[] numImagesToUpload = {this.userPhotosToUpload.size()};
+
+        Log.d(SwipeActivity.firebaseLogKey, "Total images to upload: " + String.valueOf(this.userPhotosToUpload.size()));
+
+        // Upload each image
+        for (int i = 0; i < this.userPhotosToUpload.size(); i++) {
+
+            // No image at that slot
+            if (this.userPhotosToUpload.get(i) == null) {
+                numImagesToUpload[0]--;
+                continue;
+            }
+
+            if (this.userPhotosToUpload.get(i) == null && i == this.userPhotosToUpload.size()) {
+                Log.d(SwipeActivity.firebaseLogKey, "No images to upload");
+                saveDataToFirestore();
+                return;
+            }
+
+            // Get the filename of each images and track them
+            String filename = Uri.fromFile(this.userPhotosToUpload.get(i)).getLastPathSegment();
+
+            // Prepare document
+            Map<String, Object> filenameDocument = new HashMap<>();
+            filenameDocument.put("filename", filename);
+            filenameDocument.put("uid", uid);
+            filenameDocument.put("uriTemp", Uri.fromFile(this.userPhotosToUpload.get(i)).toString());
+            // Save information about the profile picture set at the upper left.
+            if (i == 0 && ibProfile1HasImage == true)
+                filenameDocument.put("isProfilePicture", true);
+            else
+                filenameDocument.put("isProfilePicture", false);
+
+            if (ibProfile1HasImage && i == 0) // Reset previous profile image file status
+                resetPreviousProfilePicture(filename);
+
+            // URL to the profile picture
+            final Uri[] profilePictureUrl = new Uri[1];
+
+            // Add document to Firestore
+            firestore.collection("filenames")
+                    .add(filenameDocument)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+                            // Get the file name on the saved document
+                            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            Log.d(SwipeActivity.firebaseLogKey, "DocumentSnapshot data: " + document.getData());
+                                            String uploadedFilename = document.getString("filename");
+                                            String uriStringTemp = document.getString("uriTemp");
+
+                                            // Proceed to image upload
+                                            // Create reference to a path in Cloud Storage (Users/UID/<filename>)
+                                            StorageReference imageUploadReference = storageRef.child("Users/" + uid + "/" + uploadedFilename);
+                                            Uri uploadImageUri = Uri.parse(uriStringTemp);
+
+                                            UploadTask uploadTask = imageUploadReference.putFile(uploadImageUri);
+
+                                            // Save the URL of the profile picture
+                                            if (document.getBoolean("isProfilePicture")) {
+                                                Log.d(SwipeActivity.firebaseLogKey, "Profile picture upload detected.");
+                                                Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                                    @Override
+                                                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                                        if (!task.isSuccessful()) {
+                                                            throw task.getException();
+                                                        }
+                                                        // Continue with the task to get the download URL
+                                                        return imageUploadReference.getDownloadUrl();
+                                                    }
+                                                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Uri> task) {
+                                                        if (task.isSuccessful()) {
+                                                            profilePictureUrl[0] = task.getResult();
+                                                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                                    .setPhotoUri(Uri.parse(profilePictureUrl[0].toString()))
+                                                                    .build();
+
+                                                            // Update account with new profile picture
+                                                            user.updateProfile(profileUpdates)
+                                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                        @Override
+                                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                                            if (task.isSuccessful())
+                                                                                Log.d(SwipeActivity.firebaseLogKey, "User profile updated with new profile picture. " +
+                                                                                        "\nLink: " + Uri.parse(profilePictureUrl[0].toString()));
+                                                                        }
+                                                                    });
+                                                        } else {
+                                                            // Handle failures
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                            // Register observers to listen for when the upload is done or if it fails
+                                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception exception) {
+                                                    exception.printStackTrace();
+                                                    // TODO: Handle failure of image upload task. Re-enable the next button.
+                                                }
+                                            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                @Override
+                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                    Log.d(SwipeActivity.firebaseLogKey, "Image uploaded.");
+                                                    numImagesToUpload[0]--;
+
+                                                    // Proceed to next Activity if all images have been uploaded
+                                                    if (numImagesToUpload[0] == 0) {
+                                                        saveDataToFirestore(); // Update user information
+                                                        Log.d(SwipeActivity.firebaseLogKey, "All images uploaded!");
+                                                    }
+                                                }
+                                            });
+                                        } else {
+                                            Log.d(SwipeActivity.firebaseLogKey, "No such document");
+                                        }
+                                    } else {
+                                        Log.d(SwipeActivity.firebaseLogKey, "get failed with ", task.getException());
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(SwipeActivity.firebaseLogKey, "Error adding document", e);
+                        }
+                    });
+        }
     }
 
     @Override
@@ -370,7 +629,9 @@ public class UserProfilePageActivity extends AppCompatActivity implements View.O
                 chooseImage(UserProfilePageActivity.this);
                 break;
             case R.id.btn_user_profile_update:
-//                updateInformation(); //TODO Implement this
+                if (checkEmptyFields()) // Empty fields, stop.
+                    return;
+                updateProfile(); //TODO Implement this
                 break;
         }
 
