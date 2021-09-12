@@ -12,6 +12,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -25,6 +27,8 @@ import com.mobdeve.s11.g32.tindergree.Models.Matches;
 import com.mobdeve.s11.g32.tindergree.Models.Profile;
 import com.mobdeve.s11.g32.tindergree.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +41,10 @@ public class CardDataHelper {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
 
+    private String currAnimal;
+
     final int[] numberOfCandidates = new int[1];
+
 
     /**
      * Fetches user profiles from Firebase.
@@ -63,6 +70,8 @@ public class CardDataHelper {
         }
 
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to get candidates...");
+
+        this.getUserAnimal();
 
         // Fetch the UIDs of matched users (to know which ones to exclude in the swipe cards)
         firestore.collection("Matches")
@@ -130,6 +139,25 @@ public class CardDataHelper {
                 });
     }
 
+    public void getUserAnimal(){
+        DocumentReference reference = firestore.collection("Pets").document(mAuth.getUid());
+
+        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists())
+                    currAnimal = documentSnapshot.getString("animal").toString();
+                else
+                    System.out.println("does not exist");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                System.out.println("cannot retrieve animal");
+            }
+        });
+    }
+
     private void fetchCandidates(SwipeActivity swipeActivity, ArrayList<CardProfile> profiles2, ArrayList<String> uidMatches) {
         // For each candidate Pet, get their UID, exclude matched ones
         firestore.collection("Pets")
@@ -148,9 +176,11 @@ public class CardDataHelper {
                                 String candidateUid = document.getData().get("uid").toString();
                                 String petName = document.getData().get("petName").toString();
                                 String petDescription = document.getData().get("petDescription").toString();
+                                String animalType = document.getData().get("animal").toString();
 
+                                System.out.println("not swiped" + !uidMatches.contains(candidateUid));
                                 // Add their information to the app, exclude them if matched
-                                if (!uidMatches.contains(candidateUid)) {
+                                if (!uidMatches.contains(candidateUid) && animalType.equals(currAnimal)) {
                                     CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
                                     fetchImage(tempCardProfile, swipeActivity, profiles2);
                                 }
