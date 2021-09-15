@@ -69,14 +69,16 @@ public class ChatDataHelper {
                     for (Map.Entry<String, Object> chatEntry : chatEntries.entrySet()) { // -MiMTkAGO_bqnMlbhemc={sender=UID HERE, message=Hello po!}
                         Map<String, String> chatEntryMessageDetail = (Map<String, String>) chatEntry.getValue(); // {sender=UID HERE, message=Hello po!}
 
+                        String messageId = chatEntry.getKey();
                         String message = chatEntryMessageDetail.get("message");
                         String sender = chatEntryMessageDetail.get("sender");
 
+                        chatActivity.messageIDs.add(messageId);
                         messages.add(new Chat(message, sender));
                     }
 
                     chatActivity.finalizeChatRecyclerView();
-                    chatActivity.readyToListenToIncomingMessage = true;
+                    chatActivity.registerMessageListener();
                 }
             }
         });

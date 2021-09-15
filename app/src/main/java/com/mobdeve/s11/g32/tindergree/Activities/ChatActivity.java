@@ -77,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
     public Boolean readyToListenToIncomingMessage;
 
     private ArrayList<Chat> messages;
+    public ArrayList<String> messageIDs;
     private String chatUid;
     private SharedPreferences sp;
 
@@ -165,6 +166,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         messages = new ArrayList<>();
+        messageIDs = new ArrayList<>();
 
         fetchProfilePicture();
         getChatUid();
@@ -173,11 +175,9 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         readyToListenToIncomingMessage = false;
         loadDayNight();
         loadChatting();
-        registerMessageListener();
     }
 
     private void changeStatusBarColor(){
@@ -278,23 +278,32 @@ public class ChatActivity extends AppCompatActivity {
      * Registers the callback for new incoming messages.
      * Allows the front-end to be updated in real-time.
      */
-    private void registerMessageListener() {
+    public void registerMessageListener() {
         // If incoming message is from other user, add to view.
-        if (readyToListenToIncomingMessage == false)
-            return;
 
         DatabaseReference chatMessagesRef = database.getReference("ChatMessages").child(chatUid);
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull @NotNull DataSnapshot snapshot, @Nullable @org.jetbrains.annotations.Nullable String previousChildName) {
+                if (readyToListenToIncomingMessage == false) {
+                    readyToListenToIncomingMessage = true;
+                    return;
+                }
+
                 Log.d(SwipeActivity.firebaseLogKey, "onChildAdded:" + snapshot.getKey());
 
                 String key = snapshot.getKey();
                 Map<String, Object> chatEntry = (Map<String, Object>) snapshot.getValue();
 
+                String messageId = snapshot.getKey();
                 String message = (String) chatEntry.get("message");
                 String sender = (String) chatEntry.get("sender");
+
+                if (messageIDs.contains(messageId))
+                    return;
+                else
+                    messageIDs.add(messageId);
 
                 Chat newMessage = new Chat(message, sender);
                 if (newMessage.getSender().compareTo(mAuth.getUid()) != 0) { // New message from other user
@@ -341,6 +350,10 @@ public class ChatActivity extends AppCompatActivity {
         Log.d(SwipeActivity.firebaseLogKey, "Saving message to ChatUID: " + this.chatUid);
 
         String message = this.etMessage.getText().toString();
+
+        if (this.messages.size() == 0)
+            this.registerMessageListener();
+
         if (message.length() == 0) {
             this.etMessage.setError("Do not leave blank!");
             return;
