@@ -28,6 +28,7 @@ import com.mobdeve.s11.g32.tindergree.R;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+
     private TextView tvRegister;
     private EditText etEmail;
     private EditText etPassword;
@@ -79,7 +80,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onResume();
 
         // Use Firebase emulator instead
-        FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+        if (SwipeActivity.useEmulator) {
+            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+        }
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();

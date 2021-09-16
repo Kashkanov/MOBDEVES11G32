@@ -83,6 +83,7 @@ public class SwipeActivity extends AppCompatActivity {
     private ArrayList<CardProfile> profiles2 = new ArrayList<>();
 
     public static String firebaseLogKey = "AUTH_TEST";
+    public static Boolean useEmulator = false; // Set value here if using Firebase emulator or not
 
     /**
      * BroadcastReceiver to end this activity from another activity.
@@ -120,13 +121,14 @@ public class SwipeActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         // Comment these lines if production Firebase should be used instead of emulator
-        try {
-            FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
-            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-            firestore.useEmulator("10.0.2.2", 8080);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        if (SwipeActivity.useEmulator) {
+            try {
+                FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
+                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+                firestore.useEmulator("10.0.2.2", 8080);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();

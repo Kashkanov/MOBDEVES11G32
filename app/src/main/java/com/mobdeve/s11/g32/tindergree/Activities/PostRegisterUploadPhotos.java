@@ -109,21 +109,24 @@ public class PostRegisterUploadPhotos extends AppCompatActivity implements View.
         storage = FirebaseStorage.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+        Log.d(SwipeActivity.firebaseLogKey, "User has created account. UID: " + mAuth.getUid());
+
         askPermissions(); // Camera permissions
 
         // Comment these lines if production Firebase should be used instead of emulator
-        try {
-            FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
-            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-            firestore.useEmulator("10.0.2.2", 8080);
+        if (SwipeActivity.useEmulator) {
+            try {
+                FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
+                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+                firestore.useEmulator("10.0.2.2", 8080);
 
-            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                    .setPersistenceEnabled(false)
-                    .build();
-            firestore.setFirestoreSettings(settings);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+                FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                        .setPersistenceEnabled(false)
+                        .build();
+                firestore.setFirestoreSettings(settings);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
 
         userPhotosToUpload = new ArrayList<>();

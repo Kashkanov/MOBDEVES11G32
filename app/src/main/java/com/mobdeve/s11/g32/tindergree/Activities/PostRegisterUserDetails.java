@@ -64,17 +64,18 @@ public class PostRegisterUserDetails extends AppCompatActivity {
         setContentView(R.layout.activity_post_register_user_details);
         changeStatusBarColor();
 
-        try {
-            mAuth = FirebaseAuth.getInstance();
-            firestore = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
-            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                    .setPersistenceEnabled(false)
-                    .build();
-            firestore.setFirestoreSettings(settings);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        if (SwipeActivity.useEmulator) {
+            try {
+                FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                        .setPersistenceEnabled(false)
+                        .build();
+                firestore.setFirestoreSettings(settings);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
 
 

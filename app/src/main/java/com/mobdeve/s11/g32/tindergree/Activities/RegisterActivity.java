@@ -104,20 +104,18 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Use Firebase emulator instead
-        FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
         // Comment these lines if production Firebase should be used instead of emulator
-        try {
-            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-            firestore.useEmulator("10.0.2.2", 8080);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        if (SwipeActivity.useEmulator) {
+            try {
+                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+                firestore.useEmulator("10.0.2.2", 8080);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
     }
 

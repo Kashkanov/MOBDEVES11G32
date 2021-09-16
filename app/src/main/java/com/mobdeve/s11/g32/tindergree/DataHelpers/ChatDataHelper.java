@@ -23,15 +23,17 @@ public class ChatDataHelper {
     private FirebaseDatabase database;
 
     public ChatDataHelper() {
-        database = FirebaseDatabase.getInstance(); // TODO: Don't forget to change the parameters if switching between emulator / production.
+        database = FirebaseDatabase.getInstance("https://tindergree-default-rtdb.asia-southeast1.firebasedatabase.app"); // TODO: Don't forget to change the parameters if switching between emulator / production.
 
         // Comment these lines if production Firebase should be used instead of emulator
-        try {
-            FirebaseDatabase database = FirebaseDatabase.getInstance();
-            database.useEmulator("10.0.2.2", 9000);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+        if (SwipeActivity.useEmulator) {
+            try {
+                database = FirebaseDatabase.getInstance();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                database.useEmulator("10.0.2.2", 9000);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
     }
 

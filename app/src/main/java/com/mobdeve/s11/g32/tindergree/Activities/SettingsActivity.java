@@ -73,18 +73,19 @@ public class SettingsActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         // Comment these lines if production Firebase should be used instead of emulator
-        try {
-            FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
-            FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
-            firestore.useEmulator("10.0.2.2", 8080);
+        if (SwipeActivity.useEmulator) {
+            try {
+                FirebaseStorage.getInstance().useEmulator("10.0.2.2", 9199);
+                FirebaseAuth.getInstance().useEmulator("10.0.2.2", 9099);
+                firestore.useEmulator("10.0.2.2", 8080);
 
-            FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-                    .setPersistenceEnabled(false)
-                    .build();
-            firestore.setFirestoreSettings(settings);
-        }
-        catch (IllegalStateException e) {
-            Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+                FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                        .setPersistenceEnabled(false)
+                        .build();
+                firestore.setFirestoreSettings(settings);
+            } catch (IllegalStateException e) {
+                Log.d(SwipeActivity.firebaseLogKey, "Firestore emulator already instantiated!");
+            }
         }
 
         btnLogout = findViewById(R.id.btn_settings_log_out);
