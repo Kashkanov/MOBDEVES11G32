@@ -83,7 +83,7 @@ public class SwipeActivity extends AppCompatActivity {
     private ArrayList<CardProfile> profiles2 = new ArrayList<>();
 
     public static String firebaseLogKey = "AUTH_TEST";
-    public static Boolean useEmulator = false; // Set value here if using Firebase emulator or not
+    public static Boolean useEmulator = true; // Set value here if using Firebase emulator or not
 
     /**
      * BroadcastReceiver to end this activity from another activity.

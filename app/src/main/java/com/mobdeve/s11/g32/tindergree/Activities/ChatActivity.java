@@ -172,14 +172,15 @@ public class ChatActivity extends AppCompatActivity {
 
         fetchProfilePicture();
         getChatUid();
+
+        readyToListenToIncomingMessage = false;
+        loadChatting();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        readyToListenToIncomingMessage = false;
         loadDayNight();
-        loadChatting();
     }
 
     private void changeStatusBarColor(){
