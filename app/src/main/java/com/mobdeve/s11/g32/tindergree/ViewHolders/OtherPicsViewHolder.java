@@ -12,14 +12,14 @@ import com.mobdeve.s11.g32.tindergree.R;
 import org.jetbrains.annotations.NotNull;
 
 public class OtherPicsViewHolder extends RecyclerView.ViewHolder {
-    private ImageView iv_otherpic;
+    private ImageView ivOtherPic;
     
     public OtherPicsViewHolder(@NonNull @NotNull View itemView){
         super(itemView);
-        this.iv_otherpic = itemView.findViewById(R.id.iv_otherpic);
+        this.ivOtherPic = itemView.findViewById(R.id.iv_otherpic);
     }
 
     public void setIv_otherpic(Bitmap otherpic){
-        this.iv_otherpic.setImageBitmap(otherpic);
+        this.ivOtherPic.setImageBitmap(otherpic);
     }
 }

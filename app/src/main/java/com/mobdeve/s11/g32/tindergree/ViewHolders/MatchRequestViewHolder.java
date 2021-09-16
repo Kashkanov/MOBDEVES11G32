@@ -17,38 +17,38 @@ import com.mobdeve.s11.g32.tindergree.R;
 import org.jetbrains.annotations.NotNull;
 
 public class MatchRequestViewHolder extends RecyclerView.ViewHolder {
-    private ImageButton ib_reject, ib_accept;
-    private TextView tv_mrName;
-    private ImageView iv_mrPic;
-    private Button btn_mrPic;
+    private ImageButton ibReject, ibAccept;
+    private TextView tvMrName;
+    private ImageView ivMrPic;
+    private Button btnMrPic;
 
 
     public MatchRequestViewHolder(@NonNull @NotNull View itemView){
         super(itemView);
-        this.iv_mrPic = itemView.findViewById(R.id.iv_mrPic);
-        this.btn_mrPic = itemView.findViewById(R.id.btn_mrPic);
-        this.tv_mrName = itemView.findViewById(R.id.tv_mrname);
-        this.ib_reject = itemView.findViewById(R.id.ib_reject);
-        this.ib_accept = itemView.findViewById(R.id.ib_accept);
+        this.ivMrPic = itemView.findViewById(R.id.iv_mrPic);
+        this.btnMrPic = itemView.findViewById(R.id.btn_mrPic);
+        this.tvMrName = itemView.findViewById(R.id.tv_mrname);
+        this.ibReject = itemView.findViewById(R.id.ib_reject);
+        this.ibAccept = itemView.findViewById(R.id.ib_accept);
     }
 
     public void setIv_mrPic(Bitmap mrPic){
-        this.iv_mrPic.setImageBitmap(mrPic);
+        this.ivMrPic.setImageBitmap(mrPic);
     }
 
     public void setTv_mrName(String mrName){
-        this.tv_mrName.setText(mrName);
+        this.tvMrName.setText(mrName);
     }
 
     public Button getBtn_mrPic(){
-        return this.btn_mrPic;
+        return this.btnMrPic;
     }
 
     public ImageButton getIb_reject() {
-        return this.ib_reject;
+        return this.ibReject;
     }
 
     public ImageButton getIb_accept() {
-        return this.ib_accept;
+        return this.ibAccept;
     }
 }
