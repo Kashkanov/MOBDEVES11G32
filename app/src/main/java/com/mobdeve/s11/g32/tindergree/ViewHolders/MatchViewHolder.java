@@ -15,28 +15,28 @@ import com.mobdeve.s11.g32.tindergree.R;
 import org.jetbrains.annotations.NotNull;
 
 public class MatchViewHolder extends RecyclerView.ViewHolder {
-    private Button btn_matchpic;
-    private TextView tv_matchname;
-    private ImageView iv_matchpic;
+    private Button btnMatchPic;
+    private TextView tvMatchName;
+    private ImageView ivMatchPic;
 
     public MatchViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
 
-        this.btn_matchpic = itemView.findViewById(R.id.btn_matchpic);
-        this.tv_matchname = itemView.findViewById(R.id.tv_matchname);
-        this.iv_matchpic = itemView.findViewById(R.id.iv_matchpic);
+        this.btnMatchPic = itemView.findViewById(R.id.btn_matchpic);
+        this.tvMatchName = itemView.findViewById(R.id.tv_matchname);
+        this.ivMatchPic = itemView.findViewById(R.id.iv_matchpic);
     }
 
     public void setIv_matchpic(Bitmap matchpic) {
-        this.iv_matchpic.setImageBitmap(matchpic);
+        this.ivMatchPic.setImageBitmap(matchpic);
     }
 
     public void setTv_matchname(String matchname){
-        this.tv_matchname.setText(matchname);
+        this.tvMatchName.setText(matchname);
     }
 
     public Button getBtn_matchpic(){
-        return this.btn_matchpic;
+        return this.btnMatchPic;
     }
 
 }

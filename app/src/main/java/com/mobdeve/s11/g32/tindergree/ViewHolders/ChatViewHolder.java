@@ -12,22 +12,22 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChatViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView tv_sender;
-    private TextView tv_message;
+    private TextView tvSender;
+    private TextView tvMessage;
 
     public ChatViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
 
-        this.tv_sender = itemView.findViewById(R.id.tv_sender);
-        this.tv_message = itemView.findViewById(R.id.tv_message);
+        this.tvSender = itemView.findViewById(R.id.tv_sender);
+        this.tvMessage = itemView.findViewById(R.id.tv_message);
     }
 
     public void setTv_sender(String sender) {
-        this.tv_sender.setText(sender);
+        this.tvSender.setText(sender);
     }
 
     public void setTv_message(String message) {
-        this.tv_message.setText(message);
+        this.tvMessage.setText(message);
     }
 
 }
