@@ -269,6 +269,8 @@ public class SwipeActivity extends AppCompatActivity {
                     cardAdapter.notifyItemRangeChanged(0, profiles2.size());
                 }
 
+                if (profiles2.size() == 0)
+                    tvSwipeNotify.setVisibility(View.VISIBLE);
             }
 
             @Override
