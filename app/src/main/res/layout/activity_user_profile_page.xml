@@ -320,6 +320,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="TextView"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@+id/gl_right_user_profile"
             app:layout_constraintStart_toStartOf="@+id/gl_user_profile_left_headers"
             app:layout_constraintTop_toBottomOf="@+id/btn_user_profile_update" />
