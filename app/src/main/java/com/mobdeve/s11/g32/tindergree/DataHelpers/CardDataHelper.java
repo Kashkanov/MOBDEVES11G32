@@ -41,7 +41,7 @@ public class CardDataHelper {
     private FirebaseStorage storage;
     private FirebaseFirestore firestore;
 
-    private String currAnimal;
+    private String currAnimal,filterOption;
 
     final int[] numberOfCandidates = new int[1];
 
@@ -72,7 +72,8 @@ public class CardDataHelper {
 
         Log.d(SwipeActivity.firebaseLogKey, "Now attempting to get candidates...");
 
-        this.getUserAnimal();
+//        if(currAnimal == "cat" || currAnimal == "dog")
+//            this.getUserAnimal();
 
         // Fetch the UIDs of matched users (to know which ones to exclude in the swipe cards)
         firestore.collection("Matches")
@@ -182,7 +183,14 @@ public class CardDataHelper {
 
                                 System.out.println("not swiped" + !uidMatches.contains(candidateUid));
                                 // Add their information to the app, exclude them if matched
+
+                                Log.w("CURRENT ANIMAL VALUE:",currAnimal);
+
                                 if (!uidMatches.contains(candidateUid) && animalType.equals(currAnimal)) {
+                                    CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
+                                    fetchImage(tempCardProfile, swipeActivity, profiles2);
+                                }
+                                else if(!uidMatches.contains(candidateUid) && currAnimal == "none"){
                                     CardProfile tempCardProfile = new CardProfile(petName, petDescription, candidateUid);
                                     fetchImage(tempCardProfile, swipeActivity, profiles2);
                                 }
@@ -363,5 +371,9 @@ public class CardDataHelper {
                     }
                 });
         return bitmap[0];
+    }
+
+    public void checkFilter(String filterOption){
+        currAnimal = filterOption;
     }
 }

@@ -221,6 +221,10 @@ public class SwipeActivity extends AppCompatActivity {
 
         CardDataHelper carddataHelper = new CardDataHelper();
 
+        String filterValue = sp.getString(Keys.KEY_FILTER.name(), "none");
+
+        carddataHelper.checkFilter(filterValue);
+
         Log.d(SwipeActivity.firebaseLogKey, "Loading cards...");
         carddataHelper.loadProfiles(this, profiles2);
 

@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     private FirebaseFirestore firestore;
 
     private Button btnLogout, btnDeleteAccount;
-    private ConstraintLayout clDeveloperNotes,clProfileActivity,clDarkMode;
+    private ConstraintLayout clDeveloperNotes,clProfileActivity,clDarkMode,clFilterActivity;
     private Switch switchDark;
     private Toolbar toolbar;
 
@@ -93,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
         clDeveloperNotes = findViewById(R.id.cl_settings_developer_notes);
         clProfileActivity = findViewById(R.id.cl_settings_profile_activity);
         clDarkMode = findViewById(R.id.cl_settings_child_dark);
+        clFilterActivity = findViewById(R.id.cl_settings_filter_options);
         switchDark = findViewById(R.id.switch_dark);
         Intent i = getIntent();
 
@@ -153,6 +154,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingsActivity.this,UserProfilePageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        clFilterActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this,FilterActivity.class);
                 startActivity(intent);
             }
         });

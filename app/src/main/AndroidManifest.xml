@@ -3,8 +3,8 @@
     package="com.mobdeve.s11.g32.tindergree">
     <!-- Permissions for gallery -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,14 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Tindergree"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.SplashScreenActivity"
+        <activity android:name=".Activities.FilterActivity"></activity>
+        <activity
+            android:name=".Activities.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.DeveloperNotesActivity"></activity>
+        <activity android:name=".Activities.DeveloperNotesActivity" />
         <activity android:name=".Activities.UserProfilePageActivity" />
         <activity android:name=".Activities.SettingsActivity" />
         <activity android:name=".Activities.OtherPicsActivity" />
@@ -31,19 +34,22 @@
         <activity android:name=".Activities.SwipeActivity" />
         <activity android:name=".Activities.PostRegisterUploadPhotos" />
         <activity android:name=".Activities.RegisterActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".Activities.DisplayChatsActivity">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".Activities.MatchRequestsActivity"/>
+        <activity android:name=".Activities.MatchRequestsActivity" />
     </application>
 
 </manifest>
