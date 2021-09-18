@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -40,6 +41,7 @@ public class DisplayChatsActivity extends AppCompatActivity {
     private ArrayList<CardProfile> profiles;
     private Toolbar toolbar;
     private SharedPreferences sp;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +58,10 @@ public class DisplayChatsActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.display_chats_toolbar);
         setToolbar();
         this.sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        pb = findViewById(R.id.pb_display_chats_matches);
 
         this.initRecyclerView();
+
 
     }
 
@@ -72,6 +76,7 @@ public class DisplayChatsActivity extends AppCompatActivity {
         CardDataHelper carddataHelper = new CardDataHelper();
 
         carddataHelper.loadProfiles(this, profiles);
+
     }
 
     public void finalizeReyclerView() {
@@ -82,6 +87,8 @@ public class DisplayChatsActivity extends AppCompatActivity {
         this.rvMatches.setLayoutManager(manager);
         this.matchAdapter = new MatchAdapter(this.profiles);
         this.rvMatches.setAdapter(this.matchAdapter);
+
+        pb.setVisibility(View.GONE);
     }
 
     private void setToolbar(){
