@@ -236,6 +236,9 @@ public class CardDataHelper {
                                 }
                                 else {
                                     numberOfCandidates[0]--;
+
+                                    if (numberOfCandidates[0] == 0)
+                                        displayChatsActivity.finalizeReyclerView();
                                 }
 
                                 Log.d(SwipeActivity.firebaseLogKey, "Profile saved!");
@@ -298,6 +301,12 @@ public class CardDataHelper {
                                         // Handle any errors
                                         bitmap[0] = null;
                                         Log.d(SwipeActivity.firebaseLogKey, "Failed to fetch profile picture from Cloud Storage");
+
+                                        numberOfCandidates[0]--;
+
+                                        if (numberOfCandidates[0] == 0) {
+                                            swipeActivity.finalizeRecyclerView();
+                                        }
                                     }
                                 });
                             }
